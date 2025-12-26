@@ -17,7 +17,7 @@ export function Contact() {
         {/* Contact Links */}
         <div className="flex flex-col sm:flex-row gap-4">
           <a
-            href="mailto:gowtam04@gmail.com"
+            href="mailto:gowtam@gowtam.ai"
             className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
           >
             <div className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-medium text-[var(--foreground)]">Email</p>
-                <p className="text-sm text-[var(--muted)]">gowtam04@gmail.com</p>
+                <p className="text-sm text-[var(--muted)]">gowtam@gowtam.ai</p>
               </div>
             </div>
             <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
