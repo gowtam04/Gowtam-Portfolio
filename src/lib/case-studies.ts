@@ -1,3 +1,5 @@
+export type ProjectType = 'personal' | 'client';
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -10,11 +12,15 @@ export interface CaseStudy {
   solution: string;
   results: string[];
   technologies: string[];
+  projectType: ProjectType;
   appStoreUrl?: string;
   externalLink?: {
     url: string;
     label: string;
   };
+  // Client project specific fields
+  clientName?: string;
+  testimonial?: string;
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -39,6 +45,7 @@ export const caseStudies: CaseStudy[] = [
       "Seamless HealthKit integration for comprehensive health data",
     ],
     technologies: ["Claude AI", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
+    projectType: 'personal',
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
   {
@@ -62,6 +69,7 @@ export const caseStudies: CaseStudy[] = [
       "Full offline capability for in-store use",
     ],
     technologies: ["React Native", "Expo", "TypeScript", "Firebase", "Serverless"],
+    projectType: 'personal',
     appStoreUrl: "https://apps.apple.com/us/app/familycart-groceries/id6753196717",
   },
   {
@@ -85,6 +93,7 @@ export const caseStudies: CaseStudy[] = [
       "Unique strategic card request mechanics",
     ],
     technologies: ["WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
+    projectType: 'personal',
     externalLink: {
       url: "https://ace-suit-break.fly.dev",
       label: "Play Now",
