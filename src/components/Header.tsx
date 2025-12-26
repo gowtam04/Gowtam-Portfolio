@@ -42,7 +42,7 @@ export function Header() {
             href="#"
             className="text-lg font-semibold text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
           >
-            [Your Name]
+            Gowtam
           </a>
 
           {/* Desktop Navigation */}

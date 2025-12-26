@@ -32,7 +32,7 @@ export function Hero() {
             <span className="text-sm font-medium">LinkedIn</span>
           </a>
           <a
-            href="mailto:your.email@example.com"
+            href="mailto:gowtam@gowtam.ai"
             className="flex items-center gap-2 px-5 py-3 rounded-lg bg-[var(--accent)] text-[var(--accent-foreground)] hover:opacity-90 transition-all duration-200"
             aria-label="Send Email"
           >
