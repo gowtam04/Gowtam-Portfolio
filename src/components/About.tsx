@@ -41,11 +41,11 @@ export function About() {
             <div className="pt-6 border-t border-[var(--border)]">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 <div>
-                  <p className="text-2xl font-bold text-[var(--accent)]">6+</p>
+                  <p className="text-2xl font-bold text-[var(--accent)]">7+</p>
                   <p className="text-sm text-[var(--muted)]">Years Experience</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-[var(--accent)]">7+</p>
+                  <p className="text-2xl font-bold text-[var(--accent)]">15+</p>
                   <p className="text-sm text-[var(--muted)]">Products Shipped</p>
                 </div>
                 <div>
