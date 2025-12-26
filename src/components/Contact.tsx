@@ -17,7 +17,7 @@ export function Contact() {
         {/* Contact Links */}
         <div className="flex flex-col sm:flex-row gap-4">
           <a
-            href="mailto:your.email@example.com"
+            href="mailto:gowtam04@gmail.com"
             className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
           >
             <div className="flex items-center gap-4">
@@ -26,14 +26,14 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-medium text-[var(--foreground)]">Email</p>
-                <p className="text-sm text-[var(--muted)]">your.email@example.com</p>
+                <p className="text-sm text-[var(--muted)]">gowtam04@gmail.com</p>
               </div>
             </div>
             <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
           </a>
 
           <a
-            href="https://linkedin.com/in/yourprofile"
+            href="https://linkedin.com/in/gowtam-ramanujam"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
@@ -44,7 +44,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-medium text-[var(--foreground)]">LinkedIn</p>
-                <p className="text-sm text-[var(--muted)]">linkedin.com/in/yourprofile</p>
+                <p className="text-sm text-[var(--muted)]">linkedin.com/in/gowtam-ramanujam</p>
               </div>
             </div>
             <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />

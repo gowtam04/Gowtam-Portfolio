@@ -16,7 +16,7 @@ export function Hero() {
 
         {/* Tagline */}
         <p className="text-lg sm:text-xl text-[var(--muted)] mb-10 max-w-xl mx-auto leading-relaxed">
-          [Your compelling tagline here — describe what you do and the value you bring]
+          Your AI Product Partner
         </p>
 
         {/* Social Links */}

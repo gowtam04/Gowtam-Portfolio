@@ -14,70 +14,70 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "ai-recommendation-engine",
-    title: "AI-Powered Recommendation Engine",
+    slug: "nibble-ai",
+    title: "Nibble AI",
     description:
-      "Led the development of a machine learning recommendation system that increased user engagement by 40%.",
+      "An AI-powered nutrition tracker that uses Claude AI for instant meal analysis from photos, available on the App Store.",
     category: "AI/ML",
-    duration: "[Duration]",
-    role: "Product Manager",
+    duration: "2024",
+    role: "AI Product Manager",
     overview:
-      "[Provide a comprehensive overview of the project. Describe the product, the team, and the overall goal you were trying to achieve. This should give readers context about the scope and importance of the project.]",
+      "Nibble AI is an iOS application that revolutionizes nutrition tracking by leveraging Claude AI to instantly analyze meals from photos. The app eliminates the tedious manual entry that plagues traditional calorie counters, making healthy eating effortless and engaging.",
     challenge:
-      "[Describe the main challenge or problem you were trying to solve. What was the pain point for users? What business problem needed addressing? Include any constraints or limitations you faced.]",
+      "Traditional nutrition tracking apps require users to manually search and log every food item, leading to low adherence rates. Users needed a frictionless way to track their nutrition that could understand complex meals and provide accurate nutritional information without extensive manual input.",
     solution:
-      "[Explain your approach and the solution you developed. Discuss the product strategy, key decisions made, and how you worked with engineering and design teams. Include any innovative approaches or methodologies used.]",
+      "I designed and built an AI-first nutrition tracking experience powered by Claude AI. The app uses computer vision to analyze meal photos and provide instant nutritional breakdowns. I implemented barcode scanning for packaged foods, personalized AI coaching for dietary guidance, HealthKit integration for holistic health tracking, gamified challenges to boost engagement, and 16 home screen widgets for at-a-glance nutrition data.",
     results: [
-      "[Key result 1 - e.g., 40% increase in user engagement]",
-      "[Key result 2 - e.g., 25% reduction in churn rate]",
-      "[Key result 3 - e.g., $2M in additional revenue]",
-      "[Key result 4 - e.g., 95% user satisfaction score]",
+      "Successfully shipped to the App Store",
+      "16 home screen widgets for personalized tracking",
+      "Instant AI-powered meal analysis from photos",
+      "Seamless HealthKit integration for comprehensive health data",
     ],
-    technologies: ["Machine Learning", "Python", "TensorFlow", "AWS"],
+    technologies: ["Claude AI", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
   },
   {
-    slug: "conversational-ai-platform",
-    title: "Conversational AI Platform",
+    slug: "familycart",
+    title: "FamilyCart",
     description:
-      "Designed and launched an enterprise chatbot platform that reduced support tickets by 60%.",
-    category: "Product Strategy",
-    duration: "[Duration]",
-    role: "Senior Product Manager",
+      "A collaborative grocery list app with real-time sync and zero-friction onboarding, built for families.",
+    category: "Mobile App",
+    duration: "2024",
+    role: "AI Product Manager",
     overview:
-      "[Provide a comprehensive overview of the project. Describe the product, the team, and the overall goal you were trying to achieve.]",
+      "FamilyCart is a collaborative grocery shopping app designed to make family shopping seamless. The app enables multiple family members to contribute to and check off items from a shared list in real-time, eliminating the chaos of uncoordinated grocery runs.",
     challenge:
-      "[Describe the main challenge or problem you were trying to solve. What was the pain point for users?]",
+      "Families struggled with coordinating grocery shopping—duplicate purchases, forgotten items, and the inability to collaborate in real-time were common pain points. Existing solutions were either too complex or required everyone to create accounts, creating friction for adoption.",
     solution:
-      "[Explain your approach and the solution you developed. Discuss the product strategy and key decisions made.]",
+      "I architected a serverless multi-tenant solution using Firebase that enables instant collaboration without requiring account creation. The app features zero-friction onboarding where users can start a shared list and invite family members within seconds. Built with React Native and Expo for cross-platform support, with offline capability ensuring the app works even in stores with poor connectivity.",
     results: [
-      "[Key result 1]",
-      "[Key result 2]",
-      "[Key result 3]",
-      "[Key result 4]",
+      "Successfully shipped to the App Store",
+      "Zero-friction onboarding with instant family sharing",
+      "Real-time sync across all family members' devices",
+      "Full offline capability for in-store use",
     ],
-    technologies: ["NLP", "GPT", "Node.js", "React"],
+    technologies: ["React Native", "Expo", "TypeScript", "Firebase", "Serverless"],
   },
   {
-    slug: "data-analytics-dashboard",
-    title: "Predictive Analytics Dashboard",
+    slug: "suit-break",
+    title: "Suit Break",
     description:
-      "Built a real-time analytics platform that empowered data-driven decision making across the organization.",
-    category: "Data Products",
-    duration: "[Duration]",
-    role: "Product Manager",
+      "A multiplayer card game with real-time matchmaking, ELO rating system, and strategic gameplay mechanics.",
+    category: "Web Game",
+    duration: "2024",
+    role: "Product Designer & Developer",
     overview:
-      "[Provide a comprehensive overview of the project. Describe the product, the team, and the overall goal you were trying to achieve.]",
+      "Suit Break is a multiplayer web-based card game that brings the classic trick-taking genre to the browser with modern matchmaking and competitive features. The game features strategic card request mechanics that add depth beyond traditional card games.",
     challenge:
-      "[Describe the main challenge or problem you were trying to solve. What was the pain point for users?]",
+      "Creating an engaging multiplayer card game that works seamlessly in the browser while maintaining competitive integrity. The game needed to handle real-time synchronization between players, prevent cheating, and provide a fair matchmaking experience for players of all skill levels.",
     solution:
-      "[Explain your approach and the solution you developed. Discuss the product strategy and key decisions made.]",
+      "I designed and implemented a complete multiplayer infrastructure with real-time matchmaking, private rooms for playing with friends, and an ELO-based rating system for competitive play. The strategic card request mechanic adds a unique twist to traditional trick-taking games, requiring players to think several moves ahead.",
     results: [
-      "[Key result 1]",
-      "[Key result 2]",
-      "[Key result 3]",
-      "[Key result 4]",
+      "Real-time multiplayer with seamless matchmaking",
+      "ELO rating system for competitive balance",
+      "Private rooms for playing with friends",
+      "Unique strategic card request mechanics",
     ],
-    technologies: ["Data Visualization", "SQL", "Python", "Tableau"],
+    technologies: ["WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
   },
 ];
 

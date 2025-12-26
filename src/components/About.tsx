@@ -1,4 +1,4 @@
-import { User } from "lucide-react";
+import Image from "next/image";
 
 export function About() {
   return (
@@ -10,44 +10,46 @@ export function About() {
         </h2>
 
         <div className="grid md:grid-cols-5 gap-12 items-start">
-          {/* Photo Placeholder */}
+          {/* Photo */}
           <div className="md:col-span-2">
             <div className="aspect-square rounded-2xl bg-[var(--border)] flex items-center justify-center overflow-hidden">
-              {/* Replace with your photo */}
-              <div className="w-full h-full flex flex-col items-center justify-center text-[var(--muted)]">
-                <User className="w-24 h-24 mb-4 opacity-50" />
-                <p className="text-sm">[Your Photo]</p>
-              </div>
+              <Image
+                src="/images/profile.jpg"
+                alt="Gowtam Ramanujam"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
           {/* Bio Content */}
           <div className="md:col-span-3 space-y-6">
             <p className="text-lg text-[var(--foreground)] leading-relaxed">
-              [Opening paragraph about who you are and your background. This should be a strong introduction that captures your professional identity and what drives you. Mention your years of experience and key industries you&apos;ve worked in.]
+              I&apos;m an AI Product Manager with 6+ years of experience designing, building, and shipping software products. My journey spans healthcare software, enterprise AI tools, mobile apps, and even game development. I&apos;m passionate about translating complex business requirements into elegant, user-focused products.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              [Second paragraph about your approach to product management and AI. Discuss your philosophy on building products, how you leverage AI/ML technologies, and what makes your approach unique. Include specific methodologies or frameworks you use.]
+              My approach combines rapid prototyping with AI-assisted development. I architect multi-agent AI systems using LangChain, LangGraph, and AWS Bedrock, and leverage tools like Claude Code, Windsurf, and Cursor to accelerate development cycles. My workflow moves quickly from BRD creation through stakeholder approval to functional prototype—often delivering working demos within days.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              [Third paragraph about your achievements and what you&apos;re looking for. Highlight key accomplishments, products you&apos;ve shipped, or impact you&apos;ve made. End with what excites you about the future of AI in product development.]
+              I&apos;ve shipped 3 iOS applications to the App Store, deployed enterprise AI tools used by multiple clients, and co-founded a game studio that released a title with 500,000+ downloads. I&apos;m excited about the future of AI-native products and the opportunity to build tools that genuinely improve people&apos;s lives.
             </p>
 
             {/* Optional: Quick Facts */}
             <div className="pt-6 border-t border-[var(--border)]">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
                 <div>
-                  <p className="text-2xl font-bold text-[var(--accent)]">[X]+</p>
+                  <p className="text-2xl font-bold text-[var(--accent)]">6+</p>
                   <p className="text-sm text-[var(--muted)]">Years Experience</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-[var(--accent)]">[X]+</p>
+                  <p className="text-2xl font-bold text-[var(--accent)]">7+</p>
                   <p className="text-sm text-[var(--muted)]">Products Shipped</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-[var(--accent)]">[X]M+</p>
+                  <p className="text-2xl font-bold text-[var(--accent)]">500K+</p>
                   <p className="text-sm text-[var(--muted)]">Users Impacted</p>
                 </div>
               </div>
