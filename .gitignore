@@ -39,3 +39,6 @@ Thumbs.db
 
 # Testing
 coverage/
+
+# Personal files
+resume/
