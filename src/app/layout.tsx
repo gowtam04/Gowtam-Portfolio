@@ -10,7 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "[Your Name] | AI Product Manager",
+  title: "Gowtam Ramanujam | AI Product Manager",
   description:
     "[Your compelling tagline here — describe what you do and the value you bring as an AI Product Manager]",
   keywords: [
@@ -20,19 +20,19 @@ export const metadata: Metadata = {
     "Artificial Intelligence",
     "Product Strategy",
   ],
-  authors: [{ name: "[Your Name]" }],
+  authors: [{ name: "Gowtam Ramanujam" }],
   openGraph: {
-    title: "[Your Name] | AI Product Manager",
+    title: "Gowtam Ramanujam | AI Product Manager",
     description:
       "[Your compelling tagline here — describe what you do and the value you bring]",
     url: "https://yourwebsite.com",
-    siteName: "[Your Name] Portfolio",
+    siteName: "Gowtam Ramanujam Portfolio",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "[Your Name] | AI Product Manager",
+    title: "Gowtam Ramanujam | AI Product Manager",
     description:
       "[Your compelling tagline here — describe what you do and the value you bring]",
   },

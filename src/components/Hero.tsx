@@ -22,7 +22,7 @@ export function Hero() {
         {/* Social Links */}
         <div className="flex items-center justify-center gap-4">
           <a
-            href="https://linkedin.com/in/yourprofile"
+            href="https://www.linkedin.com/in/gowtam-ramanujam/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[var(--border)] text-[var(--foreground)] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all duration-200"
