@@ -6,7 +6,7 @@ export function Hero() {
       <div className="max-w-3xl mx-auto text-center">
         {/* Name */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-[var(--foreground)] mb-4 tracking-tight">
-          [Your Name]
+          Gowtam Ramanujam
         </h1>
 
         {/* Title */}
