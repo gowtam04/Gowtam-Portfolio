@@ -10,13 +10,8 @@ export function Hero() {
         </h1>
 
         {/* Title */}
-        <p className="text-xl sm:text-2xl text-[var(--accent)] font-medium mb-6">
+        <p className="text-xl sm:text-2xl text-[var(--accent)] font-medium mb-10">
           AI Product Manager
-        </p>
-
-        {/* Tagline */}
-        <p className="text-lg sm:text-xl text-[var(--muted)] mb-10 max-w-xl mx-auto leading-relaxed">
-          Your AI Product Partner
         </p>
 
         {/* Social Links */}
