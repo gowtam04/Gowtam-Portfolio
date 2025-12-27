@@ -1,5 +1,4 @@
-import { caseStudies } from "@/lib/case-studies";
-import { CaseStudyCard } from "./CaseStudyCard";
+import { CaseStudiesGrid } from "./CaseStudiesGrid";
 
 export function CaseStudies() {
   return (
@@ -15,12 +14,8 @@ export function CaseStudies() {
           </p>
         </div>
 
-        {/* Case Studies Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {caseStudies.map((caseStudy) => (
-            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-          ))}
-        </div>
+        {/* Filterable Case Studies Grid */}
+        <CaseStudiesGrid />
       </div>
     </section>
   );

@@ -7,6 +7,8 @@
   --border: #e2e8f0;
   --accent: #2563eb;
   --accent-foreground: #ffffff;
+  --personal: #10b981;
+  --client: #8b5cf6;
 }
 
 .dark {
@@ -16,6 +18,8 @@
   --border: #1e293b;
   --accent: #60a5fa;
   --accent-foreground: #030712;
+  --personal: #34d399;
+  --client: #a78bfa;
 }
 
 @theme inline {
@@ -25,6 +29,8 @@
   --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-personal: var(--personal);
+  --color-client: var(--client);
   --font-sans: var(--font-inter);
 }
 
