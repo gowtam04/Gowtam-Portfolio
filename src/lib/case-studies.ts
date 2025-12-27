@@ -162,6 +162,35 @@ export const caseStudies: CaseStudy[] = [
     clientName: "Large UAE Conglomerate",
   },
   {
+    slug: "ai-resume-parser",
+    title: "AI Resume Parser",
+    description:
+      "Built an AI-powered solution that bulk-filters job applicants and returns top candidates with detailed analysis based on configurable preferences.",
+    category: "Enterprise AI",
+    duration: "2024",
+    role: "Product Manager",
+    overview:
+      "An AI-powered applicant screening system that transforms the hiring process for high-volume recruitment. The solution processes resumes from multiple sources and formats, using GPT to analyze and rank candidates against configurable criteria, dramatically reducing the time spent on initial screening.",
+    challenge:
+      "The client was receiving hundreds to thousands of applicants for each open position. Manually reviewing every resume to identify qualified candidates was extremely time-consuming and created bottlenecks in the hiring process. They needed a way to efficiently filter large applicant pools while still identifying the best-fit candidates.",
+    solution:
+      "I led the end-to-end development of an AI-powered screening system. The solution accepts resumes in mixed formats (PDF, Word, etc.) from various sources and uses OpenAI GPT to parse and analyze each candidate. Clients can configure custom filtering rules and criteria. The AI generates match scores for all applicants and produces a shortlist of top candidates, each with detailed analysis including strengths, weaknesses, and job-fit assessment.",
+    results: [
+      "Significantly reduced time spent on initial applicant screening",
+      "Bulk processing of hundreds of resumes per job posting",
+      "AI-generated candidate analysis with strengths, weaknesses, and job-fit",
+      "Configurable filtering rules for customized screening criteria",
+    ],
+    technologies: [
+      "OpenAI GPT",
+      "Resume Parsing",
+      "Document Processing",
+      "Web Application",
+      "AI/ML",
+    ],
+    projectType: "client",
+  },
+  {
     slug: "paraverse",
     title: "Paraverse",
     description:
