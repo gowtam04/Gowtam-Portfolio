@@ -99,6 +99,99 @@ export const caseStudies: CaseStudy[] = [
       label: "Play Now",
     },
   },
+  {
+    slug: "diagnostic-lab-lims",
+    title: "Laboratory Information Management System",
+    description:
+      "Led the development of a custom LIMS that replaced Salesforce, enabling a diagnostic lab to process 10,000+ samples daily.",
+    category: "Healthcare Tech",
+    duration: "2022-2023",
+    role: "Product Manager",
+    overview:
+      "A diagnostic testing lab needed a system that could handle their massive scale of operations. I led the product development of a comprehensive LIMS from initial concept through company-wide deployment, managing the full product lifecycle for a system now used by hundreds of employees.",
+    challenge:
+      "The lab was using Salesforce to manage their operations, but it couldn't handle the scale they were operating at. They needed a custom solution that could support their high-volume testing workflows, from patient intake through result delivery, without bottlenecks.",
+    solution:
+      "I owned the product vision and roadmap, working closely with lab technicians, operations staff, and leadership to design a system built around their actual workflows. I led cross-functional teams through discovery, design, development, and deployment, ensuring the solution addressed real operational pain points.",
+    results: [
+      "Scaled to process 10,000+ samples per day",
+      "Deployed company-wide with hundreds of daily active users",
+      "Led full product lifecycle from initial concept to production launch",
+      "Replaced legacy Salesforce system with purpose-built solution",
+    ],
+    technologies: [
+      "Product Strategy",
+      "Stakeholder Management",
+      "Requirements Analysis",
+      "Cross-functional Leadership",
+      "Healthcare Workflows",
+      "Enterprise Software",
+    ],
+    projectType: "client",
+  },
+  {
+    slug: "expense-ai-auditing",
+    title: "AI-Powered Expense Validation & Auditing",
+    description:
+      "Designed an AI solution using OCI Generative AI to automate expense report validation and auditing for a large enterprise.",
+    category: "Enterprise AI",
+    duration: "2025",
+    role: "Product Manager",
+    overview:
+      "An enterprise-scale AI solution that automates the validation and auditing of Oracle Expense Reports. The system uses Llama 4 Maverick through OCI Generative AI to extract data from receipt attachments, validate expense records against company policies, and generate comprehensive audit reports.",
+    challenge:
+      "The client's finance team was spending significant time manually reviewing and auditing expense reports. The process was slow, inconsistent, and couldn't scale with the volume of submissions. Validating receipts against expense claims and ensuring policy compliance required tedious manual comparison that was prone to human error.",
+    solution:
+      "I led the solution design and architecture for an AI-powered automation system. I evaluated multiple AI models through OCI Generative AI and selected Llama 4 Maverick for its superior multi-document processing capabilities. The solution architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates the AI workflows. The system automatically extracts data from receipts (handling multiple receipts per attachment), validates expenses against configured rules, and generates audit reports attached directly to expense records.",
+    results: [
+      "Deployed to production, automating expense validation workflow",
+      "AI-powered data extraction from receipt images with multi-document support",
+      "Configurable audit rules enabling policy customization without code changes",
+      "Automated report generation attached directly to expense records in Oracle Fusion",
+    ],
+    technologies: [
+      "OCI Generative AI",
+      "Llama 4 Maverick",
+      "Oracle Fusion Cloud",
+      "Oracle Integration Cloud",
+      "Oracle VBCS",
+      "Python",
+      "REST APIs",
+    ],
+    projectType: "client",
+    clientName: "Large UAE Conglomerate",
+  },
+  {
+    slug: "paraverse",
+    title: "Paraverse",
+    description:
+      "Led product development for a blockchain mobile app bridging physical and digital worlds through NFT-based redemption experiences.",
+    category: "Web3/Blockchain",
+    duration: "2021-2022",
+    role: "Product Manager",
+    overview:
+      "Paraverse is a blockchain-based mobile application built on Polygon that creates a gateway between physical and digital worlds. The platform enables brands and influencers to connect consumers with both digital and physical offerings through NFT ownership, allowing everyday people to access NFTs that can be redeemed for in-store or on-site value.",
+    challenge:
+      "The NFT and blockchain space had a massive barrier to entry for mainstream users. Most people lacked crypto knowledge, found wallet setup intimidating, and didn't understand how NFTs could provide real-world value. Brands wanted to leverage NFT technology but needed a solution that wouldn't alienate their existing customer base.",
+    solution:
+      "I led the entire product development from conception to launch, focusing on removing friction at every step. The core innovation was a one-click wallet setup that eliminated the need for any NFT or blockchain knowledge. I designed an external wallet verification process allowing existing NFT projects to attach physical value redemption to their offerings. The product strategy centered on making Web3 technology invisible to users while delivering tangible real-world benefits.",
+    results: [
+      "Led full product lifecycle from conception to launch",
+      "Designed one-click wallet setup eliminating blockchain complexity",
+      "Created external wallet verification for existing NFT projects",
+      "Built bridge between digital NFT ownership and physical redemption",
+    ],
+    technologies: [
+      "Product Strategy",
+      "Product Management",
+      "Product Road Mapping",
+      "Product Design",
+      "Agile Project Management",
+      "Polygon Blockchain",
+    ],
+    projectType: "client",
+    clientName: "Paraverse LLC",
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {

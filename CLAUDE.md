@@ -13,15 +13,15 @@ npm run lint     # Run ESLint
 
 ## Architecture
 
-This is a personal portfolio website for an AI Product Manager built with Next.js 14 (App Router), Tailwind CSS 4, and TypeScript.
+This is a personal portfolio website for an AI Product Manager built with Next.js 16 (App Router), Tailwind CSS 4, and TypeScript.
 
 ### Key Patterns
 
 **Theme System**: Dark/light mode via `next-themes`. CSS variables defined in `globals.css` with `.dark` class variants. Theme toggle in header persists user preference.
 
-**Styling**: Tailwind CSS 4 with CSS variables for colors (`--foreground`, `--background`, `--accent`, `--muted`, `--border`). All components use `var(--color-name)` syntax for theme consistency.
+**Styling**: Tailwind CSS 4 with CSS variables for colors (`--foreground`, `--background`, `--accent`, `--muted`, `--border`). The `@theme inline` block in `globals.css` maps these to Tailwind utilities (e.g., `bg-background`, `text-foreground`). Components can use either `var(--color-name)` or Tailwind's `color-*` classes.
 
-**Case Studies**: Dynamic routes at `/case-studies/[slug]`. Data defined in `src/lib/case-studies.ts` with `CaseStudy` type. Uses `generateStaticParams` for SSG.
+**Case Studies**: Dynamic routes at `/case-studies/[slug]`. Data defined in `src/lib/case-studies.ts` with `CaseStudy` type. Uses `generateStaticParams` for SSG. Note: Next.js 16 requires `params` to be awaited (e.g., `const { slug } = await params`).
 
 - `projectType`: Either `'personal'` or `'client'` to categorize projects
 - Client projects can include optional `clientName` and `testimonial` fields
