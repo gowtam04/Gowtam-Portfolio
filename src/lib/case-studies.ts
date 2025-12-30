@@ -221,6 +221,41 @@ export const caseStudies: CaseStudy[] = [
     projectType: "client",
     clientName: "Paraverse LLC",
   },
+  {
+    slug: "agent-red",
+    title: "Agent RED",
+    description:
+      "An autonomous multi-agent AI system that plays Pokemon Red using Claude AI models and a Game Boy emulator.",
+    category: "AI/ML",
+    duration: "2024",
+    role: "AI Product Manager",
+    overview:
+      "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains—navigation, battles, and menus—coordinated by an orchestrator that routes tasks to the appropriate agent.",
+    challenge:
+      "Playing Pokemon Red autonomously requires solving multiple complex problems: understanding game state from raw memory, navigating a world with 223 interconnected maps, making strategic battle decisions against 391 different trainer teams, and managing inventory and party composition—all while maintaining context across hours of gameplay.",
+    solution:
+      "I designed a hierarchical multi-agent system with four specialized agents: an Orchestrator (Sonnet) for task routing, Navigation (Haiku) with A* pathfinding, Battle (Sonnet/Opus) with automatic escalation for boss fights, and Menu (Haiku) for inventory management. The system extracts comprehensive game state from emulator memory and leverages a knowledge base parsed from the Pokemon Red disassembly, including all 223 maps, 151 Pokemon stats, and type effectiveness matrices. A real-time React dashboard provides monitoring and control via WebSocket streaming.",
+    results: [
+      "38 tools distributed across 4 specialized AI agents",
+      "223 maps with collision data and trainer positions parsed",
+      "151 Pokemon with stats, types, and learnsets integrated",
+      "Real-time monitoring dashboard with WebSocket streaming",
+    ],
+    technologies: [
+      "Claude AI",
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "PyBoy",
+      "Multi-Agent Systems",
+    ],
+    projectType: "personal",
+    externalLink: {
+      url: "https://github.com/gowtam04/Agent_RED",
+      label: "View on GitHub",
+    },
+  },
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {
