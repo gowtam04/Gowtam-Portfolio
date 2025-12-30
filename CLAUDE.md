@@ -17,6 +17,8 @@ This is a personal portfolio website for an AI Product Manager built with Next.j
 
 ### Key Patterns
 
+**No Em Dashes**: Do not use em dashes (—) anywhere in the codebase. Use alternative punctuation such as commas, colons, semicolons, or parentheses instead.
+
 **Theme System**: Dark/light mode via `next-themes`. CSS variables defined in `globals.css` with `.dark` class variants. Theme toggle in header persists user preference.
 
 **Styling**: Tailwind CSS 4 with CSS variables for colors (`--foreground`, `--background`, `--accent`, `--muted`, `--border`). The `@theme inline` block in `globals.css` maps these to Tailwind utilities (e.g., `bg-background`, `text-foreground`). Components can use either `var(--color-name)` or Tailwind's `color-*` classes.

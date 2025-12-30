@@ -30,7 +30,7 @@ export function About() {
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              My approach combines rapid prototyping with AI-assisted development. I architect multi-agent AI systems using LangChain, LangGraph, and AWS Bedrock, and leverage tools like Claude Code, Windsurf, and Cursor to accelerate development cycles. My workflow moves quickly from BRD creation through stakeholder approval to functional prototype—often delivering working demos within days.
+              My approach combines rapid prototyping with AI-assisted development. I architect multi-agent AI systems using LangChain, LangGraph, and AWS Bedrock, and leverage tools like Claude Code, Windsurf, and Cursor to accelerate development cycles. My workflow moves quickly from BRD creation through stakeholder approval to functional prototype, often delivering working demos within days.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
