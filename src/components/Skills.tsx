@@ -5,6 +5,7 @@ import {
   Search,
   Map,
   MessageSquare,
+  Bot,
 } from "lucide-react";
 
 const skills = [
@@ -19,6 +20,12 @@ const skills = [
     title: "AI/ML Product Development",
     description:
       "Building intelligent products powered by machine learning and artificial intelligence.",
+  },
+  {
+    icon: Bot,
+    title: "Agentic AI Design",
+    description:
+      "Designing autonomous AI systems that reason, plan, and execute complex tasks with minimal human intervention.",
   },
   {
     icon: Users,
