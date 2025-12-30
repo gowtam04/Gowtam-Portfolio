@@ -28,6 +28,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: `${caseStudy.title} | Gowtam Ramanujam`,
     description: caseStudy.description,
+    alternates: {
+      canonical: `/case-studies/${slug}`,
+    },
   };
 }
 

@@ -39,7 +39,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           {/* Logo / Name */}
           <a
-            href="#"
+            href="/"
             className="text-lg font-semibold text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
           >
             Gowtam
@@ -66,6 +66,8 @@ export function Header() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 rounded-lg border border-[var(--border)] hover:bg-[var(--border)] transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
             >
               {isMenuOpen ? (
                 <X className="w-5 h-5 text-[var(--foreground)]" />
@@ -78,6 +80,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <div
+          id="mobile-menu"
           className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
             isMenuOpen ? "max-h-64 opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
