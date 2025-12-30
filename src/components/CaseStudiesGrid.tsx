@@ -1,58 +1,22 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
-import {
-  caseStudies,
-  type ProjectType,
-  getAllCategories,
-  getAllTechnologies,
-} from "@/lib/case-studies";
+import { useState, useMemo } from "react";
+import { caseStudies, type ProjectType } from "@/lib/case-studies";
 import { CaseStudyCard } from "./CaseStudyCard";
-import { Search, X, ChevronDown, Check, SlidersHorizontal } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 type FilterOption = "all" | ProjectType;
 
 const filterOptions: { value: FilterOption; label: string }[] = [
   { value: "all", label: "All" },
-  { value: "personal", label: "Personal" },
-  { value: "client", label: "Client" },
+  { value: "independent", label: "Independent" },
+  { value: "professional", label: "Professional" },
 ];
 
 export function CaseStudiesGrid() {
   const [activeFilter, setActiveFilter] = useState<FilterOption>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedTechnologies, setSelectedTechnologies] = useState<string[]>(
-    []
-  );
-  const [techDropdownOpen, setTechDropdownOpen] = useState(false);
-  const [techSearch, setTechSearch] = useState("");
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const allCategories = getAllCategories();
-  const allTechnologies = getAllTechnologies();
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setTechDropdownOpen(false);
-        setTechSearch("");
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  // Filter technologies based on search
-  const filteredTechnologies = allTechnologies.filter((tech) =>
-    tech.toLowerCase().includes(techSearch.toLowerCase())
-  );
-
-  // Combined filtering logic
   const filteredStudies = useMemo(() => {
     return caseStudies.filter((cs) => {
       // Project type filter
@@ -60,26 +24,11 @@ export function CaseStudiesGrid() {
         return false;
       }
 
-      // Category filter (OR match)
-      if (
-        selectedCategories.length > 0 &&
-        !selectedCategories.includes(cs.category)
-      ) {
-        return false;
-      }
-
-      // Technology filter (OR match)
-      if (
-        selectedTechnologies.length > 0 &&
-        !cs.technologies.some((tech) => selectedTechnologies.includes(tech))
-      ) {
-        return false;
-      }
-
       // Search query filter
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
-        const searchableText = `${cs.title} ${cs.description} ${cs.overview}`.toLowerCase();
+        const searchableText =
+          `${cs.title} ${cs.description} ${cs.overview}`.toLowerCase();
         if (!searchableText.includes(query)) {
           return false;
         }
@@ -87,34 +36,14 @@ export function CaseStudiesGrid() {
 
       return true;
     });
-  }, [activeFilter, selectedCategories, selectedTechnologies, searchQuery]);
-
-  const toggleCategory = (category: string) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category]
-    );
-  };
-
-  const toggleTechnology = (tech: string) => {
-    setSelectedTechnologies((prev) =>
-      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech]
-    );
-  };
+  }, [activeFilter, searchQuery]);
 
   const hasActiveFilters =
-    activeFilter !== "all" ||
-    selectedCategories.length > 0 ||
-    selectedTechnologies.length > 0 ||
-    searchQuery.trim() !== "";
+    activeFilter !== "all" || searchQuery.trim() !== "";
 
   const clearAllFilters = () => {
     setActiveFilter("all");
-    setSelectedCategories([]);
-    setSelectedTechnologies([]);
     setSearchQuery("");
-    setTechSearch("");
   };
 
   return (
@@ -142,8 +71,8 @@ export function CaseStudiesGrid() {
         </div>
       </div>
 
-      {/* Project Type Toggle */}
-      <div className="flex flex-wrap gap-2">
+      {/* Project Type Toggle + Results Count */}
+      <div className="flex flex-wrap items-center gap-2">
         {filterOptions.map((option) => (
           <button
             key={option.value}
@@ -157,128 +86,17 @@ export function CaseStudiesGrid() {
             {option.label}
           </button>
         ))}
-      </div>
 
-      {/* Category Chips */}
-      <div className="space-y-2">
-        <span className="text-xs font-medium uppercase tracking-wider text-[var(--muted)]">
-          Categories
-        </span>
-        <div className="flex flex-wrap gap-2">
-          {allCategories.map((category) => {
-            const isSelected = selectedCategories.includes(category);
-            return (
-              <button
-                key={category}
-                onClick={() => toggleCategory(category)}
-                className={`px-3 py-1.5 text-sm rounded-full transition-all duration-200 cursor-pointer ${
-                  isSelected
-                    ? "bg-[var(--foreground)] text-[var(--background)] shadow-md"
-                    : "bg-[var(--border)]/50 text-[var(--muted)] hover:bg-[var(--border)] hover:text-[var(--foreground)]"
-                }`}
-              >
-                {category}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Technology Dropdown + Clear All Row */}
-      <div className="flex flex-wrap items-center gap-3">
-        {/* Technology Dropdown */}
-        <div className="relative" ref={dropdownRef}>
-          <button
-            onClick={() => setTechDropdownOpen(!techDropdownOpen)}
-            className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-lg border transition-all duration-200 cursor-pointer ${
-              selectedTechnologies.length > 0
-                ? "border-[var(--accent)] bg-[var(--accent)]/10 text-[var(--accent)]"
-                : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--foreground)] hover:text-[var(--foreground)]"
-            }`}
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-            <span>
-              {selectedTechnologies.length > 0
-                ? `${selectedTechnologies.length} tech${selectedTechnologies.length > 1 ? "s" : ""} selected`
-                : "Technologies"}
-            </span>
-            <ChevronDown
-              className={`w-4 h-4 transition-transform duration-200 ${techDropdownOpen ? "rotate-180" : ""}`}
-            />
-          </button>
-
-          {/* Dropdown Panel */}
-          {techDropdownOpen && (
-            <div className="absolute z-50 mt-2 w-72 max-h-80 bg-[var(--background)] border border-[var(--border)] rounded-xl shadow-xl shadow-black/10 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
-              {/* Search within dropdown */}
-              <div className="p-3 border-b border-[var(--border)]">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--muted)]" />
-                  <input
-                    type="text"
-                    value={techSearch}
-                    onChange={(e) => setTechSearch(e.target.value)}
-                    placeholder="Filter technologies..."
-                    className="w-full pl-9 pr-3 py-2 text-sm bg-[var(--border)]/30 border-none rounded-lg text-[var(--foreground)] placeholder:text-[var(--muted)] focus:ring-2 focus:ring-[var(--accent)]/20 outline-none"
-                    autoFocus
-                  />
-                </div>
-              </div>
-
-              {/* Technology List */}
-              <div className="max-h-52 overflow-y-auto p-2">
-                {filteredTechnologies.length > 0 ? (
-                  filteredTechnologies.map((tech) => {
-                    const isSelected = selectedTechnologies.includes(tech);
-                    return (
-                      <button
-                        key={tech}
-                        onClick={() => toggleTechnology(tech)}
-                        className={`w-full flex items-center justify-between px-3 py-2 text-sm rounded-lg transition-all duration-150 cursor-pointer ${
-                          isSelected
-                            ? "bg-[var(--accent)]/10 text-[var(--accent)]"
-                            : "text-[var(--foreground)] hover:bg-[var(--border)]/50"
-                        }`}
-                      >
-                        <span>{tech}</span>
-                        {isSelected && <Check className="w-4 h-4" />}
-                      </button>
-                    );
-                  })
-                ) : (
-                  <p className="px-3 py-4 text-sm text-[var(--muted)] text-center">
-                    No technologies found
-                  </p>
-                )}
-              </div>
-
-              {/* Clear Selection */}
-              {selectedTechnologies.length > 0 && (
-                <div className="p-2 border-t border-[var(--border)]">
-                  <button
-                    onClick={() => setSelectedTechnologies([])}
-                    className="w-full px-3 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--border)]/50 rounded-lg transition-all duration-150 cursor-pointer"
-                  >
-                    Clear selection
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* Clear All Filters */}
         {hasActiveFilters && (
           <button
             onClick={clearAllFilters}
             className="flex items-center gap-1.5 px-3 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200 cursor-pointer"
           >
             <X className="w-3.5 h-3.5" />
-            Clear all filters
+            Clear
           </button>
         )}
 
-        {/* Results Count */}
         <span className="ml-auto text-sm text-[var(--muted)]">
           {filteredStudies.length} project
           {filteredStudies.length !== 1 ? "s" : ""}

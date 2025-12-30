@@ -1,4 +1,4 @@
-export type ProjectType = 'personal' | 'client';
+export type ProjectType = 'independent' | 'professional';
 
 export interface CaseStudy {
   slug: string;
@@ -45,7 +45,7 @@ export const caseStudies: CaseStudy[] = [
       "Seamless HealthKit integration for comprehensive health data",
     ],
     technologies: ["Claude AI", "Claude Code", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
-    projectType: 'personal',
+    projectType: 'independent',
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
   {
@@ -69,7 +69,7 @@ export const caseStudies: CaseStudy[] = [
       "Full offline capability for in-store use",
     ],
     technologies: ["Claude Code", "React Native", "Expo", "TypeScript", "Firebase", "Serverless"],
-    projectType: 'personal',
+    projectType: 'independent',
     appStoreUrl: "https://apps.apple.com/us/app/familycart-groceries/id6753196717",
   },
   {
@@ -93,7 +93,7 @@ export const caseStudies: CaseStudy[] = [
       "Validated market need through user testing with Indian families",
     ],
     technologies: ["React Native", "Expo", "Mobile App", "Document Management"],
-    projectType: "personal",
+    projectType: "independent",
   },
   {
     slug: "suit-break",
@@ -116,7 +116,7 @@ export const caseStudies: CaseStudy[] = [
       "Unique strategic card request mechanics",
     ],
     technologies: ["Claude Code", "WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
-    projectType: 'personal',
+    projectType: 'independent',
     externalLink: {
       url: "https://ace-suit-break.fly.dev",
       label: "Play Now",
@@ -150,7 +150,7 @@ export const caseStudies: CaseStudy[] = [
       "Healthcare Workflows",
       "Enterprise Software",
     ],
-    projectType: "client",
+    projectType: "professional",
   },
   {
     slug: "dmepos-order-management",
@@ -180,7 +180,7 @@ export const caseStudies: CaseStudy[] = [
       "Healthcare Workflows",
       "Cross-functional Leadership",
     ],
-    projectType: "client",
+    projectType: "professional",
   },
   {
     slug: "expense-ai-auditing",
@@ -211,7 +211,7 @@ export const caseStudies: CaseStudy[] = [
       "Python",
       "REST APIs",
     ],
-    projectType: "client",
+    projectType: "professional",
     clientName: "Large UAE Conglomerate",
   },
   {
@@ -241,7 +241,7 @@ export const caseStudies: CaseStudy[] = [
       "Web Application",
       "AI/ML",
     ],
-    projectType: "client",
+    projectType: "professional",
   },
   {
     slug: "paraverse",
@@ -271,7 +271,7 @@ export const caseStudies: CaseStudy[] = [
       "Agile Project Management",
       "Polygon Blockchain",
     ],
-    projectType: "client",
+    projectType: "professional",
     clientName: "Paraverse LLC",
   },
   {
@@ -304,7 +304,7 @@ export const caseStudies: CaseStudy[] = [
       "PyBoy",
       "Multi-Agent Systems",
     ],
-    projectType: "personal",
+    projectType: "independent",
     externalLink: {
       url: "https://github.com/gowtam04/Agent_RED",
       label: "View on GitHub",

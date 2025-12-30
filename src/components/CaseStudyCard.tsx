@@ -16,12 +16,12 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
         </span>
         <span
           className={`inline-block px-3 py-1 text-xs font-medium rounded-full ${
-            caseStudy.projectType === "personal"
+            caseStudy.projectType === "independent"
               ? "text-[var(--personal)] bg-[var(--personal)]/10"
               : "text-[var(--client)] bg-[var(--client)]/10"
           }`}
         >
-          {caseStudy.projectType === "personal" ? "Personal" : "Client"}
+          {caseStudy.projectType === "independent" ? "Independent" : "Professional"}
         </span>
       </div>
 
