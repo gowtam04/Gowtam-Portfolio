@@ -12,7 +12,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Gowtam Ramanujam | AI Product Manager",
   description:
-    "Your AI Product Partner. Building AI-powered products from concept to App Store with 6+ years of experience in product management and AI-assisted development.",
+    "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience in product management and AI-assisted development.",
   keywords: [
     "AI Product Manager",
     "Product Management",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gowtam Ramanujam | AI Product Manager",
     description:
-      "Your AI Product Partner. Building AI-powered products from concept to App Store with 6+ years of experience.",
+      "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
     url: "https://gowtam.ai",
     siteName: "Gowtam Ramanujam Portfolio",
     locale: "en_US",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gowtam Ramanujam | AI Product Manager",
     description:
-      "Your AI Product Partner. Building AI-powered products from concept to App Store with 6+ years of experience.",
+      "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
   },
   robots: {
     index: true,
