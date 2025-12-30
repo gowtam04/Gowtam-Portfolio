@@ -165,21 +165,21 @@ export const caseStudies: CaseStudy[] = [
     slug: "ai-resume-parser",
     title: "AI Resume Parser",
     description:
-      "Built an AI-powered solution that bulk-filters job applicants and returns top candidates with detailed analysis based on configurable preferences.",
+      "Built an AI-powered solution that bulk-filters 1000+ job applicants and returns top candidates with detailed analysis based on configurable criteria.",
     category: "Enterprise AI",
-    duration: "2024",
-    role: "Product Manager",
+    duration: "2023",
+    role: "AI Product Manager",
     overview:
-      "An AI-powered applicant screening system that transforms the hiring process for high-volume recruitment. The solution processes resumes from multiple sources and formats, using GPT to analyze and rank candidates against configurable criteria, dramatically reducing the time spent on initial screening.",
+      "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing, so I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
     challenge:
-      "The client was receiving hundreds to thousands of applicants for each open position. Manually reviewing every resume to identify qualified candidates was extremely time-consuming and created bottlenecks in the hiring process. They needed a way to efficiently filter large applicant pools while still identifying the best-fit candidates.",
+      "The client was receiving 1000+ applicants for each open position. Manually reviewing every resume to identify qualified candidates was tedious, unsustainable, and created major bottlenecks in their hiring process. They needed a way to efficiently filter massive applicant pools while still identifying the best-fit candidates.",
     solution:
-      "I led the end-to-end development of an AI-powered screening system. The solution accepts resumes in mixed formats (PDF, Word, etc.) from various sources and uses OpenAI GPT to parse and analyze each candidate. Clients can configure custom filtering rules and criteria. The AI generates match scores for all applicants and produces a shortlist of top candidates, each with detailed analysis including strengths, weaknesses, and job-fit assessment.",
+      "I led the end-to-end development of an AI-powered screening system. Users enter the job description, bulk upload resumes (supporting 1000+ in mixed formats like PDF and Word), then configure their filter criteria: required skills, years of experience, and education level. They specify how many candidates they want shortlisted. The AI then scores each resume one-by-one against the job requirements and filter criteria, ranks all applicants by match score, and filters down to the top X candidates. For each shortlisted candidate, the system generates a comprehensive profile including a summary, their key strengths, and potential weaknesses.",
     results: [
-      "Significantly reduced time spent on initial applicant screening",
-      "Bulk processing of hundreds of resumes per job posting",
-      "AI-generated candidate analysis with strengths, weaknesses, and job-fit",
-      "Configurable filtering rules for customized screening criteria",
+      "Saved hundreds of hours of manual resume screening",
+      "Processed thousands of candidates across multiple job postings",
+      "AI-generated candidate profiles with summary, strengths, and weaknesses",
+      "Configurable filtering by skills, experience, and education criteria",
     ],
     technologies: [
       "OpenAI GPT",
