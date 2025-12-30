@@ -44,7 +44,7 @@ export const caseStudies: CaseStudy[] = [
       "Instant AI-powered meal analysis from photos",
       "Seamless HealthKit integration for comprehensive health data",
     ],
-    technologies: ["Claude AI", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
+    technologies: ["Claude AI", "Claude Code", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
     projectType: 'personal',
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
@@ -68,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
       "Real-time sync across all family members' devices",
       "Full offline capability for in-store use",
     ],
-    technologies: ["React Native", "Expo", "TypeScript", "Firebase", "Serverless"],
+    technologies: ["Claude Code", "React Native", "Expo", "TypeScript", "Firebase", "Serverless"],
     projectType: 'personal',
     appStoreUrl: "https://apps.apple.com/us/app/familycart-groceries/id6753196717",
   },
@@ -115,7 +115,7 @@ export const caseStudies: CaseStudy[] = [
       "Private rooms for playing with friends",
       "Unique strategic card request mechanics",
     ],
-    technologies: ["WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
+    technologies: ["Claude Code", "WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
     projectType: 'personal',
     externalLink: {
       url: "https://ace-suit-break.fly.dev",
@@ -296,6 +296,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     technologies: [
       "Claude AI",
+      "Claude Code",
       "Python",
       "FastAPI",
       "React",
@@ -317,4 +318,14 @@ export function getCaseStudy(slug: string): CaseStudy | undefined {
 
 export function getAllCaseStudySlugs(): string[] {
   return caseStudies.map((cs) => cs.slug);
+}
+
+export function getAllCategories(): string[] {
+  const categories = new Set(caseStudies.map((cs) => cs.category));
+  return Array.from(categories).sort();
+}
+
+export function getAllTechnologies(): string[] {
+  const technologies = new Set(caseStudies.flatMap((cs) => cs.technologies));
+  return Array.from(technologies).sort();
 }
