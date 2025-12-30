@@ -73,6 +73,29 @@ export const caseStudies: CaseStudy[] = [
     appStoreUrl: "https://apps.apple.com/us/app/familycart-groceries/id6753196717",
   },
   {
+    slug: "yosihealth",
+    title: "Yosihealth",
+    description:
+      "A mobile app for digitizing and organizing health records, built for the Indian market where paper-based medical documents are still the norm.",
+    category: "Healthcare Tech",
+    duration: "2023",
+    role: "Product Manager",
+    overview:
+      "Yosihealth is a mobile application designed to solve a pervasive problem in India: the reliance on paper-based medical records. The app enables users to digitize, organize, and share their health documents including blood test reports, imaging results, prescriptions, and diagnoses, eliminating the chaos of managing physical paperwork.",
+    challenge:
+      "In India, patients still carry around paper test reports, prescriptions, and diagnosis documents. These records are easily lost or damaged, and finding the right report when a doctor requests it is cumbersome and time-consuming. Families often manage health records for multiple members, compounding the organizational challenge.",
+    solution:
+      "I designed and built a mobile app with quick-capture document scanning that makes digitizing records effortless. The app organizes documents by type (blood tests, imaging, prescriptions), date, and family member, with a flexible tagging system for custom organization. Sharing with healthcare providers is frictionless through shareable links or QR codes that doctors can scan during consultations.",
+    results: [
+      "Quick-capture scanning for effortless document digitization",
+      "Multi-member family support with separate profiles",
+      "Instant sharing via links or QR codes for doctor visits",
+      "Validated market need through user testing with Indian families",
+    ],
+    technologies: ["React Native", "Expo", "Mobile App", "Document Management"],
+    projectType: "personal",
+  },
+  {
     slug: "suit-break",
     title: "Suit Break",
     description:
@@ -130,6 +153,36 @@ export const caseStudies: CaseStudy[] = [
     projectType: "client",
   },
   {
+    slug: "dmepos-order-management",
+    title: "DMEPOS Order Management System",
+    description:
+      "Led the development of an order management system for a DMEPOS provider, replacing manual paper processes with a streamlined digital workflow.",
+    category: "Healthcare Tech",
+    duration: "2022-2023",
+    role: "Product Manager",
+    overview:
+      "A DMEPOS (Durable Medical Equipment, Prosthetics, Orthotics, and Supplies) provider needed to modernize their order management operations. I led the product development of a comprehensive system that digitized their entire workflow, from prescription intake through order fulfillment, across their full range of medical equipment categories.",
+    challenge:
+      "The provider was managing orders through manual, paper-based processes. Prescriptions arrived via fax, insurance verification required phone calls and manual data entry, and order tracking relied on spreadsheets and physical paperwork. This created bottlenecks, increased error rates, and limited their ability to scale operations.",
+    solution:
+      "I owned the product vision and worked directly with intake coordinators, verification specialists, and fulfillment staff to design a system around their actual workflows. The solution included prescription management for Rx intake and verification, insurance eligibility and prior authorization workflows, end-to-end order tracking from intake to delivery, and document management for CMNs and compliance documentation.",
+    results: [
+      "Deployed company-wide with broad adoption across all departments",
+      "Significantly increased daily order processing capacity",
+      "Replaced manual paper-based processes with digital workflows",
+      "Streamlined prescription intake through delivery tracking",
+    ],
+    technologies: [
+      "Product Strategy",
+      "Stakeholder Management",
+      "Requirements Analysis",
+      "User Research",
+      "Healthcare Workflows",
+      "Cross-functional Leadership",
+    ],
+    projectType: "client",
+  },
+  {
     slug: "expense-ai-auditing",
     title: "AI-Powered Expense Validation & Auditing",
     description:
@@ -167,7 +220,7 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Built an AI-powered solution that bulk-filters 1000+ job applicants and returns top candidates with detailed analysis based on configurable criteria.",
     category: "Enterprise AI",
-    duration: "2023",
+    duration: "2024",
     role: "AI Product Manager",
     overview:
       "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing, so I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
