@@ -26,7 +26,7 @@ export function About() {
           {/* Bio Content */}
           <div className="md:col-span-3 space-y-6">
             <p className="text-lg text-[var(--foreground)] leading-relaxed">
-              I&apos;m an AI Product Manager with 6+ years of experience designing, building, and shipping software products. My journey spans healthcare software, enterprise AI tools, mobile apps, and even game development. I&apos;m passionate about translating complex business requirements into elegant, user-focused products.
+              I&apos;m an AI Product Manager with 7+ years of experience designing, building, and shipping software products. My journey spans healthcare software, enterprise AI tools, mobile apps, and even game development. I&apos;m passionate about translating complex business requirements into elegant, user-focused products.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
