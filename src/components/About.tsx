@@ -18,6 +18,7 @@ export function About() {
                 alt="Gowtam Ramanujam"
                 width={400}
                 height={400}
+                priority
                 className="w-full h-full object-cover"
               />
             </div>

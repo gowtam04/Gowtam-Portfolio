@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Briefcase, Clock, ExternalLink } from "lucide-react";
-import { getCaseStudy, getAllCaseStudySlugs } from "@/lib/case-studies";
+import { getCaseStudy, getAllCaseStudySlugs, CaseStudy } from "@/lib/case-studies";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import type { Metadata } from "next";
@@ -31,6 +31,84 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: `/case-studies/${slug}`,
     },
+    openGraph: {
+      title: `${caseStudy.title} | Gowtam Ramanujam`,
+      description: caseStudy.description,
+      url: `https://gowtam.ai/case-studies/${slug}`,
+      siteName: "Gowtam Ramanujam Portfolio",
+      locale: "en_US",
+      type: "article",
+      images: [
+        {
+          url: "/images/profile.jpg",
+          width: 1200,
+          height: 630,
+          alt: `${caseStudy.title} - Case Study by Gowtam Ramanujam`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${caseStudy.title} | Gowtam Ramanujam`,
+      description: caseStudy.description,
+      images: ["/images/profile.jpg"],
+    },
+  };
+}
+
+function generateArticleJsonLd(caseStudy: CaseStudy, slug: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: caseStudy.title,
+    description: caseStudy.description,
+    author: {
+      "@type": "Person",
+      name: "Gowtam Ramanujam",
+      url: "https://gowtam.ai",
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Gowtam Ramanujam",
+      url: "https://gowtam.ai",
+    },
+    url: `https://gowtam.ai/case-studies/${slug}`,
+    image: "https://gowtam.ai/images/profile.jpg",
+    datePublished: caseStudy.duration.includes("-")
+      ? `${caseStudy.duration.split("-")[0]}-01-01`
+      : `${caseStudy.duration}-01-01`,
+    dateModified: new Date().toISOString().split("T")[0],
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://gowtam.ai/case-studies/${slug}`,
+    },
+  };
+}
+
+function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://gowtam.ai",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Case Studies",
+        item: "https://gowtam.ai/#case-studies",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: caseStudy.title,
+        item: `https://gowtam.ai/case-studies/${slug}`,
+      },
+    ],
   };
 }
 
@@ -42,8 +120,19 @@ export default async function CaseStudyPage({ params }: PageProps) {
     notFound();
   }
 
+  const articleJsonLd = generateArticleJsonLd(caseStudy, slug);
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd(caseStudy, slug);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <Header />
       <main className="pt-24 pb-16 px-6">
         <article className="max-w-3xl mx-auto">
