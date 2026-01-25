@@ -70,7 +70,7 @@ export const caseStudies: CaseStudy[] = [
       "Built with rate limiting and efficient streaming to handle concurrent users",
     ],
     technologies: ["Claude Code", "Next.js", "TypeScript", "Material UI", "Google Gemini", "Sharp", "Archiver"],
-    projectType: "independent",
+    projectType: "professional",
     externalLink: {
       url: "https://logoforge.gowtam.ai",
       label: "View LogoForge",
