@@ -49,6 +49,29 @@ export const caseStudies: CaseStudy[] = [
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
   {
+    slug: "dexpert",
+    title: "Dexpert",
+    description:
+      "An offline-first Pokemon companion app with a design systems approach, built using SwiftUI and Claude Code.",
+    category: "Mobile App",
+    duration: "2025",
+    role: "Designer & Developer",
+    overview:
+      "Dexpert is an offline-first Pokemon reference app that handles the full complexity of the franchise (1,025+ creatures, 15 game versions, 937 moves) while feeling fast, clean, and intuitive. The app uses a design systems approach where neutral UI surfaces let the 18 canonical type colors serve as the sole source of visual hierarchy.",
+    challenge:
+      "Existing Pokemon reference apps are cluttered and overwhelming, require constant internet connectivity, and handle version-specific data poorly. Players need quick, reliable information during gameplay, whether checking type matchups mid-battle or planning team compositions, but existing solutions create friction at every step.",
+    solution:
+      "I built an offline-first reference app with all data bundled locally. The design system uses 'clean canvas, colored content' where the UI stays monochromatic and only the 18 type colors provide saturation. A version-aware architecture lets users select their game version once, and the entire app adapts: regional dex numbers, version-specific movesets, and contextual sorting. Reusable components (GlassCard, TypeBadge, StatBar) ensure systematic consistency throughout.",
+    results: [
+      "1,025+ Pokemon with full stats, abilities, and evolutions",
+      "15 game versions supported with contextual data",
+      "Zero network requests required for core functionality",
+      "Shipped from concept to TestFlight in 4 weeks using Claude Code",
+    ],
+    technologies: ["SwiftUI", "SwiftData", "Claude Code", "Python", "iOS"],
+    projectType: "independent",
+  },
+  {
     slug: "logoforge",
     title: "LogoForge",
     description:
