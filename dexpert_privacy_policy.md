@@ -5,7 +5,7 @@
 
 ## Overview
 
-Dexpert is a Pokémon reference application that operates entirely offline. Your privacy is important to us, and we've designed the app to respect it completely.
+Dexpert is a creature reference application that operates entirely offline. Your privacy is important to us, and we've designed the app to respect it completely.
 
 ## Data Collection
 
@@ -54,4 +54,4 @@ If you have any questions about this privacy policy, please contact:
 
 ---
 
-*Dexpert is an independent fan-made application and is not affiliated with, endorsed by, or connected to Nintendo, Game Freak, or The Pokémon Company.*
+*Dexpert is an independent application. All creature data is sourced from publicly available APIs.*

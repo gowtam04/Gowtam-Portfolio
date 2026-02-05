@@ -43,7 +43,7 @@ export default function DexpertPrivacyPage() {
               Dexpert Privacy Policy
             </h1>
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              Last updated: January 2025
+              Last updated: January 29, 2025
             </p>
           </header>
 
@@ -53,33 +53,42 @@ export default function DexpertPrivacyPage() {
             <section>
               <h2 className="text-2xl font-semibold mb-4">Overview</h2>
               <p className="leading-relaxed">
-                Dexpert is an offline-first Pokemon reference application. Your
-                privacy is important to us. This policy explains what data we
-                collect (which is none) and how the app operates.
+                Dexpert is a creature reference application that operates
+                entirely offline. Your privacy is important to us, and
+                we&apos;ve designed the app to respect it completely.
               </p>
             </section>
 
             {/* Data Collection */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">Data Collection</h2>
-              <p className="leading-relaxed">
-                <strong>We do not collect any personal data.</strong> Dexpert
-                does not require account creation, does not track your usage,
-                and does not collect any information about you or your device.
-                The app operates entirely on your device with no data
-                transmitted to external servers.
+              <p className="leading-relaxed mb-4">
+                <strong>
+                  Dexpert does not collect, store, or transmit any personal
+                  data.
+                </strong>
               </p>
+              <p className="leading-relaxed mb-2">
+                Specifically, we do not collect:
+              </p>
+              <ul className="list-disc list-inside space-y-1 leading-relaxed">
+                <li>Personal information</li>
+                <li>Location data</li>
+                <li>Device identifiers</li>
+                <li>Usage analytics</li>
+                <li>Crash reports</li>
+                <li>Any other user data</li>
+              </ul>
             </section>
 
             {/* Local Storage */}
             <section>
               <h2 className="text-2xl font-semibold mb-4">Local Storage</h2>
-              <p className="leading-relaxed">
-                Dexpert stores your preferences (such as your selected game
-                version and favorite Pokemon) locally on your device using iOS
-                standard storage mechanisms. This data never leaves your device
-                and is not accessible to us or any third party.
-              </p>
+              <ul className="list-disc list-inside space-y-1 leading-relaxed">
+                <li>Saved teams stored only on device</li>
+                <li>App preferences stored only on device</li>
+                <li>No data synced to external servers</li>
+              </ul>
             </section>
 
             {/* Third-Party Services */}
@@ -87,11 +96,15 @@ export default function DexpertPrivacyPage() {
               <h2 className="text-2xl font-semibold mb-4">
                 Third-Party Services
               </h2>
-              <p className="leading-relaxed">
-                Dexpert does not integrate with any third-party analytics,
-                advertising, or tracking services. We do not use any SDKs that
-                collect user data.
+              <p className="leading-relaxed mb-2">
+                Dexpert does not integrate with any:
               </p>
+              <ul className="list-disc list-inside space-y-1 leading-relaxed">
+                <li>Analytics platforms</li>
+                <li>Advertising networks</li>
+                <li>Crash reporting services</li>
+                <li>Social media integrations</li>
+              </ul>
             </section>
 
             {/* Internet Connection */}
@@ -100,10 +113,9 @@ export default function DexpertPrivacyPage() {
                 Internet Connection
               </h2>
               <p className="leading-relaxed">
-                Dexpert is designed to work entirely offline. All Pokemon data
-                is bundled with the app. No internet connection is required for
-                core functionality, and the app does not make network requests
-                during normal use.
+                Dexpert does not require an internet connection to function.
+                The app includes all necessary data bundled within the
+                application.
               </p>
             </section>
 
@@ -113,9 +125,9 @@ export default function DexpertPrivacyPage() {
                 Children&apos;s Privacy
               </h2>
               <p className="leading-relaxed">
-                Since we do not collect any personal information from any users,
-                Dexpert is safe for users of all ages, including children under
-                13.
+                Dexpert does not collect personal information from anyone,
+                including children under the age of 13. The app is safe for
+                users of all ages.
               </p>
             </section>
 
@@ -125,9 +137,9 @@ export default function DexpertPrivacyPage() {
                 Changes to This Policy
               </h2>
               <p className="leading-relaxed">
-                If we make changes to this privacy policy, we will update the
-                &quot;Last updated&quot; date at the top of this page. We
-                encourage you to review this policy periodically.
+                If we update this privacy policy, we will post the new policy
+                on this page and update the &quot;Last updated&quot; date
+                above.
               </p>
             </section>
 
@@ -150,10 +162,8 @@ export default function DexpertPrivacyPage() {
             {/* Disclaimer */}
             <section className="pt-8 border-t border-[var(--border)]">
               <p className="text-sm text-[var(--muted)] leading-relaxed">
-                Dexpert is an independent fan project and is not affiliated
-                with, endorsed by, or connected to Nintendo, The Pokemon
-                Company, Game Freak, or any of their subsidiaries or affiliates.
-                Pokemon and all related marks are trademarks of Nintendo.
+                Dexpert is an independent application. All creature data is
+                sourced from publicly available APIs.
               </p>
             </section>
           </div>
