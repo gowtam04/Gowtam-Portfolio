@@ -47,7 +47,7 @@ export function Process() {
             Discover. Design. Develop.
           </h2>
           <p className="text-lg text-[var(--muted)] max-w-2xl">
-            A repeatable process for turning ideas into working AI prototypes, combining product discovery, deliberate technical design, and disciplined AI-driven engineering.
+            A repeatable process for shipping products with AI, combining product discovery, deliberate technical design, and disciplined AI-driven engineering.
           </p>
         </div>
 
