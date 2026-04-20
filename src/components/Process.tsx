@@ -12,14 +12,14 @@ const steps = [
     icon: MessageCircleQuestion,
     title: "Discover",
     description:
-      "An AI product analyst runs a structured requirements interview, probing users, workflows, business rules, and edge cases. The output is clear written requirements that reflect what you actually need, not what I guessed.",
+      "An AI product analyst agent runs a structured requirements interview, probing users, workflows, business rules, and edge cases. The output is clear written requirements that reflect what you actually need, not what I guessed.",
   },
   {
     number: "02",
     icon: Compass,
     title: "Design",
     description:
-      "An AI solution architect turns requirements into a technical blueprint: data model, component interfaces, file-level ownership map, and a phased build plan. Consequential tradeoffs surface as explicit choices, not silent defaults.",
+      "An AI solution architect agent turns requirements into a technical blueprint: data model, component interfaces, file-level ownership map, and a phased build plan. Consequential tradeoffs surface as explicit choices, not silent defaults.",
   },
   {
     number: "03",
