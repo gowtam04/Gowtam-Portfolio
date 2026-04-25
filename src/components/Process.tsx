@@ -77,17 +77,17 @@ export function Process() {
         {/* Process Flow Diagram (theme-aware) */}
         <div className="mt-16 flex justify-center">
           <Image
-            src="/images/process-flow-light.png"
+            src="/images/process-flow-light-technical-v3.png"
             alt="Discover, Design, Develop process flow"
-            width={2240}
-            height={1260}
+            width={1672}
+            height={941}
             className="w-full h-auto rounded-xl border border-[var(--border)] block dark:hidden"
           />
           <Image
-            src="/images/process-flow-dark.png"
+            src="/images/process-flow-dark-technical-v3.png"
             alt="Discover, Design, Develop process flow"
-            width={2240}
-            height={1260}
+            width={1672}
+            height={941}
             className="w-full h-auto rounded-xl border border-[var(--border)] hidden dark:block"
           />
         </div>
