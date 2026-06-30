@@ -25,6 +25,46 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "oak",
+    title: "Oak",
+    description:
+      "A full-stack AI agent that answers natural-language Pokémon questions by reasoning over raw game data, not just looking facts up, with cited sources and explicit uncertainty in every answer.",
+    category: "AI/ML",
+    duration: "2026",
+    role: "AI Product Manager",
+    overview:
+      "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about. What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
+    challenge:
+      "Existing Pokémon tools are retrieval engines: they recite facts but cannot deduce how moves, abilities, types, and stats interact, which is exactly what competitive players need. Worse, general-purpose chatbots will confidently hallucinate mechanics. The goal was an agent you can trust for battle math and matchups: one that shows its work, cites its sources, admits what it does not know, and is explicit about which game generation an answer applies to.",
+    solution:
+      "I designed a provider-agnostic tool loop where the model composes facts into mechanics conclusions instead of reciting them. For example, asking \"Does Fake Out work on Farigiraf?\" yields the chain: Fake Out is a +3 priority move; Armor Tail negates priority moves; if Farigiraf has Armor Tail, Fake Out fails. Every response is a schema-validated object rendered field by field: the answer, the reasoning behind it, the cited data sources, an explicit inference and uncertainty flag, and the game generation it applies to. Accounts are optional, so Oak is usable instantly as a guest, and signing in with an email one-time code unlocks durable chat history (search, pin, rename) plus a team builder with Showdown import and export, where a team can be set active to scope the agent's answers. It is multimodal (up to four images per turn for prompts like \"what is this?\" or \"rate this team sheet\") and answers can open rich side-panel artifacts for Pokémon, moves, teams, damage calcs, and type matchups with clickable entity links. The whole stack is model-agnostic: it runs on xAI Grok 4.3 by default with Claude and GPT-5.5 as drop-in alternatives, switchable with a single operator setting and no rebuild.",
+    results: [
+      "Reasoning, not retrieval: a provider-agnostic tool loop where the model composes facts into mechanics conclusions, with citations and uncertainty surfaced in every answer",
+      "Optional accounts: instant guest use, with email one-time-code sign-in unlocking durable chat history and a team builder with Showdown import and export",
+      "Multimodal turns supporting up to four attached images for identification and team-sheet review",
+      "Interactive artifacts: answers open rich side-panel views (Pokémon, moves, teams, damage calcs, type matchups) with clickable entity links",
+      "Model-agnostic: runs on xAI Grok 4.3 by default, with Claude and GPT-5.5 as drop-in alternatives switchable via a single operator setting",
+    ],
+    technologies: [
+      "TypeScript",
+      "Next.js",
+      "Postgres",
+      "Drizzle",
+      "Server-Sent Events",
+      "Zod",
+      "Vitest",
+      "xAI Grok",
+      "Claude",
+      "GPT-5.5",
+      "Fly.io",
+    ],
+    projectType: "independent",
+    externalLink: {
+      url: "https://oak.gowtam.ai",
+      label: "Try Oak",
+    },
+  },
+  {
     slug: "nibble-ai",
     title: "Nibble AI",
     description:
