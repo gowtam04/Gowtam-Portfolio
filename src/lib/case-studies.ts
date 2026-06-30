@@ -31,7 +31,7 @@ export const caseStudies: CaseStudy[] = [
       "A full-stack AI agent that answers natural-language Pokémon questions by reasoning over raw game data, not just looking facts up, with cited sources and explicit uncertainty in every answer.",
     category: "AI/ML",
     duration: "2026",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about. What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
     challenge:
@@ -71,7 +71,7 @@ export const caseStudies: CaseStudy[] = [
       "An AI-powered nutrition tracker that uses Claude AI for instant meal analysis from photos, available on the App Store.",
     category: "AI/ML",
     duration: "2024",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "Nibble AI is an iOS application that revolutionizes nutrition tracking by leveraging Claude AI to instantly analyze meals from photos. The app eliminates the tedious manual entry that plagues traditional calorie counters, making healthy eating effortless and engaging.",
     challenge:
@@ -95,7 +95,7 @@ export const caseStudies: CaseStudy[] = [
       "A free AI-powered logo generator that creates App Store-ready icon bundles using Google's Gemini AI.",
     category: "AI/ML",
     duration: "2026",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "LogoForge is a free AI-powered logo generator that takes users from a simple text description to App Store-ready icon bundles in under five minutes. It leverages Google's Gemini multimodal AI to generate professional logos and includes a complete export pipeline for iOS, Android, and Web platforms.",
     challenge:
@@ -123,7 +123,7 @@ export const caseStudies: CaseStudy[] = [
       "A collaborative grocery list app with real-time sync and zero-friction onboarding, built for families.",
     category: "Mobile App",
     duration: "2024",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "FamilyCart is a collaborative grocery shopping app designed to make family shopping seamless. The app enables multiple family members to contribute to and check off items from a shared list in real-time, eliminating the chaos of uncoordinated grocery runs.",
     challenge:
@@ -289,7 +289,7 @@ export const caseStudies: CaseStudy[] = [
       "Built an AI-powered solution that bulk-filters 1000+ job applicants and returns top candidates with detailed analysis based on configurable criteria.",
     category: "Enterprise AI",
     duration: "2024",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing, so I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
     challenge:
@@ -349,7 +349,7 @@ export const caseStudies: CaseStudy[] = [
       "An autonomous multi-agent AI system that plays Pokemon Red using Claude AI models and a Game Boy emulator.",
     category: "AI/ML",
     duration: "2024",
-    role: "AI Product Manager",
+    role: "AI Architect",
     overview:
       "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains (navigation, battles, and menus) coordinated by an orchestrator that routes tasks to the appropriate agent.",
     challenge:

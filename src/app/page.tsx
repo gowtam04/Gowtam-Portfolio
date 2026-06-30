@@ -11,11 +11,11 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Gowtam Ramanujam",
-  jobTitle: "AI Product Manager",
+  jobTitle: "AI Architect",
   url: "https://gowtam.ai",
   image: "https://gowtam.ai/images/profile.jpg",
   description:
-    "AI Product Manager with 7+ years of experience building AI-powered products from concept to App Store.",
+    "AI Architect with 7+ years of experience building AI-powered products from concept to App Store.",
   sameAs: ["https://www.linkedin.com/in/gowtamr/"],
   knowsAbout: [
     "Artificial Intelligence",
@@ -32,7 +32,7 @@ const profilePageJsonLd = {
   mainEntity: {
     "@type": "Person",
     name: "Gowtam Ramanujam",
-    jobTitle: "AI Product Manager",
+    jobTitle: "AI Architect",
     url: "https://gowtam.ai",
     image: "https://gowtam.ai/images/profile.jpg",
   },

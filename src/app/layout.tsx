@@ -11,11 +11,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://gowtam.ai"),
-  title: "Gowtam Ramanujam | AI Product Manager",
+  title: "Gowtam Ramanujam | AI Architect",
   description:
     "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience in product management and AI-assisted development.",
   keywords: [
-    "AI Product Manager",
+    "AI Architect",
     "Product Management",
     "Machine Learning",
     "Artificial Intelligence",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Gowtam Ramanujam | AI Product Manager",
+    title: "Gowtam Ramanujam | AI Architect",
     description:
       "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
     url: "https://gowtam.ai",
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
         url: "/images/profile.jpg",
         width: 1200,
         height: 630,
-        alt: "Gowtam Ramanujam - AI Product Manager",
+        alt: "Gowtam Ramanujam - AI Architect",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Gowtam Ramanujam | AI Product Manager",
+    title: "Gowtam Ramanujam | AI Architect",
     description:
       "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
     images: ["/images/profile.jpg"],
