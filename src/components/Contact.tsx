@@ -46,7 +46,7 @@ export function Contact() {
           </a>
 
           <a
-            href="https://x.com/Gowtam"
+            href="https://x.com/gowtam"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
@@ -57,7 +57,7 @@ export function Contact() {
               </div>
               <div>
                 <p className="font-medium text-[var(--foreground)]">X</p>
-                <p className="text-sm text-[var(--muted)]">x.com/Gowtam</p>
+                <p className="text-sm text-[var(--muted)]">x.com/gowtam</p>
               </div>
             </div>
             <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
