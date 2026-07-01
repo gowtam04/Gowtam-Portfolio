@@ -15,11 +15,13 @@ const personJsonLd = {
   url: "https://gowtam.ai",
   image: "https://gowtam.ai/images/profile.jpg",
   description:
-    "AI Architect with 7+ years of experience building AI-powered products from concept to App Store.",
+    "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
   sameAs: ["https://www.linkedin.com/in/gowtamr/"],
   knowsAbout: [
     "Artificial Intelligence",
-    "Product Management",
+    "Agentic AI",
+    "AI System Architecture",
+    "Multi-Agent Systems",
     "Machine Learning",
     "Mobile App Development",
     "Enterprise Software",

@@ -23,7 +23,7 @@ export function Contact() {
             Let&apos;s Connect
           </h2>
           <p className="text-lg text-[var(--muted)] mb-12">
-            I&apos;m always interested in discussing new opportunities, AI product challenges, or just connecting with fellow product enthusiasts.
+            Open to AI architecture engagements, full-time roles, or conversations about agentic systems and production AI.
           </p>
         </div>
 

@@ -27,15 +27,15 @@ export function About() {
           {/* Bio Content */}
           <div className="md:col-span-3 space-y-6">
             <p className="text-lg text-[var(--foreground)] leading-relaxed">
-              I&apos;m an AI Architect with 7+ years of experience designing, building, and shipping software products. My journey spans healthcare software, enterprise AI tools, mobile apps, and even game development. I&apos;m passionate about translating complex business requirements into elegant, user-focused products.
+              I&apos;m an AI Architect with 7+ years of experience designing, building, and shipping software systems. I specialize in architecting AI systems and autonomous agents: tool loops, multi-agent orchestration, model selection, and the integration patterns that turn LLM capabilities into reliable production software. My work spans enterprise AI automation, agentic web applications, mobile apps, healthcare systems, and game development.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              My approach centers on client collaboration and rapid execution. I begin by conducting stakeholder interviews to deeply understand the problem and desired outcomes. From there, I design a tailored solution and create comprehensive requirements documentation. Once the client approves, I develop a technical design document and leverage AI-powered tools like Claude Code to rapidly build and deliver a working MVP.
+              For clients, I translate business problems into technical blueprints: agent architectures, data flows, API contracts, and phased build plans with explicit tradeoffs. For teams hiring an architect, I bring the same rigor hands-on: I write the design docs, make the model and infrastructure decisions, and ship working systems, not just diagrams. Requirements discovery comes first, then deliberate architecture, then disciplined execution with AI-assisted engineering.
             </p>
 
             <p className="text-lg text-[var(--muted)] leading-relaxed">
-              I&apos;ve shipped 3 iOS applications to the App Store, deployed enterprise AI tools used by multiple clients, and co-founded a game studio that released a title with 500,000+ downloads. I&apos;m excited about the future of AI-native products and the opportunity to build tools that genuinely improve people&apos;s lives.
+              I&apos;ve architected and shipped agentic systems like Oak and Agent RED, deployed enterprise AI tools for multiple clients, published 3 iOS applications to the App Store, and co-founded a game studio that released a title with 500,000+ downloads. I&apos;m focused on building AI systems that are trustworthy, observable, and production-ready.
             </p>
 
             {/* Optional: Quick Facts */}
@@ -47,7 +47,7 @@ export function About() {
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-[var(--accent)]">15+</p>
-                  <p className="text-sm text-[var(--muted)]">Products Shipped</p>
+                  <p className="text-sm text-[var(--muted)]">Systems Shipped</p>
                 </div>
                 <div>
                   <p className="text-2xl font-bold text-[var(--accent)]">500K+</p>

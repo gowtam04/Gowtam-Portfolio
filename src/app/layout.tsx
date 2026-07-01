@@ -13,13 +13,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://gowtam.ai"),
   title: "Gowtam Ramanujam | AI Architect",
   description:
-    "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience in product management and AI-assisted development.",
+    "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
   keywords: [
     "AI Architect",
-    "Product Management",
+    "Agentic AI",
+    "AI Systems",
+    "System Architecture",
+    "Multi-Agent Systems",
     "Machine Learning",
     "Artificial Intelligence",
-    "Product Strategy",
   ],
   authors: [{ name: "Gowtam Ramanujam" }],
   alternates: {
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Gowtam Ramanujam | AI Architect",
     description:
-      "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
+      "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
     url: "https://gowtam.ai",
     siteName: "Gowtam Ramanujam Portfolio",
     locale: "en_US",
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Gowtam Ramanujam | AI Architect",
     description:
-      "Your AI Product Partner. Building AI-powered products from concept to App Store with 7+ years of experience.",
+      "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
     images: ["/images/profile.jpg"],
   },
   robots: {

@@ -10,7 +10,7 @@ export function CaseStudies() {
             Case Studies
           </h2>
           <p className="text-lg text-[var(--muted)] max-w-2xl">
-            A selection of projects showcasing my approach to AI product management, from conception to launch.
+            Projects showcasing how I architect AI systems and agents, from requirements through production deployment.
           </p>
         </div>
 

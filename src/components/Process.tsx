@@ -12,7 +12,7 @@ const steps = [
     icon: MessageCircleQuestion,
     title: "Discover",
     description:
-      "A product analyst agent runs a structured requirements interview, probing users, workflows, business rules, and edge cases. The output is clear written requirements that reflect what you actually need, not what I guessed.",
+      "A requirements discovery agent runs a structured interview, probing users, workflows, business rules, and edge cases. The output is clear written requirements that reflect what you actually need, not what I guessed.",
   },
   {
     number: "02",
@@ -31,7 +31,7 @@ const steps = [
 ];
 
 const principles = [
-  "Product discipline first. Requirements before code, every time.",
+  "Architecture discipline first. Requirements before code, every time.",
   "Engineering rigor, not vibes. Tests before code. Reviews at every gate.",
   "Humans decide, agents execute. Tradeoffs surface as choices.",
   "Shipped in days, not months. The best of an engineering team, scaled to one operator.",
@@ -47,7 +47,7 @@ export function Process() {
             Discover. Design. Develop.
           </h2>
           <p className="text-lg text-[var(--muted)] max-w-2xl">
-            A repeatable process for shipping products with AI, combining product discovery, deliberate technical design, and disciplined AI-driven engineering.
+            A repeatable process for shipping AI systems, combining requirements discovery, deliberate architecture, and disciplined AI-driven engineering.
           </p>
         </div>
 

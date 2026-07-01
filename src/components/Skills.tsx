@@ -1,31 +1,31 @@
 import {
-  Target,
   Brain,
   Users,
   Search,
   Map,
   MessageSquare,
   Bot,
+  Network,
 } from "lucide-react";
 
 const skills = [
   {
-    icon: Target,
-    title: "Product Strategy",
-    description:
-      "Defining product vision and roadmaps that align with business goals and user needs.",
-  },
-  {
     icon: Brain,
-    title: "AI/ML Product Development",
+    title: "AI System Architecture",
     description:
-      "Building intelligent products powered by machine learning and artificial intelligence.",
+      "End-to-end system design: data flows, integrations, infrastructure, and model selection for production AI.",
   },
   {
     icon: Bot,
     title: "Agentic AI Design",
     description:
-      "Designing autonomous AI systems that reason, plan, and execute complex tasks with minimal human intervention.",
+      "Designing autonomous agents that reason, plan, and execute complex tasks with tool use and structured outputs.",
+  },
+  {
+    icon: Network,
+    title: "Multi-Agent Orchestration",
+    description:
+      "Coordinating specialized agents with routing, task delegation, and shared context across complex workflows.",
   },
   {
     icon: Users,
@@ -35,21 +35,21 @@ const skills = [
   },
   {
     icon: Search,
-    title: "User Research & Validation",
+    title: "Requirements Discovery",
     description:
-      "Conducting discovery research and validating solutions with real users.",
+      "Stakeholder interviews, workflow mapping, and edge-case analysis to define what systems actually need to do.",
   },
   {
     icon: Map,
-    title: "Roadmap Planning",
+    title: "Technical Solution Design",
     description:
-      "Prioritizing features and creating actionable roadmaps that drive impact.",
+      "Technical blueprints, architecture tradeoffs, and phased build plans that turn requirements into shippable systems.",
   },
   {
     icon: MessageSquare,
-    title: "Stakeholder Management",
+    title: "Stakeholder Communication",
     description:
-      "Communicating effectively with executives and aligning diverse perspectives.",
+      "Translating technical decisions for executives, engineering teams, and clients with clarity and alignment.",
   },
 ];
 
@@ -63,7 +63,7 @@ export function Skills() {
             Skills & Expertise
           </h2>
           <p className="text-lg text-[var(--muted)] max-w-2xl">
-            Core competencies developed through years of building and shipping AI-powered products.
+            Core competencies for designing and shipping AI systems and agents.
           </p>
         </div>
 

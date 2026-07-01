@@ -257,13 +257,13 @@ export const caseStudies: CaseStudy[] = [
       "Designed an AI solution using OCI Generative AI to automate expense report validation and auditing for a large enterprise.",
     category: "Enterprise AI",
     duration: "2025",
-    role: "Product Manager",
+    role: "AI Architect",
     overview:
-      "An enterprise-scale AI solution that automates the validation and auditing of Oracle Expense Reports. The system uses Llama 4 Maverick through OCI Generative AI to extract data from receipt attachments, validate expense records against company policies, and generate comprehensive audit reports.",
+      "An enterprise-scale AI automation system for Oracle Expense Report validation and auditing. I architected the full solution: model selection, event-driven integration topology, and the orchestration layer that extracts receipt data, validates against policy rules, and generates audit reports at scale.",
     challenge:
       "The client's finance team was spending significant time manually reviewing and auditing expense reports. The process was slow, inconsistent, and couldn't scale with the volume of submissions. Validating receipts against expense claims and ensuring policy compliance required tedious manual comparison that was prone to human error.",
     solution:
-      "I led the solution design and architecture for an AI-powered automation system. I evaluated multiple AI models through OCI Generative AI and selected Llama 4 Maverick for its superior multi-document processing capabilities. The solution architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates the AI workflows. The system automatically extracts data from receipts (handling multiple receipts per attachment), validates expenses against configured rules, and generates audit reports attached directly to expense records.",
+      "I architected an event-driven AI system on OCI. I evaluated multiple models through OCI Generative AI and selected Llama 4 Maverick for its multi-document processing capabilities. The architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates extraction, validation, and report generation workflows. The system handles multiple receipts per attachment, validates expenses against configured rules, and attaches audit reports directly to expense records in Oracle Fusion.",
     results: [
       "Deployed to production, automating expense validation workflow",
       "AI-powered data extraction from receipt images with multi-document support",

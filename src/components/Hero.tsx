@@ -11,7 +11,7 @@ export function Hero() {
 
         {/* Title */}
         <p className="text-xl sm:text-2xl text-[var(--accent)] font-medium mb-10">
-          Your AI Product Expert
+          AI Architect
         </p>
 
         {/* Social Links */}
