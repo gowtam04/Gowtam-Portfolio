@@ -65,6 +65,56 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    slug: "annie-acs",
+    title: "Annie ACS",
+    description:
+      "An AI medical consultant for a cosmetic surgery practice that educates patients on procedures, streams cited media from a curated knowledge base, books consultations via Calendly, and gives practice staff a full admin panel, including a second agent that answers natural-language questions over thousands of patient conversations.",
+    category: "Healthcare Tech",
+    duration: "2026",
+    role: "AI Architect",
+    overview:
+      "Annie ACS is a production AI medical consultant for Advanced Cosmetic Surgery (Dr. Jon Mendelsohn). Patients ask about blepharoplasty, rhinoplasty, facelifts, and other procedures; Annie adapts to their expertise level, surfaces procedure-specific videos and images from a curated knowledge base, and books consultations through Calendly, all inside an embeddable chat widget that runs 24/7 on the practice website. Behind the widget is a three-service platform: a FastAPI backend with a streaming LLM pipeline, a React chat widget with three deployment modes (floating icon, inline iframe, standalone page), and a JWT-authenticated admin panel where practice staff manage branding, knowledge base content, conversation history, and analytics. A second tool-calling agent, the Conversation Insights Assistant, lets non-technical staff query the entire patient-conversation corpus in plain English, with cited sessions and confirmation-gated actions.",
+    challenge:
+      "Cosmetic surgery patients research procedures online before they ever call the office. They need accurate, procedure-specific answers (recovery timelines, risks, pricing context, before-and-after media) without waiting for staff. A generic chatbot would hallucinate video URLs, give one-size-fits-all answers, and have no way for the practice to update content or review what patients are asking. The first version of Annie ran on LangGraph with in-memory sessions and SQLite on a Fly Volume. That worked for a prototype, but it could not scale operationally: sessions did not survive restarts cleanly, media URLs sometimes leaked into LLM text instead of structured delivery, there was no admin tooling, and the storage model (local SQLite + mounted volumes) was not viable for a production medical practice that needed durable conversation history, staff-managed knowledge bases, and zero-downtime index updates.",
+    solution:
+      "I architected and shipped a full platform rebuild (requirements through production deployment) in phased releases (admin panel v1.0 to v2.0, Postgres + Tigris migration). For the patient-facing agent, a three-step async pipeline replaces LangGraph: route (intent + procedure + expertise classification), then retrieve (dual FAISS search with expertise cascade and shown-content dedup), then respond (streaming tokens via SSE). Media URLs are delivered only through structured SSE events from retrieval results, never from LLM text, eliminating URL hallucination entirely. The responder supports dual providers (Anthropic Haiku default, OpenAI fallback) with hot-reloaded system prompts. Expertise cascade serves BEGINNER, INTERMEDIATE, and ADVANCED content tiers from the same index. For knowledge infrastructure, two FAISS indexes (visual procedure media from a managed spreadsheet, and knowledge from PDFs and staff-uploaded documents chunked 1000/200) live in Tigris object storage with atomic hot-swap via Postgres version pointers. Staff upload KB documents through the admin panel; the backend stages, commits, rebuilds, and swaps indexes without taking chat offline. The admin platform is a React admin panel covering branding (colors, three avatar slots, per-mode intro videos and posters), knowledge base management, conversation search (Postgres full-text), analytics, deployment snippet generation, and JWT auth. v2.0 adds the Conversation Insights Assistant: a streaming tool-calling agent (Anthropic Sonnet) over three corpus paths (structured FTS, semantic FAISS conversations index, and pre-computed per-conversation enrichment digests), with clickable session citations and confirmation-gated actions (set review status, export to .docx, apply list filters). The agent has no mutating tools; every action requires explicit staff confirmation. For production re-platforming, I led the SQLite-on-Volume to Fly Postgres + Tigris cutover (staging rehearsal, then production on 2026-05-21): extract-and-load migration, FTS parity verification, FAISS index relocation, and a break-glass snapshot retention plan. Production runs one warm Fly machine with Alembic migrations on boot, asyncpg connection pooling, and health checks against both Postgres and Tigris.",
+    results: [
+      "Hallucination-free media delivery: structured SSE events from FAISS retrieval, never from LLM text, so procedure videos and images are always from the curated knowledge base",
+      "Expertise-adaptive education: BEGINNER / INTERMEDIATE / ADVANCED content cascade from a single index, so Annie meets patients where they are",
+      "Staff self-service: admin panel for branding, KB uploads, conversation review, and analytics, with no engineering tickets for content or appearance changes",
+      "Conversation Insights Assistant: natural-language corpus queries with cited sessions and confirmation-gated actions, built for non-technical practice staff",
+      "Zero-downtime index updates: FAISS rebuild, Tigris upload, atomic Postgres pointer flip, in-process hot-swap, chat stays up throughout",
+      "Production-grade persistence: Postgres + Tigris cutover with verified FTS parity, staging rehearsal, and documented break-glass rollback",
+      "Three embed modes: floating chat icon, inline iframe, and standalone page, same Annie, same knowledge base, deployable anywhere",
+      "Dual-provider LLM architecture: Anthropic and OpenAI interchangeable via env config, with lazy-initialized clients so the test suite runs without API keys",
+    ],
+    technologies: [
+      "Python",
+      "FastAPI",
+      "React",
+      "MUI",
+      "Vite",
+      "Postgres",
+      "asyncpg",
+      "Alembic",
+      "FAISS",
+      "OpenAI Embeddings",
+      "Anthropic Claude",
+      "Server-Sent Events",
+      "Tigris",
+      "Fly.io",
+      "Docker",
+      "Vitest",
+      "pytest",
+    ],
+    projectType: "professional",
+    clientName: "Advanced Cosmetic Surgery",
+    externalLink: {
+      url: "https://annie.351face.com",
+      label: "Try Annie",
+    },
+  },
+  {
     slug: "nibble-ai",
     title: "Nibble AI",
     description:
