@@ -4,6 +4,7 @@ import { ArrowLeft, Briefcase, Clock, ExternalLink } from "lucide-react";
 import { getCaseStudy, getAllCaseStudySlugs, CaseStudy } from "@/lib/case-studies";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CaseStudyBody } from "@/components/CaseStudyBody";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -200,15 +201,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
           </header>
 
           {/* Content */}
-          <div className="space-y-12">
+          <div className="space-y-16">
             {/* Overview */}
             <section>
               <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
                 Overview
               </h2>
-              <p className="text-[var(--foreground)] leading-relaxed">
-                {caseStudy.overview}
-              </p>
+              <CaseStudyBody content={caseStudy.overview} />
             </section>
 
             {/* Challenge */}
@@ -216,9 +215,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
                 The Challenge
               </h2>
-              <p className="text-[var(--foreground)] leading-relaxed">
-                {caseStudy.challenge}
-              </p>
+              <CaseStudyBody content={caseStudy.challenge} />
             </section>
 
             {/* Solution */}
@@ -226,9 +223,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
                 The Solution
               </h2>
-              <p className="text-[var(--foreground)] leading-relaxed">
-                {caseStudy.solution}
-              </p>
+              <CaseStudyBody content={caseStudy.solution} />
             </section>
 
             {/* Results */}

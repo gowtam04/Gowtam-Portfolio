@@ -1,5 +1,18 @@
 export type ProjectType = 'independent' | 'professional';
 
+export interface CaseStudySubsection {
+  title: string;
+  paragraphs?: string[];
+  bullets?: string[];
+}
+
+export interface CaseStudySectionContent {
+  paragraphs?: string[];
+  subsections?: CaseStudySubsection[];
+}
+
+export type CaseStudySection = string | CaseStudySectionContent;
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -7,9 +20,9 @@ export interface CaseStudy {
   category: string;
   duration: string;
   role: string;
-  overview: string;
-  challenge: string;
-  solution: string;
+  overview: CaseStudySection;
+  challenge: CaseStudySection;
+  solution: CaseStudySection;
   results: string[];
   technologies: string[];
   projectType: ProjectType;
@@ -32,12 +45,52 @@ export const caseStudies: CaseStudy[] = [
     category: "AI/ML",
     duration: "2026",
     role: "AI Architect",
-    overview:
-      "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about. What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
-    challenge:
-      "Existing Pokémon tools are retrieval engines: they recite facts but cannot deduce how moves, abilities, types, and stats interact, which is exactly what competitive players need. Worse, general-purpose chatbots will confidently hallucinate mechanics. The goal was an agent you can trust for battle math and matchups: one that shows its work, cites its sources, admits what it does not know, and is explicit about which game generation an answer applies to.",
-    solution:
-      "I designed a provider-agnostic tool loop where the model composes facts into mechanics conclusions instead of reciting them. For example, asking \"Does Fake Out work on Farigiraf?\" yields the chain: Fake Out is a +3 priority move; Armor Tail negates priority moves; if Farigiraf has Armor Tail, Fake Out fails. Every response is a schema-validated object rendered field by field: the answer, the reasoning behind it, the cited data sources, an explicit inference and uncertainty flag, and the game generation it applies to. Accounts are optional, so Oak is usable instantly as a guest, and signing in with an email one-time code unlocks durable chat history (search, pin, rename) plus a team builder with Showdown import and export, where a team can be set active to scope the agent's answers. It is multimodal (up to four images per turn for prompts like \"what is this?\" or \"rate this team sheet\") and answers can open rich side-panel artifacts for Pokémon, moves, teams, damage calcs, and type matchups with clickable entity links. The whole stack is model-agnostic: it runs on xAI Grok 4.3 by default with Claude and GPT-5.5 as drop-in alternatives, switchable with a single operator setting and no rebuild.",
+    overview: {
+      paragraphs: [
+        "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about.",
+        "What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "Existing Pokémon tools are retrieval engines: they recite facts but cannot deduce how moves, abilities, types, and stats interact, which is exactly what competitive players need. Worse, general-purpose chatbots will confidently hallucinate mechanics.",
+        "The goal was an agent you can trust for battle math and matchups: one that shows its work, cites its sources, admits what it does not know, and is explicit about which game generation an answer applies to.",
+      ],
+    },
+    solution: {
+      subsections: [
+        {
+          title: "Reasoning tool loop",
+          paragraphs: [
+            "I designed a provider-agnostic tool loop where the model composes facts into mechanics conclusions instead of reciting them. For example, asking \"Does Fake Out work on Farigiraf?\" yields the chain: Fake Out is a +3 priority move; Armor Tail negates priority moves; if Farigiraf has Armor Tail, Fake Out fails.",
+          ],
+        },
+        {
+          title: "Schema-validated responses",
+          paragraphs: [
+            "Every response is a schema-validated object rendered field by field: the answer, the reasoning behind it, the cited data sources, an explicit inference and uncertainty flag, and the game generation it applies to.",
+          ],
+        },
+        {
+          title: "Optional accounts and team builder",
+          paragraphs: [
+            "Accounts are optional, so Oak is usable instantly as a guest. Signing in with an email one-time code unlocks durable chat history (search, pin, rename) plus a team builder with Showdown import and export, where a team can be set active to scope the agent's answers.",
+          ],
+        },
+        {
+          title: "Multimodal turns and artifacts",
+          paragraphs: [
+            "Oak supports up to four images per turn for prompts like \"what is this?\" or \"rate this team sheet.\" Answers can open rich side-panel artifacts for Pokémon, moves, teams, damage calcs, and type matchups with clickable entity links.",
+          ],
+        },
+        {
+          title: "Model-agnostic stack",
+          paragraphs: [
+            "The whole stack runs on xAI Grok 4.3 by default with Claude and GPT-5.5 as drop-in alternatives, switchable with a single operator setting and no rebuild.",
+          ],
+        },
+      ],
+    },
     results: [
       "Reasoning, not retrieval: a provider-agnostic tool loop where the model composes facts into mechanics conclusions, with citations and uncertainty surfaced in every answer",
       "Optional accounts: instant guest use, with email one-time-code sign-in unlocking durable chat history and a team builder with Showdown import and export",
@@ -72,12 +125,57 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2026",
     role: "AI Architect",
-    overview:
-      "Annie ACS is a production AI medical consultant for Advanced Cosmetic Surgery (Dr. Jon Mendelsohn). Patients ask about blepharoplasty, rhinoplasty, facelifts, and other procedures; Annie adapts to their expertise level, surfaces procedure-specific videos and images from a curated knowledge base, and books consultations through Calendly, all inside an embeddable chat widget that runs 24/7 on the practice website. Behind the widget is a three-service platform: a FastAPI backend with a streaming LLM pipeline, a React chat widget with three deployment modes (floating icon, inline iframe, standalone page), and a JWT-authenticated admin panel where practice staff manage branding, knowledge base content, conversation history, and analytics. A second tool-calling agent, the Conversation Insights Assistant, lets non-technical staff query the entire patient-conversation corpus in plain English, with cited sessions and confirmation-gated actions.",
-    challenge:
-      "Cosmetic surgery patients research procedures online before they ever call the office. They need accurate, procedure-specific answers (recovery timelines, risks, pricing context, before-and-after media) without waiting for staff. A generic chatbot would hallucinate video URLs, give one-size-fits-all answers, and have no way for the practice to update content or review what patients are asking. The first version of Annie ran on LangGraph with in-memory sessions and SQLite on a Fly Volume. That worked for a prototype, but it could not scale operationally: sessions did not survive restarts cleanly, media URLs sometimes leaked into LLM text instead of structured delivery, there was no admin tooling, and the storage model (local SQLite + mounted volumes) was not viable for a production medical practice that needed durable conversation history, staff-managed knowledge bases, and zero-downtime index updates.",
-    solution:
-      "I architected and shipped a full platform rebuild (requirements through production deployment) in phased releases (admin panel v1.0 to v2.0, Postgres + Tigris migration). For the patient-facing agent, a three-step async pipeline replaces LangGraph: route (intent + procedure + expertise classification), then retrieve (dual FAISS search with expertise cascade and shown-content dedup), then respond (streaming tokens via SSE). Media URLs are delivered only through structured SSE events from retrieval results, never from LLM text, eliminating URL hallucination entirely. The responder supports dual providers (Anthropic Haiku default, OpenAI fallback) with hot-reloaded system prompts. Expertise cascade serves BEGINNER, INTERMEDIATE, and ADVANCED content tiers from the same index. For knowledge infrastructure, two FAISS indexes (visual procedure media from a managed spreadsheet, and knowledge from PDFs and staff-uploaded documents chunked 1000/200) live in Tigris object storage with atomic hot-swap via Postgres version pointers. Staff upload KB documents through the admin panel; the backend stages, commits, rebuilds, and swaps indexes without taking chat offline. The admin platform is a React admin panel covering branding (colors, three avatar slots, per-mode intro videos and posters), knowledge base management, conversation search (Postgres full-text), analytics, deployment snippet generation, and JWT auth. v2.0 adds the Conversation Insights Assistant: a streaming tool-calling agent (Anthropic Sonnet) over three corpus paths (structured FTS, semantic FAISS conversations index, and pre-computed per-conversation enrichment digests), with clickable session citations and confirmation-gated actions (set review status, export to .docx, apply list filters). The agent has no mutating tools; every action requires explicit staff confirmation. For production re-platforming, I led the SQLite-on-Volume to Fly Postgres + Tigris cutover (staging rehearsal, then production on 2026-05-21): extract-and-load migration, FTS parity verification, FAISS index relocation, and a break-glass snapshot retention plan. Production runs one warm Fly machine with Alembic migrations on boot, asyncpg connection pooling, and health checks against both Postgres and Tigris.",
+    overview: {
+      paragraphs: [
+        "Annie ACS is a production AI medical consultant for Advanced Cosmetic Surgery (Dr. Jon Mendelsohn). Patients ask about blepharoplasty, rhinoplasty, facelifts, and other procedures; Annie adapts to their expertise level, surfaces procedure-specific videos and images from a curated knowledge base, and books consultations through Calendly, all inside an embeddable chat widget that runs 24/7 on the practice website.",
+        "Behind the widget is a three-service platform: a FastAPI backend with a streaming LLM pipeline, a React chat widget with three deployment modes (floating icon, inline iframe, standalone page), and a JWT-authenticated admin panel where practice staff manage branding, knowledge base content, conversation history, and analytics.",
+        "A second tool-calling agent, the Conversation Insights Assistant, lets non-technical staff query the entire patient-conversation corpus in plain English, with cited sessions and confirmation-gated actions.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "Cosmetic surgery patients research procedures online before they ever call the office. They need accurate, procedure-specific answers (recovery timelines, risks, pricing context, before-and-after media) without waiting for staff. A generic chatbot would hallucinate video URLs, give one-size-fits-all answers, and have no way for the practice to update content or review what patients are asking.",
+        "The first version of Annie ran on LangGraph with in-memory sessions and SQLite on a Fly Volume. That worked for a prototype, but it could not scale operationally: sessions did not survive restarts cleanly, media URLs sometimes leaked into LLM text instead of structured delivery, there was no admin tooling, and the storage model (local SQLite + mounted volumes) was not viable for a production medical practice that needed durable conversation history, staff-managed knowledge bases, and zero-downtime index updates.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I architected and shipped a full platform rebuild (requirements through production deployment) in phased releases (admin panel v1.0 to v2.0, Postgres + Tigris migration).",
+      ],
+      subsections: [
+        {
+          title: "Patient-facing agent",
+          paragraphs: [
+            "A three-step async pipeline replaces LangGraph: route (intent + procedure + expertise classification), then retrieve (dual FAISS search with expertise cascade and shown-content dedup), then respond (streaming tokens via SSE). Media URLs are delivered only through structured SSE events from retrieval results, never from LLM text, eliminating URL hallucination entirely.",
+            "The responder supports dual providers (Anthropic Haiku default, OpenAI fallback) with hot-reloaded system prompts. Expertise cascade serves BEGINNER, INTERMEDIATE, and ADVANCED content tiers from the same index.",
+          ],
+        },
+        {
+          title: "Knowledge infrastructure",
+          paragraphs: [
+            "Two FAISS indexes (visual procedure media from a managed spreadsheet, and knowledge from PDFs and staff-uploaded documents chunked 1000/200) live in Tigris object storage with atomic hot-swap via Postgres version pointers. Staff upload KB documents through the admin panel; the backend stages, commits, rebuilds, and swaps indexes without taking chat offline.",
+          ],
+        },
+        {
+          title: "Admin platform",
+          paragraphs: [
+            "The admin panel covers branding (colors, three avatar slots, per-mode intro videos and posters), knowledge base management, conversation search (Postgres full-text), analytics, deployment snippet generation, and JWT auth.",
+          ],
+        },
+        {
+          title: "Conversation Insights Assistant",
+          paragraphs: [
+            "v2.0 adds a streaming tool-calling agent (Anthropic Sonnet) over three corpus paths (structured FTS, semantic FAISS conversations index, and pre-computed per-conversation enrichment digests), with clickable session citations and confirmation-gated actions (set review status, export to .docx, apply list filters). The agent has no mutating tools; every action requires explicit staff confirmation.",
+          ],
+        },
+        {
+          title: "Production re-platforming",
+          paragraphs: [
+            "I led the SQLite-on-Volume to Fly Postgres + Tigris cutover (staging rehearsal, then production on 2026-05-21): extract-and-load migration, FTS parity verification, FAISS index relocation, and a break-glass snapshot retention plan. Production runs one warm Fly machine with Alembic migrations on boot, asyncpg connection pooling, and health checks against both Postgres and Tigris.",
+          ],
+        },
+      ],
+    },
     results: [
       "Hallucination-free media delivery: structured SSE events from FAISS retrieval, never from LLM text, so procedure videos and images are always from the curated knowledge base",
       "Expertise-adaptive education: BEGINNER / INTERMEDIATE / ADVANCED content cascade from a single index, so Annie meets patients where they are",
@@ -126,8 +224,12 @@ export const caseStudies: CaseStudy[] = [
       "Nibble AI is an iOS application that revolutionizes nutrition tracking by leveraging Claude AI to instantly analyze meals from photos. The app eliminates the tedious manual entry that plagues traditional calorie counters, making healthy eating effortless and engaging.",
     challenge:
       "Traditional nutrition tracking apps require users to manually search and log every food item, leading to low adherence rates. Users needed a frictionless way to track their nutrition that could understand complex meals and provide accurate nutritional information without extensive manual input.",
-    solution:
-      "I designed and built an AI-first nutrition tracking experience powered by Claude AI. The app uses computer vision to analyze meal photos and provide instant nutritional breakdowns. I implemented barcode scanning for packaged foods, personalized AI coaching for dietary guidance, HealthKit integration for holistic health tracking, gamified challenges to boost engagement, and 16 home screen widgets for at-a-glance nutrition data.",
+    solution: {
+      paragraphs: [
+        "I designed and built an AI-first nutrition tracking experience powered by Claude AI. The app uses computer vision to analyze meal photos and provide instant nutritional breakdowns.",
+        "I implemented barcode scanning for packaged foods, personalized AI coaching for dietary guidance, HealthKit integration for holistic health tracking, gamified challenges to boost engagement, and 16 home screen widgets for at-a-glance nutrition data.",
+      ],
+    },
     results: [
       "Successfully shipped to the App Store",
       "16 home screen widgets for personalized tracking",
@@ -148,10 +250,37 @@ export const caseStudies: CaseStudy[] = [
     role: "AI Architect",
     overview:
       "LogoForge is a free AI-powered logo generator that takes users from a simple text description to App Store-ready icon bundles in under five minutes. It leverages Google's Gemini multimodal AI to generate professional logos and includes a complete export pipeline for iOS, Android, and Web platforms.",
-    challenge:
-      "Indie developers and small teams face a frustrating bottleneck when launching apps: creating professional icons. Existing solutions either require expensive design tools and expertise, charge per-download for AI-generated assets, or produce generic results that don't work well at small sizes. The icon export process itself is tedious, as each platform requires dozens of precisely-sized variants, proper folder structures, and configuration files like Contents.json and manifest.json.",
-    solution:
-      "LogoForge addresses both logo creation and export in a single streamlined workflow. For AI-powered generation, users describe their desired logo or upload reference images for style guidance. The system uses Gemini's image generation capabilities with style-specific prompt engineering (minimalist, playful, corporate, mascot) to produce four unique variations. A Sharp-based smart export pipeline generates platform-compliant icon bundles: for iOS, it creates AppIcon.appiconset with all required sizes and Contents.json; for Android, it produces standard and round launcher icons, adaptive icon foreground layers, and Play Store assets; for Web, it generates favicons, PWA manifest icons, Apple Touch icons, and Microsoft tile assets. Users download a ZIP file with correctly-structured folders, configuration files, and metadata, ready to drop directly into Xcode, Android Studio, or a web project.",
+    challenge: {
+      paragraphs: [
+        "Indie developers and small teams face a frustrating bottleneck when launching apps: creating professional icons. Existing solutions either require expensive design tools and expertise, charge per-download for AI-generated assets, or produce generic results that don't work well at small sizes.",
+        "The icon export process itself is tedious, as each platform requires dozens of precisely-sized variants, proper folder structures, and configuration files like Contents.json and manifest.json.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "LogoForge addresses both logo creation and export in a single streamlined workflow.",
+      ],
+      subsections: [
+        {
+          title: "AI-powered generation",
+          paragraphs: [
+            "Users describe their desired logo or upload reference images for style guidance. The system uses Gemini's image generation capabilities with style-specific prompt engineering (minimalist, playful, corporate, mascot) to produce four unique variations.",
+          ],
+        },
+        {
+          title: "Smart export pipeline",
+          paragraphs: [
+            "A Sharp-based image processing system generates platform-compliant icon bundles. For iOS, it creates AppIcon.appiconset with all required sizes and Contents.json. For Android, it produces standard and round launcher icons, adaptive icon foreground layers, and Play Store assets. For Web, it generates favicons, PWA manifest icons, Apple Touch icons, and Microsoft tile assets.",
+          ],
+        },
+        {
+          title: "Production-ready output",
+          paragraphs: [
+            "Users download a ZIP file with correctly-structured folders, configuration files, and metadata, ready to drop directly into Xcode, Android Studio, or a web project.",
+          ],
+        },
+      ],
+    },
     results: [
       "Launched as a free, open-source tool with no watermarks or usage limits",
       "Supports 4 logo styles with reference image input for guided generation",
@@ -178,8 +307,12 @@ export const caseStudies: CaseStudy[] = [
       "FamilyCart is a collaborative grocery shopping app designed to make family shopping seamless. The app enables multiple family members to contribute to and check off items from a shared list in real-time, eliminating the chaos of uncoordinated grocery runs.",
     challenge:
       "Families struggled with coordinating grocery shopping: duplicate purchases, forgotten items, and the inability to collaborate in real-time were common pain points. Existing solutions were either too complex or required everyone to create accounts, creating friction for adoption.",
-    solution:
-      "I architected a serverless multi-tenant solution using Firebase that enables instant collaboration without requiring account creation. The app features zero-friction onboarding where users can start a shared list and invite family members within seconds. Built with React Native and Expo for cross-platform support, with offline capability ensuring the app works even in stores with poor connectivity.",
+    solution: {
+      paragraphs: [
+        "I architected a serverless multi-tenant solution using Firebase that enables instant collaboration without requiring account creation. The app features zero-friction onboarding where users can start a shared list and invite family members within seconds.",
+        "Built with React Native and Expo for cross-platform support, with offline capability ensuring the app works even in stores with poor connectivity.",
+      ],
+    },
     results: [
       "Successfully shipped to the App Store",
       "Zero-friction onboarding with instant family sharing",
@@ -198,12 +331,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2023",
     role: "Product Manager",
-    overview:
-      "Yosihealth is a mobile application designed to solve a pervasive problem in India: the reliance on paper-based medical records. The app enables users to digitize, organize, and share their health documents including blood test reports, imaging results, prescriptions, and diagnoses, eliminating the chaos of managing physical paperwork.",
-    challenge:
-      "In India, patients still carry around paper test reports, prescriptions, and diagnosis documents. These records are easily lost or damaged, and finding the right report when a doctor requests it is cumbersome and time-consuming. Families often manage health records for multiple members, compounding the organizational challenge.",
-    solution:
-      "I designed and built a mobile app with quick-capture document scanning that makes digitizing records effortless. The app organizes documents by type (blood tests, imaging, prescriptions), date, and family member, with a flexible tagging system for custom organization. Sharing with healthcare providers is frictionless through shareable links or QR codes that doctors can scan during consultations.",
+    overview: {
+      paragraphs: [
+        "Yosihealth is a mobile application designed to solve a pervasive problem in India: the reliance on paper-based medical records.",
+        "The app enables users to digitize, organize, and share their health documents including blood test reports, imaging results, prescriptions, and diagnoses, eliminating the chaos of managing physical paperwork.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "In India, patients still carry around paper test reports, prescriptions, and diagnosis documents. These records are easily lost or damaged, and finding the right report when a doctor requests it is cumbersome and time-consuming.",
+        "Families often manage health records for multiple members, compounding the organizational challenge.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I designed and built a mobile app with quick-capture document scanning that makes digitizing records effortless. The app organizes documents by type (blood tests, imaging, prescriptions), date, and family member, with a flexible tagging system for custom organization.",
+        "Sharing with healthcare providers is frictionless through shareable links or QR codes that doctors can scan during consultations.",
+      ],
+    },
     results: [
       "Quick-capture scanning for effortless document digitization",
       "Multi-member family support with separate profiles",
@@ -223,10 +368,18 @@ export const caseStudies: CaseStudy[] = [
     role: "Product Designer & Developer",
     overview:
       "Suit Break is a multiplayer web-based card game that brings the classic trick-taking genre to the browser with modern matchmaking and competitive features. The game features strategic card request mechanics that add depth beyond traditional card games.",
-    challenge:
-      "Creating an engaging multiplayer card game that works seamlessly in the browser while maintaining competitive integrity. The game needed to handle real-time synchronization between players, prevent cheating, and provide a fair matchmaking experience for players of all skill levels.",
-    solution:
-      "I designed and implemented a complete multiplayer infrastructure with real-time matchmaking, private rooms for playing with friends, and an ELO-based rating system for competitive play. The strategic card request mechanic adds a unique twist to traditional trick-taking games, requiring players to think several moves ahead.",
+    challenge: {
+      paragraphs: [
+        "Creating an engaging multiplayer card game that works seamlessly in the browser while maintaining competitive integrity.",
+        "The game needed to handle real-time synchronization between players, prevent cheating, and provide a fair matchmaking experience for players of all skill levels.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I designed and implemented a complete multiplayer infrastructure with real-time matchmaking, private rooms for playing with friends, and an ELO-based rating system for competitive play.",
+        "The strategic card request mechanic adds a unique twist to traditional trick-taking games, requiring players to think several moves ahead.",
+      ],
+    },
     results: [
       "Real-time multiplayer with seamless matchmaking",
       "ELO rating system for competitive balance",
@@ -248,12 +401,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2022-2023",
     role: "Product Manager",
-    overview:
-      "A diagnostic testing lab needed a system that could handle their massive scale of operations. I led the product development of a comprehensive LIMS from initial concept through company-wide deployment, managing the full product lifecycle for a system now used by hundreds of employees.",
-    challenge:
-      "The lab was using Salesforce to manage their operations, but it couldn't handle the scale they were operating at. They needed a custom solution that could support their high-volume testing workflows, from patient intake through result delivery, without bottlenecks.",
-    solution:
-      "I owned the product vision and roadmap, working closely with lab technicians, operations staff, and leadership to design a system built around their actual workflows. I led cross-functional teams through discovery, design, development, and deployment, ensuring the solution addressed real operational pain points.",
+    overview: {
+      paragraphs: [
+        "A diagnostic testing lab needed a system that could handle their massive scale of operations.",
+        "I led the product development of a comprehensive LIMS from initial concept through company-wide deployment, managing the full product lifecycle for a system now used by hundreds of employees.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The lab was using Salesforce to manage their operations, but it couldn't handle the scale they were operating at.",
+        "They needed a custom solution that could support their high-volume testing workflows, from patient intake through result delivery, without bottlenecks.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I owned the product vision and roadmap, working closely with lab technicians, operations staff, and leadership to design a system built around their actual workflows.",
+        "I led cross-functional teams through discovery, design, development, and deployment, ensuring the solution addressed real operational pain points.",
+      ],
+    },
     results: [
       "Scaled to process 10,000+ samples per day",
       "Deployed company-wide with hundreds of daily active users",
@@ -278,12 +443,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2022-2023",
     role: "Product Manager",
-    overview:
-      "A DMEPOS (Durable Medical Equipment, Prosthetics, Orthotics, and Supplies) provider needed to modernize their order management operations. I led the product development of a comprehensive system that digitized their entire workflow, from prescription intake through order fulfillment, across their full range of medical equipment categories.",
-    challenge:
-      "The provider was managing orders through manual, paper-based processes. Prescriptions arrived via fax, insurance verification required phone calls and manual data entry, and order tracking relied on spreadsheets and physical paperwork. This created bottlenecks, increased error rates, and limited their ability to scale operations.",
-    solution:
-      "I owned the product vision and worked directly with intake coordinators, verification specialists, and fulfillment staff to design a system around their actual workflows. The solution included prescription management for Rx intake and verification, insurance eligibility and prior authorization workflows, end-to-end order tracking from intake to delivery, and document management for CMNs and compliance documentation.",
+    overview: {
+      paragraphs: [
+        "A DMEPOS (Durable Medical Equipment, Prosthetics, Orthotics, and Supplies) provider needed to modernize their order management operations.",
+        "I led the product development of a comprehensive system that digitized their entire workflow, from prescription intake through order fulfillment, across their full range of medical equipment categories.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The provider was managing orders through manual, paper-based processes. Prescriptions arrived via fax, insurance verification required phone calls and manual data entry, and order tracking relied on spreadsheets and physical paperwork.",
+        "This created bottlenecks, increased error rates, and limited their ability to scale operations.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I owned the product vision and worked directly with intake coordinators, verification specialists, and fulfillment staff to design a system around their actual workflows.",
+        "The solution included prescription management for Rx intake and verification, insurance eligibility and prior authorization workflows, end-to-end order tracking from intake to delivery, and document management for CMNs and compliance documentation.",
+      ],
+    },
     results: [
       "Deployed company-wide with broad adoption across all departments",
       "Significantly increased daily order processing capacity",
@@ -308,12 +485,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Enterprise AI",
     duration: "2025",
     role: "AI Architect",
-    overview:
-      "An enterprise-scale AI automation system for Oracle Expense Report validation and auditing. I architected the full solution: model selection, event-driven integration topology, and the orchestration layer that extracts receipt data, validates against policy rules, and generates audit reports at scale.",
-    challenge:
-      "The client's finance team was spending significant time manually reviewing and auditing expense reports. The process was slow, inconsistent, and couldn't scale with the volume of submissions. Validating receipts against expense claims and ensuring policy compliance required tedious manual comparison that was prone to human error.",
-    solution:
-      "I architected an event-driven AI system on OCI. I evaluated multiple models through OCI Generative AI and selected Llama 4 Maverick for its multi-document processing capabilities. The architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates extraction, validation, and report generation workflows. The system handles multiple receipts per attachment, validates expenses against configured rules, and attaches audit reports directly to expense records in Oracle Fusion.",
+    overview: {
+      paragraphs: [
+        "An enterprise-scale AI automation system for Oracle Expense Report validation and auditing.",
+        "I architected the full solution: model selection, event-driven integration topology, and the orchestration layer that extracts receipt data, validates against policy rules, and generates audit reports at scale.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The client's finance team was spending significant time manually reviewing and auditing expense reports. The process was slow, inconsistent, and couldn't scale with the volume of submissions.",
+        "Validating receipts against expense claims and ensuring policy compliance required tedious manual comparison that was prone to human error.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I architected an event-driven AI system on OCI. I evaluated multiple models through OCI Generative AI and selected Llama 4 Maverick for its multi-document processing capabilities. The architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates extraction, validation, and report generation workflows.",
+        "The system handles multiple receipts per attachment, validates expenses against configured rules, and attaches audit reports directly to expense records in Oracle Fusion.",
+      ],
+    },
     results: [
       "Deployed to production, automating expense validation workflow",
       "AI-powered data extraction from receipt images with multi-document support",
@@ -340,12 +529,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Enterprise AI",
     duration: "2024",
     role: "AI Architect",
-    overview:
-      "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing, so I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
-    challenge:
-      "The client was receiving 1000+ applicants for each open position. Manually reviewing every resume to identify qualified candidates was tedious, unsustainable, and created major bottlenecks in their hiring process. They needed a way to efficiently filter massive applicant pools while still identifying the best-fit candidates.",
-    solution:
-      "I led the end-to-end development of an AI-powered screening system. Users enter the job description, bulk upload resumes (supporting 1000+ in mixed formats like PDF and Word), then configure their filter criteria: required skills, years of experience, and education level. They specify how many candidates they want shortlisted. The AI then scores each resume one-by-one against the job requirements and filter criteria, ranks all applicants by match score, and filters down to the top X candidates. For each shortlisted candidate, the system generates a comprehensive profile including a summary, their key strengths, and potential weaknesses.",
+    overview: {
+      paragraphs: [
+        "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing.",
+        "I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The client was receiving 1000+ applicants for each open position. Manually reviewing every resume to identify qualified candidates was tedious, unsustainable, and created major bottlenecks in their hiring process.",
+        "They needed a way to efficiently filter massive applicant pools while still identifying the best-fit candidates.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I led the end-to-end development of an AI-powered screening system. Users enter the job description, bulk upload resumes (supporting 1000+ in mixed formats like PDF and Word), then configure their filter criteria: required skills, years of experience, and education level. They specify how many candidates they want shortlisted.",
+        "The AI then scores each resume one-by-one against the job requirements and filter criteria, ranks all applicants by match score, and filters down to the top X candidates. For each shortlisted candidate, the system generates a comprehensive profile including a summary, their key strengths, and potential weaknesses.",
+      ],
+    },
     results: [
       "Saved hundreds of hours of manual resume screening",
       "Processed thousands of candidates across multiple job postings",
@@ -369,12 +570,24 @@ export const caseStudies: CaseStudy[] = [
     category: "Web3/Blockchain",
     duration: "2021-2022",
     role: "Product Manager",
-    overview:
-      "Paraverse is a blockchain-based mobile application built on Polygon that creates a gateway between physical and digital worlds. The platform enables brands and influencers to connect consumers with both digital and physical offerings through NFT ownership, allowing everyday people to access NFTs that can be redeemed for in-store or on-site value.",
-    challenge:
-      "The NFT and blockchain space had a massive barrier to entry for mainstream users. Most people lacked crypto knowledge, found wallet setup intimidating, and didn't understand how NFTs could provide real-world value. Brands wanted to leverage NFT technology but needed a solution that wouldn't alienate their existing customer base.",
-    solution:
-      "I led the entire product development from conception to launch, focusing on removing friction at every step. The core innovation was a one-click wallet setup that eliminated the need for any NFT or blockchain knowledge. I designed an external wallet verification process allowing existing NFT projects to attach physical value redemption to their offerings. The product strategy centered on making Web3 technology invisible to users while delivering tangible real-world benefits.",
+    overview: {
+      paragraphs: [
+        "Paraverse is a blockchain-based mobile application built on Polygon that creates a gateway between physical and digital worlds.",
+        "The platform enables brands and influencers to connect consumers with both digital and physical offerings through NFT ownership, allowing everyday people to access NFTs that can be redeemed for in-store or on-site value.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The NFT and blockchain space had a massive barrier to entry for mainstream users. Most people lacked crypto knowledge, found wallet setup intimidating, and didn't understand how NFTs could provide real-world value.",
+        "Brands wanted to leverage NFT technology but needed a solution that wouldn't alienate their existing customer base.",
+      ],
+    },
+    solution: {
+      paragraphs: [
+        "I led the entire product development from conception to launch, focusing on removing friction at every step. The core innovation was a one-click wallet setup that eliminated the need for any NFT or blockchain knowledge.",
+        "I designed an external wallet verification process allowing existing NFT projects to attach physical value redemption to their offerings. The product strategy centered on making Web3 technology invisible to users while delivering tangible real-world benefits.",
+      ],
+    },
     results: [
       "Led full product lifecycle from conception to launch",
       "Designed one-click wallet setup eliminating blockchain complexity",
@@ -404,8 +617,28 @@ export const caseStudies: CaseStudy[] = [
       "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains (navigation, battles, and menus) coordinated by an orchestrator that routes tasks to the appropriate agent.",
     challenge:
       "Playing Pokemon Red autonomously requires solving multiple complex problems: understanding game state from raw memory, navigating a world with 223 interconnected maps, making strategic battle decisions against 391 different trainer teams, and managing inventory and party composition, all while maintaining context across hours of gameplay.",
-    solution:
-      "I designed a hierarchical multi-agent system with four specialized agents: an Orchestrator (Sonnet) for task routing, Navigation (Haiku) with A* pathfinding, Battle (Sonnet/Opus) with automatic escalation for boss fights, and Menu (Haiku) for inventory management. The system extracts comprehensive game state from emulator memory and leverages a knowledge base parsed from the Pokemon Red disassembly, including all 223 maps, 151 Pokemon stats, and type effectiveness matrices. A real-time React dashboard provides monitoring and control via WebSocket streaming.",
+    solution: {
+      subsections: [
+        {
+          title: "Multi-agent architecture",
+          paragraphs: [
+            "I designed a hierarchical multi-agent system with four specialized agents: an Orchestrator (Sonnet) for task routing, Navigation (Haiku) with A* pathfinding, Battle (Sonnet/Opus) with automatic escalation for boss fights, and Menu (Haiku) for inventory management.",
+          ],
+        },
+        {
+          title: "Game knowledge base",
+          paragraphs: [
+            "The system extracts comprehensive game state from emulator memory and leverages a knowledge base parsed from the Pokemon Red disassembly, including all 223 maps, 151 Pokemon stats, and type effectiveness matrices.",
+          ],
+        },
+        {
+          title: "Real-time dashboard",
+          paragraphs: [
+            "A real-time React dashboard provides monitoring and control via WebSocket streaming.",
+          ],
+        },
+      ],
+    },
     results: [
       "38 tools distributed across 4 specialized AI agents",
       "223 maps with collision data and trainer positions parsed",
