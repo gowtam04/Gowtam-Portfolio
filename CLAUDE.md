@@ -17,7 +17,7 @@ There is no explicit `typecheck` script. Either run `npx tsc -p tsconfig.json --
 
 ## Architecture
 
-Personal portfolio website for an AI Product Manager. Next.js 16 (App Router) + React 19 + Tailwind CSS 4 + TypeScript. Single-page homepage composition with a dynamic `/case-studies/[slug]` route.
+Personal portfolio website for an AI Architect at [gowtam.ai](https://gowtam.ai). Next.js 16 (App Router) + React 19 + Tailwind CSS 4 + TypeScript. Single-page homepage composition with a dynamic `/case-studies/[slug]` route.
 
 ### Key Patterns
 
@@ -32,21 +32,30 @@ See `src/app/case-studies/[slug]/page.tsx` for the canonical example. This appli
 
 **Theme system (next-themes + CSS variables).**
 - `ThemeProvider` uses `attribute="class"`, so `<html>` gets a `.dark` class, not `data-theme`.
+- Defaults to `dark` theme with `enableSystem={false}` (no OS preference fallback).
 - Color tokens live as CSS variables in `src/app/globals.css` under `:root` and `.dark`. Components read them as `text-[var(--foreground)]`, `bg-[var(--background)]`, etc.
 - `globals.css` declares `@custom-variant dark (&:where(.dark, .dark *));` so Tailwind's `dark:` variant follows the `.dark` class (not `prefers-color-scheme`). Without this line, Tailwind `dark:` utilities would ignore the in-app theme toggle and respond only to the OS setting. Do not remove it.
+- Badge colors use `--personal` / `--client` CSS variables for `independent` / `professional` project types (legacy variable names).
 
 **Theme-aware assets.** For images that need to differ between light and dark mode (e.g., the process flow diagram in `src/components/Process.tsx`), render both and toggle visibility with Tailwind `dark:` classes. Keeps the component a server component with no flash on refresh:
 ```tsx
-<Image src="/images/foo-light.png" className="block dark:hidden" ... />
-<Image src="/images/foo-dark.png"  className="hidden dark:block" ... />
+<Image src="/images/process-flow-light-technical-v3.png" className="block dark:hidden" ... />
+<Image src="/images/process-flow-dark-technical-v3.png"  className="hidden dark:block" ... />
 ```
 
-**Case studies.** Data is defined in `src/lib/case-studies.ts`. Each entry has a `projectType` of `'personal'` or `'client'`; client projects may add `clientName` and `testimonial`. Use `getCaseStudy(slug)` and `getAllCaseStudySlugs()`. The slug list feeds `generateStaticParams` for SSG.
+**Case studies.** Data is defined in `src/lib/case-studies.ts`. Each entry has a `projectType` of `'independent'` or `'professional'`. Optional fields include `appStoreUrl`, `externalLink`, `clientName`, and `testimonial`. Use `getCaseStudy(slug)` and `getAllCaseStudySlugs()`. The slug list feeds `generateStaticParams` for SSG. The homepage grid (`CaseStudiesGrid`, a client component) provides search and project-type filtering; cards are rendered by `CaseStudyCard`.
+
+**SEO and metadata.**
+- `metadataBase` and site-wide metadata live in `src/app/layout.tsx`.
+- `generateMetadata` in the case study page sets per-slug title, description, Open Graph, and Twitter cards.
+- Homepage embeds Person + ProfilePage JSON-LD; case study pages embed Article + BreadcrumbList JSON-LD.
+- `src/app/robots.ts` and `src/app/sitemap.ts` generate crawl directives and the sitemap (homepage + all case study URLs).
 
 ### File Layout
 
-- `src/app/`: App Router pages, layouts, metadata, route segments
-- `src/components/`: UI components (Header, Hero, About, Process, CaseStudies, Skills, Contact, Footer, ThemeProvider, ThemeToggle)
+- `src/app/`: App Router pages, layouts, metadata, route segments (includes `robots.ts`, `sitemap.ts`, `not-found.tsx`, `icon.svg`, `apple-icon.tsx`)
+- `src/components/`: UI components (Header, Hero, About, Process, CaseStudies, CaseStudiesGrid, CaseStudyCard, Skills, Contact, Footer, ThemeProvider, ThemeToggle)
 - `src/lib/case-studies.ts`: case study data and helpers
 - `public/diagrams/`: Excalidraw source files (`.excalidraw`). Exports to PNG go in `public/images/`.
-- `skills/`: reference material (Claude Code skills that document the development process showcased in the Process section); not part of the build.
+- `PDFs/`: client deliverable PDFs (not part of the build)
+- `case-study-*.md`: draft/reference case study content (not part of the build)

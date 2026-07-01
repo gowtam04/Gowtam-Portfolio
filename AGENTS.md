@@ -5,8 +5,10 @@ This file provides working conventions for agentic coding assistants operating i
 ## Project Summary
 
 - Next.js 16.1 (App Router) + React 19 + TypeScript + Tailwind CSS 4
+- Personal portfolio for an AI Architect at [gowtam.ai](https://gowtam.ai)
 - Primary code lives in `src/`.
 - CSS theme is driven by variables in `src/app/globals.css`.
+- Font: Inter via `next/font/google` (`--font-inter` in `layout.tsx`).
 
 ## Agent Rules (Repo Specific)
 
@@ -71,12 +73,21 @@ Examples (only valid after adding the relevant tool):
 - `src/app/` - Next.js App Router pages, layouts, metadata, route segments
 - `src/components/` - UI components
 - `src/lib/` - data and helpers (case studies live here)
+- `public/images/` - static images (profile photo, process flow diagrams)
+- `public/diagrams/` - Excalidraw source files (`.excalidraw`); exports go in `public/images/`
+- `PDFs/` - client deliverable PDFs (not part of the build)
+- `case-study-*.md` - draft/reference case study content (not part of the build)
 
 Key files:
 
-- `src/app/layout.tsx` - root layout, metadata, theme provider wrapper
-- `src/app/page.tsx` - homepage composition
-- `src/app/case-studies/[slug]/page.tsx` - dynamic case study pages
+- `src/app/layout.tsx` - root layout, site metadata (`metadataBase: https://gowtam.ai`), theme provider wrapper
+- `src/app/page.tsx` - homepage composition + Person/ProfilePage JSON-LD
+- `src/app/case-studies/[slug]/page.tsx` - dynamic case study pages + Article/Breadcrumb JSON-LD
+- `src/app/not-found.tsx` - custom 404 page
+- `src/app/robots.ts` - generates `robots.txt`
+- `src/app/sitemap.ts` - generates `sitemap.xml` (homepage + all case study slugs)
+- `src/app/icon.svg` - favicon
+- `src/app/apple-icon.tsx` - dynamic Apple touch icon via `next/og`
 - `src/lib/case-studies.ts` - case study data and helpers
 - `src/app/globals.css` - Tailwind import + CSS variables + theme mapping
 
@@ -99,16 +110,36 @@ Follow the established pattern used in `src/app/case-studies/[slug]/page.tsx`:
 ## Styling and Theme System
 
 - Theme switching uses `next-themes` with a `.dark` class on `html`.
+- `ThemeProvider` defaults to `dark`, with `enableSystem={false}` (no OS preference fallback).
 - CSS variables are defined in `src/app/globals.css` under `:root` and `.dark`.
 - Tailwind CSS v4 is imported via `@import "tailwindcss";`.
+- `@custom-variant dark (&:where(.dark, .dark *));` wires Tailwind `dark:` utilities to the `.dark` class (not `prefers-color-scheme`). Do not remove it.
 - Tailwind color tokens are mapped through `@theme inline` in `src/app/globals.css`.
+- Badge colors use `--personal` / `--client` CSS variables for `independent` / `professional` project types (legacy variable names).
 
 Guidelines:
 
 - Prefer Tailwind utilities for layout and spacing.
 - Prefer CSS variables for theme-aware colors:
   - `text-[var(--foreground)]`, `bg-[var(--background)]`, etc.
+- For theme-aware images, render both light and dark variants and toggle with `dark:` classes (see `src/components/Process.tsx`).
 - Keep transitions subtle; avoid expensive global transitions beyond what exists.
+
+## Case Study Data
+
+- All case study content lives in `src/lib/case-studies.ts`.
+- `projectType` is `'independent'` or `'professional'` (not `personal` / `client`).
+- Optional fields: `appStoreUrl`, `externalLink`, `clientName`, `testimonial`.
+- Helpers: `getCaseStudy(slug)`, `getAllCaseStudySlugs()`.
+- The homepage grid (`CaseStudiesGrid`) is a client component with search and project-type filters; individual cards are in `CaseStudyCard`.
+- Slugs feed `generateStaticParams()` for SSG.
+
+## SEO
+
+- Site metadata and `metadataBase` are set in `src/app/layout.tsx`.
+- Per-page metadata is generated in `src/app/case-studies/[slug]/page.tsx` via `generateMetadata`.
+- Structured data: Person + ProfilePage JSON-LD on the homepage; Article + BreadcrumbList on case study pages.
+- `src/app/robots.ts` and `src/app/sitemap.ts` handle crawl directives and URL discovery.
 
 ## TypeScript Guidelines
 
