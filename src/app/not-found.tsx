@@ -25,7 +25,7 @@ export default function NotFound() {
               Go home
             </Link>
             <Link
-              href="/#case-studies"
+              href="/case-studies"
               className="inline-flex items-center justify-center gap-2 rounded-md border border-[var(--border)] px-5 py-3 text-sm font-medium text-[var(--foreground)] transition-colors duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)]"
             >
               <ArrowLeft className="h-4 w-4" />

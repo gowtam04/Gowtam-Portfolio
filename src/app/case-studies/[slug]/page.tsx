@@ -34,33 +34,27 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const title = `${caseStudy.seoTitle ?? caseStudy.title} | Gowtam Ramanujam`;
+  const description = caseStudy.metaDescription ?? caseStudy.description;
+
   return {
-    title: `${caseStudy.title} | Gowtam Ramanujam`,
-    description: caseStudy.description,
+    title,
+    description,
     alternates: {
       canonical: `/case-studies/${slug}`,
     },
     openGraph: {
-      title: `${caseStudy.title} | Gowtam Ramanujam`,
-      description: caseStudy.description,
+      title,
+      description,
       url: `https://gowtam.ai/case-studies/${slug}`,
       siteName: "Gowtam Ramanujam Portfolio",
       locale: "en_US",
       type: "article",
-      images: [
-        {
-          url: "/images/profile.jpg",
-          width: 1200,
-          height: 630,
-          alt: `${caseStudy.title} - Case Study by Gowtam Ramanujam`,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${caseStudy.title} | Gowtam Ramanujam`,
-      description: caseStudy.description,
-      images: ["/images/profile.jpg"],
+      title,
+      description,
     },
   };
 }
@@ -82,11 +76,9 @@ function generateArticleJsonLd(caseStudy: CaseStudy, slug: string) {
       url: "https://gowtam.ai",
     },
     url: `https://gowtam.ai/case-studies/${slug}`,
-    image: "https://gowtam.ai/images/profile.jpg",
-    datePublished: caseStudy.duration.includes("-")
-      ? `${caseStudy.duration.split("-")[0]}-01-01`
-      : `${caseStudy.duration}-01-01`,
-    dateModified: new Date().toISOString().split("T")[0],
+    image: `https://gowtam.ai/case-studies/${slug}/opengraph-image`,
+    ...(caseStudy.datePublished && { datePublished: caseStudy.datePublished }),
+    ...(caseStudy.dateUpdated && { dateModified: caseStudy.dateUpdated }),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://gowtam.ai/case-studies/${slug}`,
@@ -109,7 +101,7 @@ function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
         "@type": "ListItem",
         position: 2,
         name: "Case Studies",
-        item: "https://gowtam.ai/#case-studies",
+        item: "https://gowtam.ai/case-studies",
       },
       {
         "@type": "ListItem",
@@ -174,7 +166,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             {/* Breadcrumb */}
             <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2">
               <Link
-                href="/#case-studies"
+                href="/case-studies"
                 className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 Work

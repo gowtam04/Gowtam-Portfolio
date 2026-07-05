@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { getAllCaseStudySlugs } from "@/lib/case-studies";
+import { caseStudies } from "@/lib/case-studies";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://gowtam.ai";
@@ -8,17 +8,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: new Date(),
+      lastModified: "2026-07-05",
       changeFrequency: "monthly",
       priority: 1,
+    },
+    {
+      url: `${baseUrl}/case-studies`,
+      lastModified: "2026-07-05",
+      changeFrequency: "monthly",
+      priority: 0.9,
     },
   ];
 
   // Dynamic case study pages
-  const caseStudySlugs = getAllCaseStudySlugs();
-  const caseStudyPages: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
-    url: `${baseUrl}/case-studies/${slug}`,
-    lastModified: new Date(),
+  const caseStudyPages: MetadataRoute.Sitemap = caseStudies.map((cs) => ({
+    url: `${baseUrl}/case-studies/${cs.slug}`,
+    lastModified: cs.dateUpdated ?? "2026-07-05",
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));

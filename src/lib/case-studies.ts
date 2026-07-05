@@ -25,6 +25,14 @@ export interface CaseStudy {
   category: string;
   duration: string;
   role: string;
+  /** SEO-optimized title for <title> and og:title; falls back to `title` if omitted */
+  seoTitle?: string;
+  /** SEO-optimized description for meta description; falls back to `description` if omitted */
+  metaDescription?: string;
+  /** Static ISO date (YYYY-MM-DD) for Article JSON-LD datePublished */
+  datePublished?: string;
+  /** Static ISO date (YYYY-MM-DD) for Article JSON-LD dateModified */
+  dateUpdated?: string;
   overview: CaseStudySection;
   challenge: CaseStudySection;
   solution: CaseStudySection;
@@ -54,6 +62,11 @@ export const caseStudies: CaseStudy[] = [
     category: "AI/ML",
     duration: "2026",
     role: "AI Architect",
+    seoTitle: "Oak: Agentic AI Reasoning System",
+    metaDescription:
+      "AI agent that reasons over raw Pokémon game data to answer questions, citing sources and flagging uncertainty in every answer.",
+    datePublished: "2026-01-01",
+    dateUpdated: "2026-07-05",
     overview: {
       paragraphs: [
         "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about.",
@@ -140,6 +153,11 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2026",
     role: "AI Architect",
+    seoTitle: "Annie ACS: AI Patient Agent for a Surgery Practice",
+    metaDescription:
+      "AI medical consultant for a cosmetic surgery practice that educates patients, streams cited procedure media, and books consultations.",
+    datePublished: "2026-01-01",
+    dateUpdated: "2026-07-05",
     overview: {
       paragraphs: [
         "Annie ACS is a production AI medical consultant for Advanced Cosmetic Surgery (Dr. Jon Mendelsohn). Patients ask about blepharoplasty, rhinoplasty, facelifts, and other procedures; Annie adapts to their expertise level, surfaces procedure-specific videos and images from a curated knowledge base, and books consultations through Calendly, all inside an embeddable chat widget that runs 24/7 on the practice website.",
@@ -242,6 +260,9 @@ export const caseStudies: CaseStudy[] = [
     category: "AI/ML",
     duration: "2024",
     role: "AI Architect",
+    seoTitle: "Nibble AI: AI Nutrition Tracker iOS App",
+    datePublished: "2024-01-01",
+    dateUpdated: "2024-12-01",
     overview:
       "Nibble AI is an iOS application that revolutionizes nutrition tracking by leveraging Claude AI to instantly analyze meals from photos. The app eliminates the tedious manual entry that plagues traditional calorie counters, making healthy eating effortless and engaging.",
     challenge:
@@ -274,6 +295,9 @@ export const caseStudies: CaseStudy[] = [
     category: "AI/ML",
     duration: "2026",
     role: "AI Architect",
+    seoTitle: "LogoForge: AI Logo Generator for App Icons",
+    datePublished: "2026-01-01",
+    dateUpdated: "2026-07-05",
     overview:
       "LogoForge is a free AI-powered logo generator that takes users from a simple text description to App Store-ready icon bundles in under five minutes. It leverages Google's Gemini multimodal AI to generate professional logos and includes a complete export pipeline for iOS, Android, and Web platforms.",
     challenge: {
@@ -334,6 +358,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Mobile App",
     duration: "2024",
     role: "AI Architect",
+    seoTitle: "FamilyCart: Real-Time Family Grocery List App",
+    datePublished: "2024-01-01",
+    dateUpdated: "2024-12-01",
     overview:
       "FamilyCart is a collaborative grocery shopping app designed to make family shopping seamless. The app enables multiple family members to contribute to and check off items from a shared list in real-time, eliminating the chaos of uncoordinated grocery runs.",
     challenge:
@@ -362,6 +389,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2023",
     role: "Product Manager",
+    seoTitle: "Yosihealth: Digital Health Records App for India",
+    datePublished: "2023-01-01",
+    dateUpdated: "2023-12-01",
     overview: {
       paragraphs: [
         "Yosihealth is a mobile application designed to solve a pervasive problem in India: the reliance on paper-based medical records.",
@@ -397,6 +427,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Web Game",
     duration: "2024",
     role: "Product Designer & Developer",
+    seoTitle: "Suit Break: Multiplayer Card Game with ELO Rating",
+    datePublished: "2024-01-01",
+    dateUpdated: "2024-12-01",
     overview:
       "Suit Break is a multiplayer web-based card game that brings the classic trick-taking genre to the browser with modern matchmaking and competitive features. The game features strategic card request mechanics that add depth beyond traditional card games.",
     challenge: {
@@ -432,6 +465,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2022-2023",
     role: "Product Manager",
+    seoTitle: "Diagnostic Lab LIMS: Replacing Salesforce",
+    datePublished: "2022-01-01",
+    dateUpdated: "2023-12-01",
     overview: {
       paragraphs: [
         "A diagnostic testing lab needed a system that could handle their massive scale of operations.",
@@ -478,6 +514,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Healthcare Tech",
     duration: "2022-2023",
     role: "Product Manager",
+    seoTitle: "DMEPOS Order Management System: Digital Rx Workflow",
+    datePublished: "2022-01-01",
+    dateUpdated: "2023-12-01",
     overview: {
       paragraphs: [
         "A DMEPOS (Durable Medical Equipment, Prosthetics, Orthotics, and Supplies) provider needed to modernize their order management operations.",
@@ -520,6 +559,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Enterprise AI",
     duration: "2025",
     role: "AI Architect",
+    seoTitle: "AI Expense Validation & Auditing on Oracle Cloud",
+    datePublished: "2025-01-01",
+    dateUpdated: "2025-12-01",
     overview: {
       paragraphs: [
         "An enterprise-scale AI automation system for Oracle Expense Report validation and auditing.",
@@ -564,6 +606,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Enterprise AI",
     duration: "2024",
     role: "AI Architect",
+    seoTitle: "AI Resume Parser: Bulk Applicant Screening Tool",
+    datePublished: "2024-01-01",
+    dateUpdated: "2024-12-01",
     overview: {
       paragraphs: [
         "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing.",
@@ -608,6 +653,9 @@ export const caseStudies: CaseStudy[] = [
     category: "Web3/Blockchain",
     duration: "2021-2022",
     role: "Product Manager",
+    seoTitle: "Paraverse: NFT Redemption App on Polygon",
+    datePublished: "2021-01-01",
+    dateUpdated: "2022-12-01",
     overview: {
       paragraphs: [
         "Paraverse is a blockchain-based mobile application built on Polygon that creates a gateway between physical and digital worlds.",
@@ -651,6 +699,9 @@ export const caseStudies: CaseStudy[] = [
     category: "AI/ML",
     duration: "2024",
     role: "AI Architect",
+    seoTitle: "Agent RED: Multi-Agent AI Plays Pokemon Red",
+    datePublished: "2024-01-01",
+    dateUpdated: "2024-12-01",
     overview:
       "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains (navigation, battles, and menus) coordinated by an orchestrator that routes tasks to the appropriate agent.",
     challenge:
