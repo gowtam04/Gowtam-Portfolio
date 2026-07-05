@@ -10,10 +10,13 @@ function BulletList({ items }: { items: string[] }) {
       {items.map((item, index) => (
         <li
           key={index}
-          className="flex items-start gap-3 text-[var(--foreground)]"
+          className="flex items-start gap-3 text-[var(--muted)]"
         >
-          <span className="w-2 h-2 rounded-full bg-[var(--accent)] mt-2 flex-shrink-0" />
-          <span className="leading-relaxed">{item}</span>
+          <span
+            aria-hidden="true"
+            className="mt-[0.7em] h-px w-3 flex-shrink-0 bg-[var(--accent)]"
+          />
+          <span className="leading-[1.65]">{item}</span>
         </li>
       ))}
     </ul>
@@ -23,14 +26,17 @@ function BulletList({ items }: { items: string[] }) {
 export function CaseStudyBody({ content }: CaseStudyBodyProps) {
   if (typeof content === "string") {
     return (
-      <p className="text-[var(--foreground)] leading-relaxed">{content}</p>
+      <p className="max-w-[68ch] leading-[1.65] text-[var(--muted)]">{content}</p>
     );
   }
 
   return (
     <div className="space-y-4">
       {content.paragraphs?.map((paragraph, index) => (
-        <p key={index} className="text-[var(--foreground)] leading-relaxed">
+        <p
+          key={index}
+          className="max-w-[68ch] leading-[1.65] text-[var(--muted)]"
+        >
           {paragraph}
         </p>
       ))}
@@ -40,7 +46,7 @@ export function CaseStudyBody({ content }: CaseStudyBodyProps) {
           {content.subsections.map((subsection, index) => (
             <div key={subsection.title}>
               <h3
-                className={`text-lg font-medium text-[var(--foreground)] mb-3 ${index === 0 && !content.paragraphs?.length ? "" : "mt-8"}`}
+                className={`mb-3 text-lg font-semibold text-[var(--foreground)] ${index === 0 && !content.paragraphs?.length ? "" : "mt-8"}`}
               >
                 {subsection.title}
               </h3>
@@ -49,7 +55,7 @@ export function CaseStudyBody({ content }: CaseStudyBodyProps) {
                   {subsection.paragraphs.map((paragraph, index) => (
                     <p
                       key={index}
-                      className="text-[var(--foreground)] leading-relaxed"
+                      className="max-w-[68ch] leading-[1.65] text-[var(--muted)]"
                     >
                       {paragraph}
                     </p>

@@ -8,7 +8,7 @@ This file provides working conventions for agentic coding assistants operating i
 - Personal portfolio for an AI Architect at [gowtam.ai](https://gowtam.ai)
 - Primary code lives in `src/`.
 - CSS theme is driven by variables in `src/app/globals.css`.
-- Font: Inter via `next/font/google` (`--font-inter` in `layout.tsx`).
+- Fonts: Instrument Sans (`--font-instrument`) and IBM Plex Mono (`--font-plex-mono`) via `next/font/google` in `layout.tsx`. Mono is the technical register: labels, metadata, stats (see `.mono-label`, `.mono-meta`, `.mono-stat` in `globals.css`).
 
 ## Agent Rules (Repo Specific)
 
@@ -115,23 +115,24 @@ Follow the established pattern used in `src/app/case-studies/[slug]/page.tsx`:
 - Tailwind CSS v4 is imported via `@import "tailwindcss";`.
 - `@custom-variant dark (&:where(.dark, .dark *));` wires Tailwind `dark:` utilities to the `.dark` class (not `prefers-color-scheme`). Do not remove it.
 - Tailwind color tokens are mapped through `@theme inline` in `src/app/globals.css`.
-- Badge colors use `--personal` / `--client` CSS variables for `independent` / `professional` project types (legacy variable names).
+- Project-type badges are mono microlabels with a dot: ember (`--accent`) dot = professional, neutral (`--faint`) dot = independent. The old `--personal` / `--client` variables no longer exist.
+- The token set is graphite neutrals (`--background`, `--surface-1`, `--surface-2`, `--border`, `--border-strong`, `--foreground`, `--muted`, `--faint`) plus one ember accent (`--accent`, `--accent-hover`, `--accent-subtle`). Full rationale in `docs/design/fable-ui-strategy.md`.
 
 Guidelines:
 
 - Prefer Tailwind utilities for layout and spacing.
 - Prefer CSS variables for theme-aware colors:
   - `text-[var(--foreground)]`, `bg-[var(--background)]`, etc.
-- For theme-aware images, render both light and dark variants and toggle with `dark:` classes (see `src/components/Process.tsx`).
+- Diagrams are inline SVG components in `src/components/diagrams.tsx` that consume CSS variables, so they are theme-aware automatically. For raster assets that must differ per theme, render both variants and toggle with `dark:` classes.
 - Keep transitions subtle; avoid expensive global transitions beyond what exists.
 
 ## Case Study Data
 
 - All case study content lives in `src/lib/case-studies.ts`.
 - `projectType` is `'independent'` or `'professional'` (not `personal` / `client`).
-- Optional fields: `appStoreUrl`, `externalLink`, `clientName`, `testimonial`.
+- Optional fields: `appStoreUrl`, `externalLink`, `clientName`, `testimonial`, `featured`, `stats`.
 - Helpers: `getCaseStudy(slug)`, `getAllCaseStudySlugs()`.
-- The homepage grid (`CaseStudiesGrid`) is a client component with search and project-type filters; individual cards are in `CaseStudyCard`.
+- The homepage grid (`CaseStudiesGrid`) is a client component with a project-type filter. `featured: true` studies render as large panels (with their diagram from `src/components/diagrams.tsx`); the rest render as compact index rows.
 - Slugs feed `generateStaticParams()` for SSG.
 
 ## SEO

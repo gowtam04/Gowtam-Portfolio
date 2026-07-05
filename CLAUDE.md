@@ -35,15 +35,13 @@ See `src/app/case-studies/[slug]/page.tsx` for the canonical example. This appli
 - Defaults to `dark` theme with `enableSystem={false}` (no OS preference fallback).
 - Color tokens live as CSS variables in `src/app/globals.css` under `:root` and `.dark`. Components read them as `text-[var(--foreground)]`, `bg-[var(--background)]`, etc.
 - `globals.css` declares `@custom-variant dark (&:where(.dark, .dark *));` so Tailwind's `dark:` variant follows the `.dark` class (not `prefers-color-scheme`). Without this line, Tailwind `dark:` utilities would ignore the in-app theme toggle and respond only to the OS setting. Do not remove it.
-- Badge colors use `--personal` / `--client` CSS variables for `independent` / `professional` project types (legacy variable names).
+- The token set is graphite neutrals plus one ember accent (`--accent`), with surfaces (`--surface-1`, `--surface-2`) and text tiers (`--foreground`, `--muted`, `--faint`). Project-type badges are mono microlabels with a dot (ember = professional, neutral = independent); the old `--personal` / `--client` variables no longer exist.
 
-**Theme-aware assets.** For images that need to differ between light and dark mode (e.g., the process flow diagram in `src/components/Process.tsx`), render both and toggle visibility with Tailwind `dark:` classes. Keeps the component a server component with no flash on refresh:
-```tsx
-<Image src="/images/process-flow-light-technical-v3.png" className="block dark:hidden" ... />
-<Image src="/images/process-flow-dark-technical-v3.png"  className="hidden dark:block" ... />
-```
+**Design system.** The visual language ("the spec sheet, elevated") is documented in `docs/design/fable-ui-strategy.md`: Instrument Sans + IBM Plex Mono, mono section labels (`.mono-label` / `.mono-meta` / `.mono-stat` utilities in `globals.css`), hairline rules, and a restrained motion grammar (`Reveal`, `CountUp`, `.hero-enter`, all honoring `prefers-reduced-motion`).
 
-**Case studies.** Data is defined in `src/lib/case-studies.ts`. Each entry has a `projectType` of `'independent'` or `'professional'`. Optional fields include `appStoreUrl`, `externalLink`, `clientName`, and `testimonial`. Use `getCaseStudy(slug)` and `getAllCaseStudySlugs()`. The slug list feeds `generateStaticParams` for SSG. The homepage grid (`CaseStudiesGrid`, a client component) provides search and project-type filtering; cards are rendered by `CaseStudyCard`.
+**Theme-aware assets.** Architecture diagrams are inline SVG components (`src/components/diagrams.tsx`) that consume CSS variables, so they follow the theme automatically. For raster images that must differ per theme, render both variants and toggle with Tailwind `dark:` classes (`block dark:hidden` / `hidden dark:block`).
+
+**Case studies.** Data is defined in `src/lib/case-studies.ts`. Each entry has a `projectType` of `'independent'` or `'professional'`. Optional fields include `appStoreUrl`, `externalLink`, `clientName`, `testimonial`, `featured`, and `stats`. Use `getCaseStudy(slug)` and `getAllCaseStudySlugs()`. The slug list feeds `generateStaticParams` for SSG. The homepage grid (`CaseStudiesGrid`, a client component) filters by project type; `featured` studies render as large panels with diagrams, the rest as compact index rows. Detail pages render a metadata band, a `stats` count-up band, indexed sections with a sticky TOC (`CaseStudyToc`), and prev/next navigation from array order.
 
 **SEO and metadata.**
 - `metadataBase` and site-wide metadata live in `src/app/layout.tsx`.
@@ -54,7 +52,7 @@ See `src/app/case-studies/[slug]/page.tsx` for the canonical example. This appli
 ### File Layout
 
 - `src/app/`: App Router pages, layouts, metadata, route segments (includes `robots.ts`, `sitemap.ts`, `not-found.tsx`, `icon.svg`, `apple-icon.tsx`)
-- `src/components/`: UI components (Header, Hero, About, Process, CaseStudies, CaseStudiesGrid, CaseStudyCard, Skills, Contact, Footer, ThemeProvider, ThemeToggle)
+- `src/components/`: UI components (Header, Hero, HeroSchematic, About, Process, TimelineSpine, CaseStudies, CaseStudiesGrid, CaseStudyBody, CaseStudyToc, Skills, Contact, Footer, SectionHeading, Reveal, CountUp, diagrams, ThemeProvider, ThemeToggle)
 - `src/lib/case-studies.ts`: case study data and helpers
 - `public/diagrams/`: Excalidraw source files (`.excalidraw`). Exports to PNG go in `public/images/`.
 - `PDFs/`: client deliverable PDFs (not part of the build)

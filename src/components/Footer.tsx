@@ -2,11 +2,12 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="py-8 px-6 border-t border-[var(--border)]">
-      <div className="max-w-5xl mx-auto">
-        <p className="text-sm text-[var(--muted)] text-center">
-          &copy; {currentYear} Gowtam Ramanujam. All rights reserved.
+    <footer className="border-t border-[var(--border)] px-6 py-8">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-2">
+        <p className="mono-label">
+          &copy; {currentYear} Gowtam Ramanujam
         </p>
+        <p className="mono-label">gowtam.ai</p>
       </div>
     </footer>
   );

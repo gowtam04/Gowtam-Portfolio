@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
+const instrumentSans = Instrument_Sans({
+  variable: "--font-instrument",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -64,8 +71,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} antialiased`} suppressHydrationWarning>
-        <ThemeProvider>{children}</ThemeProvider>
+      <body
+        className={`${instrumentSans.variable} ${plexMono.variable} antialiased`}
+        suppressHydrationWarning
+      >
+        <ThemeProvider>
+          {/* Drafting-margin frame: hairline rules at the content column edges */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none fixed inset-y-0 left-1/2 z-0 hidden w-full max-w-[68rem] -translate-x-1/2 border-x border-[var(--frame)] xl:block"
+          />
+          <div className="relative z-10">{children}</div>
+        </ThemeProvider>
       </body>
     </html>
   );

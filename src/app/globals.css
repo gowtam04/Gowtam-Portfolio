@@ -2,38 +2,60 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * Design tokens: "the spec sheet, elevated"
+ * Graphite neutrals + one ember accent. Light mode is the print rendition.
+ * See docs/design/fable-ui-strategy.md for the full system.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --muted: #64748b;
-  --border: #e2e8f0;
-  --accent: #2563eb;
+  --background: #fafaf9;
+  --surface-1: #ffffff;
+  --surface-2: #f4f4f2;
+  --border: #e9e9e6;
+  --border-strong: #dcdcd8;
+  --frame: rgba(27, 27, 26, 0.05);
+  --foreground: #1b1b1a;
+  --muted: #5c5c58;
+  --faint: #8a8a85;
+  --accent: #c9552a;
+  --accent-hover: #a8441f;
+  --accent-subtle: rgba(201, 85, 42, 0.07);
   --accent-foreground: #ffffff;
-  --personal: #10b981;
-  --client: #8b5cf6;
+  --shadow-raised: 0 1px 2px rgba(27, 27, 26, 0.05), 0 4px 12px rgba(27, 27, 26, 0.06);
+  --shadow-overlay: 0 4px 8px rgba(27, 27, 26, 0.08), 0 12px 32px rgba(27, 27, 26, 0.12);
 }
 
 .dark {
-  --background: #030712;
-  --foreground: #f1f5f9;
-  --muted: #94a3b8;
-  --border: #1e293b;
-  --accent: #60a5fa;
-  --accent-foreground: #030712;
-  --personal: #34d399;
-  --client: #a78bfa;
+  --background: #0b0b0c;
+  --surface-1: #121214;
+  --surface-2: #1a1a1d;
+  --border: #232326;
+  --border-strong: #2e2e32;
+  --frame: rgba(244, 244, 245, 0.04);
+  --foreground: #f4f4f5;
+  --muted: #a3a3ab;
+  --faint: #77777f;
+  --accent: #e8703a;
+  --accent-hover: #f5915f;
+  --accent-subtle: rgba(232, 112, 58, 0.08);
+  --accent-foreground: #0b0b0c;
+  --shadow-raised: none;
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-personal: var(--personal);
-  --color-client: var(--client);
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-instrument);
+  --font-mono: var(--font-plex-mono);
 }
 
 html {
@@ -43,7 +65,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-instrument), system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -76,10 +98,126 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--border-strong);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
+  background: var(--faint);
+}
+
+/* ---------------------------------------------------------------------------
+ * Spec-sheet furniture
+ * ------------------------------------------------------------------------- */
+
+/* Mono uppercase label: section indices, metadata keys, badges */
+.mono-label {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* Mono metadata value: stacks, years, captions */
+.mono-meta {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--muted);
+}
+
+/* Mono display numerals: stat bands */
+.mono-stat {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion grammar
+ * 150ms feedback / 250ms transitions / 400-600ms entrances, one easing curve.
+ * ------------------------------------------------------------------------- */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Scroll-triggered entrance (paired with the Reveal component) */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s cubic-bezier(0.2, 0, 0, 1) var(--reveal-delay, 0ms),
+    transform 0.5s cubic-bezier(0.2, 0, 0, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Load-time entrance (hero only) */
+.hero-enter {
+  animation: fade-up 0.6s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* Hero schematic draw-in: strokes trace once, labels fade in after */
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-stroke 0.8s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.draw-fade {
+  opacity: 0;
+  animation: fade-in 0.4s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-enter,
+  .draw-fade {
+    animation: none;
+    opacity: 1;
+  }
+
+  .draw-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }

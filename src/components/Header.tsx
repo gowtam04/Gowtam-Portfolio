@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { href: "#about", label: "About" },
   { href: "#process", label: "Process" },
-  { href: "#case-studies", label: "Case Studies" },
+  { href: "#case-studies", label: "Work" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
 ];
@@ -32,27 +33,27 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[var(--background)]/80 backdrop-blur-md border-b border-[var(--border)]"
+          ? "bg-[var(--background)]/85 backdrop-blur-md border-b border-[var(--border)]"
           : "bg-transparent"
       }`}
     >
       <nav className="max-w-5xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo / Name */}
-          <a
+          <Link
             href="/"
-            className="text-lg font-semibold text-[var(--foreground)] hover:text-[var(--accent)] transition-colors"
+            className="text-base font-semibold tracking-[-0.02em] text-[var(--foreground)] hover:text-[var(--accent)] transition-colors duration-150"
           >
             Gowtam
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-7">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
               </a>
@@ -65,7 +66,7 @@ export function Header() {
             <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-lg border border-[var(--border)] hover:bg-[var(--border)] transition-colors"
+              className="p-2 rounded-md border border-[var(--border)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)] transition-colors duration-150"
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
@@ -92,7 +93,7 @@ export function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={handleNavClick}
-                className="text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
+                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
               </a>

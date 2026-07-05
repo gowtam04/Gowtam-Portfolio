@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { caseStudies, type ProjectType } from "@/lib/case-studies";
-import { CaseStudyCard } from "./CaseStudyCard";
-import { Search, X } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { caseStudies, type CaseStudy, type ProjectType } from "@/lib/case-studies";
+import { getDiagram } from "./diagrams";
 
 type FilterOption = "all" | ProjectType;
 
@@ -13,121 +14,177 @@ const filterOptions: { value: FilterOption; label: string }[] = [
   { value: "professional", label: "Professional" },
 ];
 
-export function CaseStudiesGrid() {
-  const [activeFilter, setActiveFilter] = useState<FilterOption>("all");
-  const [searchQuery, setSearchQuery] = useState("");
+function TypeDot({ projectType }: { projectType: ProjectType }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full ${
+        projectType === "professional"
+          ? "bg-[var(--accent)]"
+          : "bg-[var(--faint)]"
+      }`}
+    />
+  );
+}
 
-  const filteredStudies = useMemo(() => {
-    return caseStudies.filter((cs) => {
-      // Project type filter
-      if (activeFilter !== "all" && cs.projectType !== activeFilter) {
-        return false;
-      }
-
-      // Search query filter
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
-        const searchableText =
-          `${cs.title} ${cs.description} ${cs.overview}`.toLowerCase();
-        if (!searchableText.includes(query)) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-  }, [activeFilter, searchQuery]);
-
-  const hasActiveFilters =
-    activeFilter !== "all" || searchQuery.trim() !== "";
-
-  const clearAllFilters = () => {
-    setActiveFilter("all");
-    setSearchQuery("");
-  };
+function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
+  const diagram = getDiagram(caseStudy.slug);
 
   return (
-    <div className="space-y-6">
-      {/* Search Input */}
-      <div className="relative group">
-        <div className="absolute inset-0 bg-[var(--accent)]/5 rounded-xl blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500" />
-        <div className="relative flex items-center">
-          <Search className="absolute left-4 w-5 h-5 text-[var(--muted)] group-focus-within:text-[var(--accent)] transition-colors duration-200" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search case studies..."
-            className="w-full pl-12 pr-12 py-3.5 bg-[var(--background)] border border-[var(--border)] rounded-xl text-[var(--foreground)] placeholder:text-[var(--muted)] focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/20 outline-none transition-all duration-200"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery("")}
-              className="absolute right-4 p-1 rounded-md text-[var(--muted)] hover:text-[var(--foreground)] hover:bg-[var(--border)]/50 transition-all duration-200"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+    <Link
+      href={`/case-studies/${caseStudy.slug}`}
+      className="group grid gap-8 rounded-lg border border-[var(--border)] bg-[var(--surface-1)] p-8 transition-colors duration-150 hover:border-[var(--border-strong)] md:grid-cols-[minmax(0,1fr)_300px] md:items-center"
+    >
+      <div>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <span className="mono-label flex items-center gap-2">
+            <TypeDot projectType={caseStudy.projectType} />
+            {caseStudy.projectType === "independent"
+              ? "Independent"
+              : "Professional"}
+          </span>
+          <span className="mono-label">{caseStudy.category}</span>
         </div>
-      </div>
 
-      {/* Project Type Toggle + Results Count */}
-      <div className="flex flex-wrap items-center gap-2">
-        {filterOptions.map((option) => (
-          <button
-            key={option.value}
-            onClick={() => setActiveFilter(option.value)}
-            className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 cursor-pointer ${
-              activeFilter === option.value
-                ? "bg-[var(--accent)] text-[var(--accent-foreground)] shadow-md shadow-[var(--accent)]/25"
-                : "border border-[var(--border)] text-[var(--muted)] hover:text-[var(--foreground)] hover:border-[var(--foreground)] hover:shadow-sm"
-            }`}
-          >
-            {option.label}
-          </button>
-        ))}
+        <h3 className="mt-4 text-2xl font-semibold tracking-[-0.01em] text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+          {caseStudy.title}
+        </h3>
 
-        {hasActiveFilters && (
-          <button
-            onClick={clearAllFilters}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] transition-colors duration-200 cursor-pointer"
-          >
-            <X className="w-3.5 h-3.5" />
-            Clear
-          </button>
+        <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-[var(--muted)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] overflow-hidden">
+          {caseStudy.description}
+        </p>
+
+        {caseStudy.stats && caseStudy.stats.length > 0 && (
+          <div className="mt-6 flex flex-wrap gap-x-10 gap-y-3">
+            {caseStudy.stats.slice(0, 2).map((stat) => (
+              <div key={stat.label}>
+                <p className="mono-stat text-xl">{stat.value}</p>
+                <p className="mono-label mt-0.5">{stat.label}</p>
+              </div>
+            ))}
+          </div>
         )}
 
-        <span className="ml-auto text-sm text-[var(--muted)]">
-          {filteredStudies.length} project
-          {filteredStudies.length !== 1 ? "s" : ""}
+        <p className="mono-meta mt-6 text-xs">
+          {caseStudy.technologies.slice(0, 6).join(" · ")}
+        </p>
+
+        <p className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+          Read case study
+          <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
+        </p>
+      </div>
+
+      {diagram && (
+        <div className="hidden rounded-md border border-[var(--border)] bg-[var(--background)] p-4 md:block">
+          {diagram}
+        </div>
+      )}
+    </Link>
+  );
+}
+
+function IndexRow({ caseStudy }: { caseStudy: CaseStudy }) {
+  return (
+    <Link
+      href={`/case-studies/${caseStudy.slug}`}
+      className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-[var(--border)] px-2 py-5 transition-colors duration-150 hover:bg-[var(--surface-1)] sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto_auto] sm:gap-6"
+    >
+      <span className="truncate text-[0.9375rem] font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+        {caseStudy.title}
+      </span>
+      <span className="hidden truncate text-sm text-[var(--muted)] sm:block">
+        {caseStudy.description}
+      </span>
+      <span className="mono-label hidden items-center gap-2 md:flex">
+        <TypeDot projectType={caseStudy.projectType} />
+        {caseStudy.category}
+      </span>
+      <span className="flex items-center gap-4">
+        <span className="mono-meta hidden text-xs sm:block">
+          {caseStudy.duration}
+        </span>
+        <ArrowRight className="h-4 w-4 text-[var(--faint)] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" />
+      </span>
+    </Link>
+  );
+}
+
+export function CaseStudiesGrid() {
+  const [activeFilter, setActiveFilter] = useState<FilterOption>("all");
+
+  const filtered = useMemo(() => {
+    if (activeFilter === "all") return caseStudies;
+    return caseStudies.filter((cs) => cs.projectType === activeFilter);
+  }, [activeFilter]);
+
+  const featured = filtered.filter((cs) => cs.featured);
+  const rest = filtered.filter((cs) => !cs.featured);
+
+  return (
+    <div>
+      {/* Filter tabs */}
+      <div className="flex flex-wrap items-center gap-6 border-b border-[var(--border)] pb-4">
+        {filterOptions.map((option) => {
+          const active = activeFilter === option.value;
+          return (
+            <button
+              key={option.value}
+              onClick={() => setActiveFilter(option.value)}
+              className={`mono-label flex cursor-pointer items-center gap-2 transition-colors duration-150 ${
+                active
+                  ? "text-[var(--foreground)]"
+                  : "hover:text-[var(--foreground)]"
+              }`}
+            >
+              {active && (
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
+                />
+              )}
+              {option.label}
+            </button>
+          );
+        })}
+        <span className="mono-label ml-auto">
+          {filtered.length} project{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
 
-      {/* Case Studies Grid */}
-      {filteredStudies.length > 0 ? (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-          {filteredStudies.map((caseStudy) => (
-            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-          ))}
-        </div>
+      {filtered.length > 0 ? (
+        <>
+          {/* Featured panels */}
+          {featured.length > 0 && (
+            <div className="mt-8 space-y-6">
+              {featured.map((cs) => (
+                <FeaturedPanel key={cs.slug} caseStudy={cs} />
+              ))}
+            </div>
+          )}
+
+          {/* Compact index */}
+          {rest.length > 0 && (
+            <div className="mt-10">
+              <p className="mono-label mb-2 px-2">More work</p>
+              <div className="border-t border-[var(--border)]">
+                {rest.map((cs) => (
+                  <IndexRow key={cs.slug} caseStudy={cs} />
+                ))}
+              </div>
+            </div>
+          )}
+        </>
       ) : (
-        /* Empty State */
-        <div className="flex flex-col items-center justify-center py-16 px-4">
-          <div className="w-16 h-16 mb-4 rounded-full bg-[var(--border)]/50 flex items-center justify-center">
-            <Search className="w-7 h-7 text-[var(--muted)]" />
-          </div>
-          <h3 className="text-lg font-medium text-[var(--foreground)] mb-2">
-            No case studies found
-          </h3>
-          <p className="text-sm text-[var(--muted)] text-center mb-4 max-w-sm">
-            Try adjusting your filters or search query to find what you&apos;re
-            looking for.
-          </p>
+        /* Empty state */
+        <div className="flex items-center gap-3 py-12">
+          <span className="mono-label">No matches</span>
+          <span aria-hidden="true" className="mono-label">/</span>
           <button
-            onClick={clearAllFilters}
-            className="px-4 py-2 text-sm font-medium text-[var(--accent)] hover:text-[var(--accent-foreground)] hover:bg-[var(--accent)] border border-[var(--accent)] rounded-lg transition-all duration-200 cursor-pointer"
+            onClick={() => setActiveFilter("all")}
+            className="mono-label cursor-pointer text-[var(--accent)] transition-colors duration-150 hover:text-[var(--accent-hover)]"
           >
-            Clear all filters
+            Clear filter
           </button>
         </div>
       )}

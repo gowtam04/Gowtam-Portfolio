@@ -1,86 +1,70 @@
-import { Mail, Linkedin, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { SectionHeading } from "./SectionHeading";
+import { Reveal } from "./Reveal";
 
-function XLogo({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-      className={className}
-    >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
+const channels = [
+  {
+    label: "Email",
+    value: "gowtam@gowtam.ai",
+    href: "mailto:gowtam@gowtam.ai",
+    external: false,
+  },
+  {
+    label: "X",
+    value: "x.com/gowtam",
+    href: "https://x.com/gowtam",
+    external: true,
+  },
+  {
+    label: "LinkedIn",
+    value: "linkedin.com/in/gowtam-ramanujam",
+    href: "https://linkedin.com/in/gowtam-ramanujam",
+    external: true,
+  },
+];
 
 export function Contact() {
   return (
-    <section id="contact" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
-        {/* Section Header */}
-        <div className="max-w-2xl">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--foreground)] mb-4 tracking-tight">
-            Let&apos;s Connect
-          </h2>
-          <p className="text-lg text-[var(--muted)] mb-12">
-            Open to AI architecture engagements, full-time roles, or conversations about agentic systems and production AI.
+    <section id="contact" className="scroll-mt-24 px-6 py-24">
+      <div className="mx-auto max-w-5xl">
+        <Reveal>
+          <SectionHeading
+            index="05"
+            label="Contact"
+            title="Let's Connect"
+            lede="Open to AI architecture engagements, full-time roles, or conversations about agentic systems and production AI."
+          />
+        </Reveal>
+
+        <Reveal delay={60}>
+          <p className="mono-label mb-8 flex items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
+            />
+            Open to engagements and full-time roles
           </p>
-        </div>
 
-        {/* Contact Links */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <a
-            href="mailto:gowtam@gowtam.ai"
-            className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)]/20 transition-colors">
-                <Mail className="w-6 h-6 text-[var(--accent)]" />
-              </div>
-              <div>
-                <p className="font-medium text-[var(--foreground)]">Email</p>
-                <p className="text-sm text-[var(--muted)]">gowtam@gowtam.ai</p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
-          </a>
-
-          <a
-            href="https://x.com/gowtam"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)]/20 transition-colors">
-                <XLogo className="w-5 h-5 text-[var(--accent)]" />
-              </div>
-              <div>
-                <p className="font-medium text-[var(--foreground)]">X</p>
-                <p className="text-sm text-[var(--muted)]">x.com/gowtam</p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
-          </a>
-
-          <a
-            href="https://linkedin.com/in/gowtam-ramanujam"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex items-center justify-between p-6 rounded-xl border border-[var(--border)] hover:border-[var(--accent)] transition-all duration-300 flex-1 max-w-sm"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-[var(--accent)]/10 flex items-center justify-center group-hover:bg-[var(--accent)]/20 transition-colors">
-                <Linkedin className="w-6 h-6 text-[var(--accent)]" />
-              </div>
-              <div>
-                <p className="font-medium text-[var(--foreground)]">LinkedIn</p>
-                <p className="text-sm text-[var(--muted)]">linkedin.com/in/gowtam-ramanujam</p>
-              </div>
-            </div>
-            <ArrowUpRight className="w-5 h-5 text-[var(--muted)] group-hover:text-[var(--accent)] transition-colors" />
-          </a>
-        </div>
+          {/* Channels */}
+          <div className="border-t border-[var(--border)]">
+            {channels.map((channel) => (
+              <a
+                key={channel.label}
+                href={channel.href}
+                {...(channel.external
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+                className="group grid grid-cols-[96px_1fr_auto] items-center gap-4 border-b border-[var(--border)] px-2 py-5 transition-colors duration-150 hover:bg-[var(--surface-1)] sm:grid-cols-[140px_1fr_auto]"
+              >
+                <span className="mono-label">{channel.label}</span>
+                <span className="truncate text-sm font-medium text-[var(--foreground)]">
+                  {channel.value}
+                </span>
+                <ArrowUpRight className="h-4 w-4 text-[var(--faint)] transition-all duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--accent)]" />
+              </a>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,10 +1,18 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Briefcase, Clock, ExternalLink } from "lucide-react";
-import { getCaseStudy, getAllCaseStudySlugs, CaseStudy } from "@/lib/case-studies";
+import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
+import {
+  caseStudies,
+  getCaseStudy,
+  getAllCaseStudySlugs,
+  CaseStudy,
+} from "@/lib/case-studies";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CaseStudyBody } from "@/components/CaseStudyBody";
+import { CaseStudyToc } from "@/components/CaseStudyToc";
+import { CountUp } from "@/components/CountUp";
+import { getDiagram } from "@/components/diagrams";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -113,6 +121,18 @@ function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
   };
 }
 
+function SectionHeader({ index, title }: { index: string; title: string }) {
+  return (
+    <div className="mb-6 flex items-center gap-4">
+      <span className="mono-label text-[var(--accent)]">{index}</span>
+      <h2 className="text-xl font-semibold tracking-[-0.01em] text-[var(--foreground)]">
+        {title}
+      </h2>
+      <span aria-hidden="true" className="h-px flex-1 bg-[var(--border)]" />
+    </div>
+  );
+}
+
 export default async function CaseStudyPage({ params }: PageProps) {
   const { slug } = await params;
   const caseStudy = getCaseStudy(slug);
@@ -123,6 +143,17 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
   const articleJsonLd = generateArticleJsonLd(caseStudy, slug);
   const breadcrumbJsonLd = generateBreadcrumbJsonLd(caseStudy, slug);
+  const diagram = getDiagram(slug);
+
+  const index = caseStudies.findIndex((cs) => cs.slug === slug);
+  const prev = index > 0 ? caseStudies[index - 1] : null;
+  const next = index < caseStudies.length - 1 ? caseStudies[index + 1] : null;
+
+  const externalCta = caseStudy.externalLink
+    ? { url: caseStudy.externalLink.url, label: caseStudy.externalLink.label }
+    : caseStudy.appStoreUrl
+      ? { url: caseStudy.appStoreUrl, label: "Download on the App Store" }
+      : null;
 
   return (
     <>
@@ -135,144 +166,209 @@ export default async function CaseStudyPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <Header />
-      <main className="pt-24 pb-16 px-6">
-        <article className="max-w-3xl mx-auto">
-          {/* Back Link */}
-          <Link
-            href="/#case-studies"
-            className="inline-flex items-center gap-2 text-[var(--muted)] hover:text-[var(--foreground)] transition-colors mb-8"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm">Back to Case Studies</span>
-          </Link>
+      <main className="px-6 pb-16 pt-28">
+        <div className="relative mx-auto max-w-3xl">
+          <CaseStudyToc />
 
-          {/* Header */}
-          <header className="mb-12">
-            <span className="inline-block px-3 py-1 text-xs font-medium text-[var(--accent)] bg-[var(--accent)]/10 rounded-full mb-4">
-              {caseStudy.category}
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--foreground)] mb-6 tracking-tight leading-tight">
-              {caseStudy.title}
-            </h1>
-            <p className="text-lg text-[var(--muted)] leading-relaxed">
-              {caseStudy.description}
-            </p>
-
-            {/* App Store Button */}
-            {caseStudy.appStoreUrl && (
-              <a
-                href={caseStudy.appStoreUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-lg font-medium text-sm hover:opacity-90 transition-opacity"
+          <article>
+            {/* Breadcrumb */}
+            <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2">
+              <Link
+                href="/#case-studies"
+                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                </svg>
-                Download on the App Store
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
+                Work
+              </Link>
+              <span aria-hidden="true" className="mono-label">
+                /
+              </span>
+              <span className="mono-label text-[var(--foreground)]">
+                {caseStudy.title}
+              </span>
+            </nav>
 
-            {/* External Link Button */}
-            {caseStudy.externalLink && (
-              <a
-                href={caseStudy.externalLink.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-[var(--foreground)] text-[var(--background)] rounded-lg font-medium text-sm hover:opacity-90 transition-opacity"
-              >
-                {caseStudy.externalLink.label}
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
+            {/* Header */}
+            <header>
+              <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--foreground)] sm:text-5xl">
+                {caseStudy.title}
+              </h1>
+              <p className="mt-5 max-w-[62ch] text-lg leading-relaxed text-[var(--muted)]">
+                {caseStudy.description}
+              </p>
 
-            {/* Meta Info */}
-            <div className="flex flex-wrap gap-6 mt-8 pt-8 border-t border-[var(--border)]">
-              <div className="flex items-center gap-2">
-                <Briefcase className="w-4 h-4 text-[var(--muted)]" />
-                <span className="text-sm text-[var(--muted)]">{caseStudy.role}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[var(--muted)]" />
-                <span className="text-sm text-[var(--muted)]">{caseStudy.duration}</span>
-              </div>
+              {externalCta && (
+                <a
+                  href={externalCta.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-7 inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-foreground)] transition-colors duration-150 hover:bg-[var(--accent-hover)]"
+                >
+                  {externalCta.label}
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              )}
+
+              {/* Metadata band */}
+              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-[var(--border)] py-5 lg:grid-cols-4">
+                <div>
+                  <dt className="mono-label">Role</dt>
+                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                    {caseStudy.role}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="mono-label">Year</dt>
+                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                    {caseStudy.duration}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="mono-label">Type</dt>
+                  <dd className="mono-meta mt-1.5 flex items-center gap-2 text-[var(--foreground)]">
+                    <span
+                      aria-hidden="true"
+                      className={`inline-block h-1.5 w-1.5 rounded-full ${
+                        caseStudy.projectType === "professional"
+                          ? "bg-[var(--accent)]"
+                          : "bg-[var(--faint)]"
+                      }`}
+                    />
+                    {caseStudy.projectType === "independent"
+                      ? "Independent"
+                      : "Professional"}
+                  </dd>
+                </div>
+                <div>
+                  <dt className="mono-label">
+                    {caseStudy.clientName ? "Client" : "Category"}
+                  </dt>
+                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                    {caseStudy.clientName ?? caseStudy.category}
+                  </dd>
+                </div>
+                <div className="col-span-2 lg:col-span-4">
+                  <dt className="mono-label">Stack</dt>
+                  <dd className="mono-meta mt-1.5">
+                    {caseStudy.technologies.join(" · ")}
+                  </dd>
+                </div>
+              </dl>
+
+              {/* Outcome stat band */}
+              {caseStudy.stats && caseStudy.stats.length > 0 && (
+                <div
+                  className={`grid grid-cols-2 gap-x-6 gap-y-8 border-b border-[var(--border)] py-8 ${
+                    caseStudy.stats.length === 3
+                      ? "sm:grid-cols-3"
+                      : caseStudy.stats.length >= 4
+                        ? "sm:grid-cols-4"
+                        : ""
+                  }`}
+                >
+                  {caseStudy.stats.map((stat) => (
+                    <div key={stat.label}>
+                      <CountUp
+                        value={stat.value}
+                        className="mono-stat block text-3xl sm:text-4xl"
+                      />
+                      <p className="mono-label mt-2">{stat.label}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </header>
+
+            {/* Content */}
+            <div className="mt-16 space-y-16">
+              <section id="overview" className="scroll-mt-28">
+                <SectionHeader index="01" title="Overview" />
+                <CaseStudyBody content={caseStudy.overview} />
+              </section>
+
+              <section id="challenge" className="scroll-mt-28">
+                <SectionHeader index="02" title="The Challenge" />
+                <CaseStudyBody content={caseStudy.challenge} />
+              </section>
+
+              <section id="solution" className="scroll-mt-28">
+                <SectionHeader index="03" title="The Solution" />
+                {diagram && (
+                  <figure className="mb-8 rounded-lg border border-[var(--border)] bg-[var(--surface-1)] p-5 sm:p-7">
+                    {diagram}
+                    <figcaption className="mono-label mt-4">
+                      {caseStudy.title} / system architecture
+                    </figcaption>
+                  </figure>
+                )}
+                <CaseStudyBody content={caseStudy.solution} />
+              </section>
+
+              <section id="results" className="scroll-mt-28">
+                <SectionHeader index="04" title="Results & Impact" />
+                <ul className="space-y-3">
+                  {caseStudy.results.map((result, index) => (
+                    <li
+                      key={index}
+                      className="flex items-start gap-3 text-[var(--muted)]"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="mt-[0.7em] h-px w-3 flex-shrink-0 bg-[var(--accent)]"
+                      />
+                      <span className="leading-[1.65]">{result}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {caseStudy.testimonial && (
+                  <blockquote className="mt-10 rounded-lg border-l-2 border-[var(--accent)] bg-[var(--surface-1)] p-6">
+                    <p className="leading-relaxed text-[var(--foreground)]">
+                      &ldquo;{caseStudy.testimonial}&rdquo;
+                    </p>
+                    {caseStudy.clientName && (
+                      <footer className="mono-label mt-4">
+                        {caseStudy.clientName}
+                      </footer>
+                    )}
+                  </blockquote>
+                )}
+              </section>
             </div>
-          </header>
 
-          {/* Content */}
-          <div className="space-y-16">
-            {/* Overview */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
-                Overview
-              </h2>
-              <CaseStudyBody content={caseStudy.overview} />
-            </section>
-
-            {/* Challenge */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
-                The Challenge
-              </h2>
-              <CaseStudyBody content={caseStudy.challenge} />
-            </section>
-
-            {/* Solution */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
-                The Solution
-              </h2>
-              <CaseStudyBody content={caseStudy.solution} />
-            </section>
-
-            {/* Results */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
-                Results & Impact
-              </h2>
-              <ul className="space-y-3">
-                {caseStudy.results.map((result, index) => (
-                  <li
-                    key={index}
-                    className="flex items-start gap-3 text-[var(--foreground)]"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-[var(--accent)] mt-2 flex-shrink-0" />
-                    <span className="leading-relaxed">{result}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            {/* Technologies */}
-            <section>
-              <h2 className="text-2xl font-semibold text-[var(--foreground)] mb-4">
-                Technologies & Tools
-              </h2>
-              <div className="flex flex-wrap gap-2">
-                {caseStudy.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1.5 text-sm border border-[var(--border)] rounded-lg text-[var(--foreground)]"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </section>
-          </div>
-
-          {/* Navigation */}
-          <div className="mt-16 pt-8 border-t border-[var(--border)]">
-            <Link
-              href="/#case-studies"
-              className="inline-flex items-center gap-2 text-[var(--accent)] hover:gap-3 transition-all"
+            {/* Prev / next navigation */}
+            <nav
+              aria-label="Case study navigation"
+              className="mt-20 grid grid-cols-2 gap-6 border-t border-[var(--border)] pt-8"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>View All Case Studies</span>
-            </Link>
-          </div>
-        </article>
+              <div>
+                {prev && (
+                  <Link href={`/case-studies/${prev.slug}`} className="group inline-block">
+                    <p className="mono-label flex items-center gap-2">
+                      <ArrowLeft className="h-3 w-3 transition-transform duration-150 group-hover:-translate-x-0.5" />
+                      Previous
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+                      {prev.title}
+                    </p>
+                  </Link>
+                )}
+              </div>
+              <div className="text-right">
+                {next && (
+                  <Link href={`/case-studies/${next.slug}`} className="group inline-block">
+                    <p className="mono-label flex items-center justify-end gap-2">
+                      Next
+                      <ArrowRight className="h-3 w-3 transition-transform duration-150 group-hover:translate-x-0.5" />
+                    </p>
+                    <p className="mt-2 text-sm font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+                      {next.title}
+                    </p>
+                  </Link>
+                )}
+              </div>
+            </nav>
+          </article>
+        </div>
       </main>
       <Footer />
     </>

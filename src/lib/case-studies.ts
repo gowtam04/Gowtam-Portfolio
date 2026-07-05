@@ -13,6 +13,11 @@ export interface CaseStudySectionContent {
 
 export type CaseStudySection = string | CaseStudySectionContent;
 
+export interface CaseStudyStat {
+  value: string;
+  label: string;
+}
+
 export interface CaseStudy {
   slug: string;
   title: string;
@@ -26,6 +31,10 @@ export interface CaseStudy {
   results: string[];
   technologies: string[];
   projectType: ProjectType;
+  /** Featured studies render as large panels at the top of the work grid */
+  featured?: boolean;
+  /** Quantified outcomes shown as a stat band on the detail page */
+  stats?: CaseStudyStat[];
   appStoreUrl?: string;
   externalLink?: {
     url: string;
@@ -112,6 +121,12 @@ export const caseStudies: CaseStudy[] = [
       "Fly.io",
     ],
     projectType: "independent",
+    featured: true,
+    stats: [
+      { value: "14", label: "Reasoning tools" },
+      { value: "3", label: "Drop-in LLM providers" },
+      { value: "100%", label: "Answers cited" },
+    ],
     externalLink: {
       url: "https://oak.gowtam.ai",
       label: "Try Oak",
@@ -206,6 +221,13 @@ export const caseStudies: CaseStudy[] = [
       "pytest",
     ],
     projectType: "professional",
+    featured: true,
+    stats: [
+      { value: "0", label: "Hallucinated media URLs" },
+      { value: "3", label: "Embed modes" },
+      { value: "0", label: "Downtime on index updates" },
+      { value: "24/7", label: "Patient availability" },
+    ],
     clientName: "Advanced Cosmetic Surgery",
     externalLink: {
       url: "https://annie.351face.com",
@@ -238,6 +260,10 @@ export const caseStudies: CaseStudy[] = [
     ],
     technologies: ["Claude AI", "Claude Code", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
     projectType: 'independent',
+    stats: [
+      { value: "16", label: "Home screen widgets" },
+      { value: "Live", label: "On the App Store" },
+    ],
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
   {
@@ -290,6 +316,11 @@ export const caseStudies: CaseStudy[] = [
     ],
     technologies: ["Claude Code", "Next.js", "TypeScript", "Material UI", "Google Gemini", "Sharp", "Archiver"],
     projectType: "independent",
+    stats: [
+      { value: "50+", label: "Icon variants per export" },
+      { value: "3", label: "Platforms covered" },
+      { value: "4", label: "Logo styles" },
+    ],
     externalLink: {
       url: "https://logoforge.gowtam.ai",
       label: "View LogoForge",
@@ -434,6 +465,10 @@ export const caseStudies: CaseStudy[] = [
       "Enterprise Software",
     ],
     projectType: "professional",
+    stats: [
+      { value: "10,000+", label: "Samples per day" },
+      { value: "100s", label: "Daily active users" },
+    ],
   },
   {
     slug: "dmepos-order-management",
@@ -561,6 +596,9 @@ export const caseStudies: CaseStudy[] = [
       "AI/ML",
     ],
     projectType: "professional",
+    stats: [
+      { value: "1,000+", label: "Applicants screened per posting" },
+    ],
   },
   {
     slug: "paraverse",
@@ -656,6 +694,11 @@ export const caseStudies: CaseStudy[] = [
       "Multi-Agent Systems",
     ],
     projectType: "independent",
+    stats: [
+      { value: "38", label: "Tools across agents" },
+      { value: "4", label: "Specialized agents" },
+      { value: "223", label: "Maps navigated" },
+    ],
     externalLink: {
       url: "https://github.com/gowtam04/Agent_RED",
       label: "View on GitHub",
