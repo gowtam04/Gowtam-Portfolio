@@ -1,207 +1,278 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const MONO = "var(--font-plex-mono), ui-monospace, monospace";
 
-function NodeLabel({
-  x,
-  y,
-  children,
-  size = 11,
-  fill = "var(--muted)",
-  delay,
-}: {
-  x: number;
-  y: number;
-  children: React.ReactNode;
-  size?: number;
-  fill?: string;
-  delay: number;
-}) {
-  return (
-    <text
-      x={x}
-      y={y}
-      textAnchor="middle"
-      fontFamily={MONO}
-      fontSize={size}
-      fontWeight={500}
-      letterSpacing="0.08em"
-      fill={fill}
-      className="draw-fade"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {children}
-    </text>
-  );
-}
+/* Production tool names; do not invent others (docs/design/hero-tool-orbit-spec.md) */
+const TOOLS = [
+  "resolve_entity",
+  "get_pokemon",
+  "get_move",
+  "estimate_damage",
+  "run_sql",
+  "search_wiki",
+  "get_learnset",
+  "compute_stat",
+  "get_usage_stats",
+  "get_encounters",
+];
+
+/* Fixed visit order: resolve_entity, run_sql, estimate_damage, compute_stat, search_wiki */
+const VISIT_ORDER = [0, 4, 3, 7, 5];
+
+const CX = 226;
+const CY = 180;
+const RX = 118;
+const RY = 112;
+
+/* Deterministic orbit layout at module scope: SSR-safe, no runtime measurement */
+const NODES = TOOLS.map((name, i) => {
+  const angle = ((i * 36 - 90) * Math.PI) / 180;
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  const x = Math.round(CX + RX * cos);
+  const y = Math.round(CY + RY * sin);
+  let anchor: "start" | "middle" | "end";
+  let lx = x;
+  let ly = y;
+  if (Math.abs(cos) < 0.35) {
+    anchor = "middle";
+    ly = sin < 0 ? y - 12 : y + 20;
+  } else if (cos > 0) {
+    anchor = "start";
+    lx = x + 9;
+    ly = y + 3.5;
+  } else {
+    anchor = "end";
+    lx = x - 9;
+    ly = y + 3.5;
+  }
+  return { name, x, y, anchor, lx, ly };
+});
 
 /**
- * The site's one animated flourish: Oak's real agent loop, drawn as a
- * hairline schematic. Connectors trace in, nodes and labels fade in after.
+ * The hero's one animated flourish, v2 "tool orbit": Oak's agent core with
+ * its real tools in orbit. After the draw-in, one spoke per loop iteration
+ * goes hot and pulses toward the core; the cycle ends on a schema pass and
+ * the cited answer lighting up. Purely decorative; reduced motion renders
+ * the final state statically.
  */
 export function HeroSchematic() {
+  const [step, setStep] = useState<number | null>(null);
+
+  useEffect(() => {
+    const reduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const timeout = setTimeout(
+      () => {
+        if (reduced) {
+          setStep(5);
+          return;
+        }
+        setStep(0);
+        interval = setInterval(
+          () => setStep((s) => (s === null ? 0 : (s + 1) % 6)),
+          1400
+        );
+      },
+      reduced ? 0 : 1700
+    );
+    return () => {
+      clearTimeout(timeout);
+      if (interval) clearInterval(interval);
+    };
+  }, []);
+
+  const looping = step !== null;
+  const hotIndex = step !== null && step < 5 ? VISIT_ORDER[step] : null;
+  const submitted = step === 5;
+  const status =
+    step === null || step < 5 ? `ITERATION ${(step ?? 0) + 1}` : "SUBMIT_ANSWER";
+
   return (
     <svg
-      viewBox="0 0 360 452"
+      viewBox="0 0 452 466"
       role="img"
-      aria-label="Agent architecture schematic: a user query flows through a reasoning tool loop and schema validation to a cited answer with uncertainty surfaced"
+      aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a schema-validated, cited answer"
       className="h-auto w-full max-w-[320px]"
     >
-      {/* Node: user query */}
+      {/* Spokes (under the core so they visually start at its edge) */}
+      {NODES.map((node, i) => {
+        const hot = hotIndex === i;
+        return (
+          <line
+            key={node.name}
+            x1={node.x}
+            y1={node.y}
+            x2={CX}
+            y2={CY}
+            stroke={hot ? "var(--accent)" : "var(--border-strong)"}
+            strokeWidth={1}
+            {...(looping
+              ? hot
+                ? { strokeDasharray: "4 4", className: "dashflow" }
+                : {}
+              : {
+                  pathLength: 1,
+                  className: "draw-path",
+                  style: { animationDelay: `${250 + i * 40}ms` },
+                })}
+          />
+        );
+      })}
+
+      {/* Agent core */}
       <rect
-        x={64}
-        y={16}
-        width={200}
-        height={40}
+        x={CX - 75}
+        y={148}
+        width={150}
+        height={64}
         rx={6}
         fill="var(--surface-1)"
         stroke="var(--border-strong)"
         className="draw-fade"
         style={{ animationDelay: "100ms" }}
       />
-      <NodeLabel x={164} y={40} delay={200}>
-        USER QUERY
-      </NodeLabel>
+      <g className="draw-fade" style={{ animationDelay: "200ms" }}>
+        <text
+          x={CX}
+          y={167}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={11}
+          fontWeight={500}
+          letterSpacing="0.08em"
+          fill="var(--foreground)"
+        >
+          AGENT
+        </text>
+        <text
+          x={CX}
+          y={182}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={9}
+          letterSpacing="0.08em"
+          fill="var(--faint)"
+        >
+          REASONING TOOL LOOP
+        </text>
+        <text
+          x={CX}
+          y={199}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={9}
+          letterSpacing="0.08em"
+          fill="var(--accent)"
+          style={{ fontVariantNumeric: "tabular-nums" }}
+        >
+          {status}
+        </text>
+      </g>
 
-      {/* Connector: query to agent */}
-      <path
-        d="M164 56 V90 M158 84 L164 90 L170 84"
-        fill="none"
-        stroke="var(--border-strong)"
-        strokeWidth={1}
-        pathLength={1}
-        className="draw-path"
-        style={{ animationDelay: "250ms" }}
-      />
+      {/* Tool dots + labels */}
+      {NODES.map((node, i) => {
+        const hot = hotIndex === i;
+        const color = hot ? "var(--accent)" : "var(--faint)";
+        return (
+          <g
+            key={node.name}
+            className="draw-fade"
+            style={{ animationDelay: `${350 + i * 40}ms` }}
+          >
+            <circle cx={node.x} cy={node.y} r={3} fill={color} />
+            <text
+              x={node.lx}
+              y={node.ly}
+              textAnchor={node.anchor}
+              fontFamily={MONO}
+              fontSize={10}
+              letterSpacing="0.08em"
+              fill={color}
+            >
+              {node.name}
+            </text>
+          </g>
+        );
+      })}
 
-      {/* Node: agent tool loop */}
-      <rect
-        x={64}
-        y={96}
-        width={200}
-        height={72}
-        rx={6}
-        fill="var(--surface-1)"
-        stroke="var(--border-strong)"
-        className="draw-fade"
-        style={{ animationDelay: "350ms" }}
-      />
-      <NodeLabel x={164} y={128} fill="var(--foreground)" delay={450}>
-        AGENT
-      </NodeLabel>
-      <NodeLabel x={164} y={148} size={9} fill="var(--faint)" delay={450}>
-        REASONING TOOL LOOP
-      </NodeLabel>
+      {/* Output row: schema gate + the cited-answer redline moment */}
+      <g className="draw-fade" style={{ animationDelay: "800ms" }}>
+        <rect
+          x={60}
+          y={344}
+          width={92}
+          height={40}
+          rx={6}
+          fill="none"
+          stroke={submitted ? "var(--border-strong)" : "var(--border)"}
+        />
+        <text
+          x={106}
+          y={368}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={9}
+          letterSpacing="0.08em"
+          fill={submitted ? "var(--foreground)" : "var(--faint)"}
+        >
+          SCHEMA ✓
+        </text>
 
-      {/* Tool-loop arc with arrowhead */}
-      <path
-        d="M264 118 C300 118 300 146 264 146 M270 140 L264 146 L270 152"
-        fill="none"
-        stroke="var(--faint)"
-        strokeWidth={1}
-        pathLength={1}
-        className="draw-path"
-        style={{ animationDelay: "500ms" }}
-      />
-      <NodeLabel x={318} y={110} size={9} fill="var(--faint)" delay={650}>
-        ×14
-      </NodeLabel>
+        <rect
+          x={164}
+          y={344}
+          width={228}
+          height={40}
+          rx={6}
+          fill={submitted ? "var(--accent-subtle)" : "none"}
+          stroke={submitted ? "var(--accent)" : "var(--border)"}
+          strokeDasharray={submitted ? undefined : "4 4"}
+        />
+        <text
+          x={278}
+          y={361}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={10.5}
+          fontWeight={500}
+          letterSpacing="0.08em"
+          fill={submitted ? "var(--foreground)" : "var(--faint)"}
+        >
+          CITED ANSWER
+        </text>
+        <text
+          x={278}
+          y={375}
+          textAnchor="middle"
+          fontFamily={MONO}
+          fontSize={8}
+          letterSpacing="0.08em"
+          fill={submitted ? "var(--accent)" : "var(--faint)"}
+        >
+          UNCERTAINTY SURFACED
+        </text>
+      </g>
 
-      {/* Connector: agent to validation */}
-      <path
-        d="M164 168 V202 M158 196 L164 202 L170 196"
-        fill="none"
-        stroke="var(--border-strong)"
-        strokeWidth={1}
-        pathLength={1}
-        className="draw-path"
-        style={{ animationDelay: "550ms" }}
-      />
-
-      {/* Node: schema validation */}
-      <rect
-        x={64}
-        y={208}
-        width={200}
-        height={40}
-        rx={6}
-        fill="var(--surface-1)"
-        stroke="var(--border-strong)"
-        className="draw-fade"
-        style={{ animationDelay: "650ms" }}
-      />
-      <NodeLabel x={164} y={232} delay={750}>
-        SCHEMA VALIDATION
-      </NodeLabel>
-
-      {/* Retry loop back to the agent (dashed) */}
-      <path
-        d="M64 228 H40 V132 H58 M52 126 L58 132 L52 138"
-        fill="none"
-        stroke="var(--faint)"
-        strokeWidth={1}
-        strokeDasharray="3 3"
-        className="draw-fade"
-        style={{ animationDelay: "800ms" }}
-      />
-      <text
-        x={32}
-        y={186}
-        textAnchor="middle"
-        fontFamily={MONO}
-        fontSize={9}
-        letterSpacing="0.08em"
-        fill="var(--faint)"
-        transform="rotate(-90 32 186)"
-        className="draw-fade"
-        style={{ animationDelay: "800ms" }}
-      >
-        RETRY
-      </text>
-
-      {/* Connector: validation to answer */}
-      <path
-        d="M164 248 V282 M158 276 L164 282 L170 276"
-        fill="none"
-        stroke="var(--border-strong)"
-        strokeWidth={1}
-        pathLength={1}
-        className="draw-path"
-        style={{ animationDelay: "850ms" }}
-      />
-
-      {/* Node: cited answer (the redline moment) */}
-      <rect
-        x={64}
-        y={288}
-        width={200}
-        height={56}
-        rx={6}
-        fill="var(--accent-subtle)"
-        stroke="var(--accent)"
-        className="draw-fade"
-        style={{ animationDelay: "950ms" }}
-      />
-      <NodeLabel x={164} y={312} fill="var(--foreground)" delay={1050}>
-        CITED ANSWER
-      </NodeLabel>
-      <NodeLabel x={164} y={330} size={9} fill="var(--accent)" delay={1050}>
-        UNCERTAINTY SURFACED
-      </NodeLabel>
-
-      {/* Provider chips: model-agnostic footing */}
+      {/* Provider chips: model-agnostic footing (unchanged from v1) */}
       {[
-        { x: 64, w: 62, label: "GROK", cx: 95 },
-        { x: 134, w: 62, label: "CLAUDE", cx: 165 },
-        { x: 204, w: 62, label: "GPT-5.5", cx: 235 },
+        { x: 125, label: "GROK", cx: 156 },
+        { x: 195, label: "CLAUDE", cx: 226 },
+        { x: 265, label: "GPT-5.5", cx: 296 },
       ].map((chip) => (
         <g
           key={chip.label}
           className="draw-fade"
-          style={{ animationDelay: "1150ms" }}
+          style={{ animationDelay: "1000ms" }}
         >
           <rect
             x={chip.x}
-            y={382}
-            width={chip.w}
+            y={414}
+            width={62}
             height={26}
             rx={4}
             fill="none"
@@ -209,7 +280,7 @@ export function HeroSchematic() {
           />
           <text
             x={chip.cx}
-            y={399}
+            y={431}
             textAnchor="middle"
             fontFamily={MONO}
             fontSize={9}
@@ -220,9 +291,19 @@ export function HeroSchematic() {
           </text>
         </g>
       ))}
-      <NodeLabel x={164} y={438} size={9} fill="var(--faint)" delay={1250}>
+      <text
+        x={CX}
+        y={460}
+        textAnchor="middle"
+        fontFamily={MONO}
+        fontSize={9}
+        letterSpacing="0.08em"
+        fill="var(--faint)"
+        className="draw-fade"
+        style={{ animationDelay: "1100ms" }}
+      >
         MODEL-AGNOSTIC · HOT-SWAP
-      </NodeLabel>
+      </text>
     </svg>
   );
 }

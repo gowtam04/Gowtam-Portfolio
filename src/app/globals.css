@@ -199,6 +199,17 @@ body {
   animation: fade-in 0.4s ease both;
 }
 
+/* Tool-orbit loop: hot spokes march their dashes toward the agent core */
+@keyframes dashflow {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+.dashflow {
+  animation: dashflow 0.5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -219,5 +230,9 @@ body {
   .draw-path {
     animation: none;
     stroke-dashoffset: 0;
+  }
+
+  .dashflow {
+    animation: none;
   }
 }
