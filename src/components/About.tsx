@@ -4,7 +4,7 @@ import { Reveal } from "./Reveal";
 import { CountUp } from "./CountUp";
 
 const selectedProof = [
-  "Architected and shipped agentic systems: Oak, Annie ACS, Agent RED",
+  "Architected and shipped agentic systems: Oak and Annie ACS",
   "Enterprise AI deployed to production for clients across healthcare, finance, and recruiting",
   "3 iOS applications published to the App Store",
   "Co-founded a game studio whose first title passed 500,000 downloads",
