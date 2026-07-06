@@ -94,7 +94,7 @@ export function HeroSchematic() {
 
   return (
     <svg
-      viewBox="0 0 452 466"
+      viewBox="0 0 452 400"
       role="img"
       aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a schema-validated, cited answer"
       className="h-auto w-full max-w-[420px]"
@@ -258,52 +258,6 @@ export function HeroSchematic() {
         </text>
       </g>
 
-      {/* Provider chips: model-agnostic footing (unchanged from v1) */}
-      {[
-        { x: 125, label: "GROK", cx: 156 },
-        { x: 195, label: "CLAUDE", cx: 226 },
-        { x: 265, label: "GPT-5.5", cx: 296 },
-      ].map((chip) => (
-        <g
-          key={chip.label}
-          className="draw-fade"
-          style={{ animationDelay: "1000ms" }}
-        >
-          <rect
-            x={chip.x}
-            y={414}
-            width={62}
-            height={26}
-            rx={4}
-            fill="none"
-            stroke="var(--border)"
-          />
-          <text
-            x={chip.cx}
-            y={431}
-            textAnchor="middle"
-            fontFamily={MONO}
-            fontSize={9}
-            letterSpacing="0.08em"
-            fill="var(--faint)"
-          >
-            {chip.label}
-          </text>
-        </g>
-      ))}
-      <text
-        x={CX}
-        y={460}
-        textAnchor="middle"
-        fontFamily={MONO}
-        fontSize={9}
-        letterSpacing="0.08em"
-        fill="var(--faint)"
-        className="draw-fade"
-        style={{ animationDelay: "1100ms" }}
-      >
-        MODEL-AGNOSTIC · HOT-SWAP
-      </text>
     </svg>
   );
 }
