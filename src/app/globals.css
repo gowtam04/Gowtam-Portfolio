@@ -111,7 +111,7 @@ body {
  * ------------------------------------------------------------------------- */
 
 /* Mono uppercase label: section indices, metadata keys, badges */
-.mono-label {
+@utility mono-label {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 0.75rem;
   font-weight: 500;
@@ -121,7 +121,7 @@ body {
 }
 
 /* Mono metadata value: stacks, years, captions */
-.mono-meta {
+@utility mono-meta {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-size: 0.8125rem;
   font-weight: 400;
@@ -129,7 +129,7 @@ body {
 }
 
 /* Mono display numerals: stat bands */
-.mono-stat {
+@utility mono-stat {
   font-family: var(--font-plex-mono), ui-monospace, monospace;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
