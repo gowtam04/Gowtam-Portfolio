@@ -29,7 +29,7 @@ function Box({ x, y, w, h, label, sub, accent }: BoxProps) {
         width={w}
         height={h}
         rx={6}
-        fill={accent ? "var(--accent-subtle)" : "var(--surface-1)"}
+        fill={accent ? "var(--accent-subtle)" : "var(--surface-2)"}
         stroke={accent ? "var(--accent)" : "var(--border-strong)"}
       />
       <text
@@ -52,7 +52,7 @@ function Box({ x, y, w, h, label, sub, accent }: BoxProps) {
           fontFamily={MONO}
           fontSize={10}
           letterSpacing="0.06em"
-          fill={accent ? "var(--accent)" : "var(--faint)"}
+          fill={accent ? "var(--accent)" : "var(--muted)"}
         >
           {sub}
         </text>
@@ -82,7 +82,7 @@ function Caption({
       fontFamily={MONO}
       fontSize={10}
       letterSpacing="0.08em"
-      fill={accent ? "var(--accent)" : "var(--faint)"}
+      fill={accent ? "var(--accent)" : "var(--muted)"}
     >
       {children}
     </text>
@@ -102,7 +102,7 @@ function Wire({
     <path
       d={d}
       fill="none"
-      stroke={accent ? "var(--accent)" : "var(--border-strong)"}
+      stroke={accent ? "var(--accent)" : "var(--faint)"}
       strokeWidth={1}
       strokeDasharray={dashed ? "3 3" : undefined}
     />

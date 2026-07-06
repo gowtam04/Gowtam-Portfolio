@@ -16,7 +16,7 @@
   --frame: rgba(27, 27, 26, 0.05);
   --foreground: #1b1b1a;
   --muted: #5c5c58;
-  --faint: #8a8a85;
+  --faint: #6f6f6a;
   --accent: #c9552a;
   --accent-hover: #a8441f;
   --accent-subtle: rgba(201, 85, 42, 0.07);
@@ -34,7 +34,7 @@
   --frame: rgba(244, 244, 245, 0.04);
   --foreground: #f4f4f5;
   --muted: #a3a3ab;
-  --faint: #77777f;
+  --faint: #8b8b93;
   --accent: #e8703a;
   --accent-hover: #f5915f;
   --accent-subtle: rgba(232, 112, 58, 0.08);

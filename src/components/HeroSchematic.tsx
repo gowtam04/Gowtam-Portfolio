@@ -94,11 +94,27 @@ export function HeroSchematic() {
 
   return (
     <svg
-      viewBox="0 0 452 400"
+      viewBox="-10 0 472 400"
       role="img"
       aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a cited answer"
-      className="h-auto w-full max-w-[420px]"
+      className="h-auto w-full max-w-[438px]"
     >
+      {/* Radial stage: subtle theme-aware glow behind the orbit */}
+      <defs>
+        <radialGradient id="heroStage">
+          <stop offset="0" stopColor="var(--foreground)" stopOpacity={0.05} />
+          <stop offset="1" stopColor="var(--foreground)" stopOpacity={0} />
+        </radialGradient>
+      </defs>
+      <ellipse
+        cx={226}
+        cy={180}
+        rx={190}
+        ry={170}
+        fill="url(#heroStage)"
+        className="draw-fade"
+      />
+
       {/* Spokes (under the core so they visually start at its edge) */}
       {NODES.map((node, i) => {
         const hot = hotIndex === i;
@@ -109,7 +125,7 @@ export function HeroSchematic() {
             y1={node.y}
             x2={CX}
             y2={CY}
-            stroke={hot ? "var(--accent)" : "var(--border-strong)"}
+            stroke={hot ? "var(--accent)" : "var(--faint)"}
             strokeWidth={1}
             {...(looping
               ? hot
@@ -131,7 +147,7 @@ export function HeroSchematic() {
         width={150}
         height={64}
         rx={6}
-        fill="var(--surface-1)"
+        fill="var(--surface-2)"
         stroke="var(--border-strong)"
         className="draw-fade"
         style={{ animationDelay: "100ms" }}
@@ -177,7 +193,7 @@ export function HeroSchematic() {
       {/* Tool dots + labels */}
       {NODES.map((node, i) => {
         const hot = hotIndex === i;
-        const color = hot ? "var(--accent)" : "var(--faint)";
+        const color = hot ? "var(--accent)" : "var(--muted)";
         return (
           <g
             key={node.name}
@@ -190,7 +206,7 @@ export function HeroSchematic() {
               y={node.ly}
               textAnchor={node.anchor}
               fontFamily={MONO}
-              fontSize={10}
+              fontSize={11}
               letterSpacing="0.08em"
               fill={color}
             >
@@ -209,7 +225,7 @@ export function HeroSchematic() {
           height={40}
           rx={6}
           fill={submitted ? "var(--accent-subtle)" : "none"}
-          stroke={submitted ? "var(--accent)" : "var(--border)"}
+          stroke={submitted ? "var(--accent)" : "var(--faint)"}
           strokeDasharray={submitted ? undefined : "4 4"}
         />
         <text
@@ -229,7 +245,7 @@ export function HeroSchematic() {
           y={375}
           textAnchor="middle"
           fontFamily={MONO}
-          fontSize={8}
+          fontSize={9}
           letterSpacing="0.08em"
           fill={submitted ? "var(--accent)" : "var(--faint)"}
         >
