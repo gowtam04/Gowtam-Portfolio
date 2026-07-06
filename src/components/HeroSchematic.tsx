@@ -97,7 +97,7 @@ export function HeroSchematic() {
       viewBox="0 0 452 466"
       role="img"
       aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a schema-validated, cited answer"
-      className="h-auto w-full max-w-[320px]"
+      className="h-auto w-full max-w-[420px]"
     >
       {/* Spokes (under the core so they visually start at its edge) */}
       {NODES.map((node, i) => {

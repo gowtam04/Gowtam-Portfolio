@@ -10,7 +10,7 @@ const proof = [
 export function Hero() {
   return (
     <section className="relative flex min-h-screen items-center px-6 pb-24 pt-24">
-      <div className="mx-auto grid w-full max-w-5xl items-center gap-16 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_420px]">
         <div>
           <p
             className="hero-enter mono-label flex items-center gap-3"
