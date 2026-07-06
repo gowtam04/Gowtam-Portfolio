@@ -6,7 +6,7 @@ import { CaseStudiesGrid } from "@/components/CaseStudiesGrid";
 import { caseStudies } from "@/lib/case-studies";
 
 export const metadata: Metadata = {
-  title: "Case Studies | Gowtam Ramanujam",
+  title: "Work | Gowtam Ramanujam",
   description:
     "A portfolio of AI systems and autonomous agents: reasoning agents, production LLM platforms, and enterprise AI tools, from requirements through deployment.",
   alternates: {
@@ -38,8 +38,8 @@ export default function CaseStudiesPage() {
           <SectionHeading
             index="01"
             label="Work"
-            title="Case Studies"
-            lede="Projects showcasing how I architect AI systems and agents, from requirements through production deployment."
+            title="Work"
+            lede="Selected projects showing how I architect AI systems and agents, from requirements through production deployment, each with a full case study."
           />
           <CaseStudiesGrid />
         </div>

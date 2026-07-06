@@ -10,8 +10,8 @@ export function CaseStudies() {
           <SectionHeading
             index="03"
             label="Work"
-            title="Case Studies"
-            lede="Projects showcasing how I architect AI systems and agents, from requirements through production deployment."
+            title="Work"
+            lede="Selected projects showing how I architect AI systems and agents, from requirements through production deployment, each with a full case study."
           />
         </Reveal>
 

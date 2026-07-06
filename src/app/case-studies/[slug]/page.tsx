@@ -100,7 +100,7 @@ function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Case Studies",
+        name: "Work",
         item: "https://gowtam.ai/case-studies",
       },
       {
