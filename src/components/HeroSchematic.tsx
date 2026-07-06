@@ -96,7 +96,7 @@ export function HeroSchematic() {
     <svg
       viewBox="0 0 452 400"
       role="img"
-      aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a schema-validated, cited answer"
+      aria-label="Agent architecture: a reasoning tool loop orchestrating tools such as run_sql and search_wiki, producing a cited answer"
       className="h-auto w-full max-w-[420px]"
     >
       {/* Spokes (under the core so they visually start at its edge) */}
@@ -200,31 +200,10 @@ export function HeroSchematic() {
         );
       })}
 
-      {/* Output row: schema gate + the cited-answer redline moment */}
+      {/* Output row: the cited-answer redline moment */}
       <g className="draw-fade" style={{ animationDelay: "800ms" }}>
         <rect
-          x={60}
-          y={344}
-          width={92}
-          height={40}
-          rx={6}
-          fill="none"
-          stroke={submitted ? "var(--border-strong)" : "var(--border)"}
-        />
-        <text
-          x={106}
-          y={368}
-          textAnchor="middle"
-          fontFamily={MONO}
-          fontSize={9}
-          letterSpacing="0.08em"
-          fill={submitted ? "var(--foreground)" : "var(--faint)"}
-        >
-          SCHEMA ✓
-        </text>
-
-        <rect
-          x={164}
+          x={CX - 114}
           y={344}
           width={228}
           height={40}
@@ -234,7 +213,7 @@ export function HeroSchematic() {
           strokeDasharray={submitted ? undefined : "4 4"}
         />
         <text
-          x={278}
+          x={CX}
           y={361}
           textAnchor="middle"
           fontFamily={MONO}
@@ -246,7 +225,7 @@ export function HeroSchematic() {
           CITED ANSWER
         </text>
         <text
-          x={278}
+          x={CX}
           y={375}
           textAnchor="middle"
           fontFamily={MONO}
