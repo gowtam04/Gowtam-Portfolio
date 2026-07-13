@@ -28,7 +28,7 @@ function TypeDot({ projectType }: { projectType: ProjectType }) {
 }
 
 function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
-  const diagram = getDiagram(caseStudy.slug);
+  const diagram = getDiagram(caseStudy.slug, { compact: true });
 
   return (
     <Link
@@ -81,8 +81,10 @@ function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
       </div>
 
       {diagram && (
-        <div className="relative hidden min-h-[220px] items-center justify-center border-l border-[var(--border)] bg-[radial-gradient(circle_at_30%_30%,var(--accent-subtle),transparent_50%),linear-gradient(145deg,var(--surface-2),var(--surface-1))] p-6 md:flex">
-          <div className="w-full max-w-[280px]">{diagram}</div>
+        <div className="relative hidden min-h-[280px] items-center justify-center border-l border-[var(--border)] bg-[radial-gradient(circle_at_30%_30%,var(--accent-subtle),transparent_50%),linear-gradient(145deg,var(--surface-2),var(--surface-1))] p-5 md:flex">
+          <div className="flex w-full max-w-[320px] items-center justify-center">
+            {diagram}
+          </div>
         </div>
       )}
     </Link>

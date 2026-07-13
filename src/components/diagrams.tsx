@@ -1,8 +1,10 @@
 import type { ReactNode } from "react";
+import { OakToolOrbit } from "./OakToolOrbit";
 
 /*
  * Architecture diagrams for flagship case studies, drawn in site tokens so
  * they follow the theme. Soft strokes and copper on the critical path.
+ * Oak uses the animated tool-orbit client component.
  */
 
 const LABEL_FONT = "var(--font-jakarta), system-ui, sans-serif";
@@ -116,45 +118,9 @@ const down = (x: number, y: number) =>
 const up = (x: number, y: number) =>
   `M${x - 5} ${y + 6} L${x} ${y} L${x + 5} ${y + 6}`;
 
-export function OakDiagram() {
-  return (
-    <svg
-      viewBox="0 0 640 260"
-      role="img"
-      aria-label="Oak architecture: a user query enters a reasoning tool loop over game data, passes schema validation, and streams back as a cited answer; Grok, Claude, and GPT are hot-swappable providers"
-      className="h-auto w-full"
-    >
-      <Box x={16} y={56} w={96} h={48} label="USER" />
-      <Wire d={`M112 80 H160 ${right(160, 80)}`} />
-
-      <Box x={162} y={46} w={168} h={68} label="AGENT" sub="TOOL LOOP ×14" />
-
-      <Box x={162} y={176} w={168} h={44} label="GAME DATA" sub="POSTGRES" />
-      <Wire d={`M246 176 V120 ${up(246, 114)}`} />
-
-      <Box x={392} y={56} w={128} h={48} label="ZOD SCHEMA" sub="VALIDATED" />
-      <Wire d={`M330 80 H386 ${right(386, 80)}`} />
-
-      {/* Retry line back to the agent */}
-      <Wire d={`M456 56 V22 H246 V40 ${down(246, 44)}`} dashed />
-      <Caption x={351} y={16}>RETRY</Caption>
-
-      <Box x={548} y={46} w={82} h={68} label="CITED" sub="ANSWER" accent />
-      <Wire d={`M520 80 H542 ${right(542, 80)}`} accent />
-      <Caption x={589} y={132} accent>SSE</Caption>
-
-      {/* Provider chips */}
-      <Box x={392} y={176} w={70} h={30} label="" />
-      <Caption x={427} y={195}>GROK</Caption>
-      <Box x={470} y={176} w={70} h={30} label="" />
-      <Caption x={505} y={195}>CLAUDE</Caption>
-      <Box x={548} y={176} w={82} h={30} label="" />
-      <Caption x={589} y={195}>GPT-5.5</Caption>
-      <Caption x={511} y={232}>MODEL-AGNOSTIC · HOT-SWAP</Caption>
-
-      <Caption x={16} y={248} anchor="start">OAK · REASONING PIPELINE</Caption>
-    </svg>
-  );
+/** Animated Oak tool orbit (client). Prefer this over a static pipeline. */
+export function OakDiagram({ compact = false }: { compact?: boolean } = {}) {
+  return <OakToolOrbit compact={compact} />;
 }
 
 export function AnnieDiagram() {
@@ -254,6 +220,12 @@ const DIAGRAMS: Record<string, ReactNode> = {
   "diagnostic-lab-lims": <LimsDiagram />,
 };
 
-export function getDiagram(slug: string): ReactNode | null {
+export function getDiagram(
+  slug: string,
+  options?: { compact?: boolean }
+): ReactNode | null {
+  if (slug === "oak") {
+    return <OakDiagram compact={options?.compact} />;
+  }
   return DIAGRAMS[slug] ?? null;
 }

@@ -295,10 +295,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <section id="solution" className="scroll-mt-28">
                 <SectionHeader index="03" title="The Solution" />
                 {diagram && (
-                  <figure className="mb-8 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-5 shadow-[var(--shadow-raised)] sm:p-7">
-                    {diagram}
-                    <figcaption className="mt-4 text-[0.78rem] font-medium text-[var(--faint)]">
-                      {caseStudy.title}: system architecture
+                  <figure className="mb-8 overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-5 shadow-[var(--shadow-raised)] sm:p-8">
+                    <div className="mx-auto flex max-w-[440px] justify-center">
+                      {diagram}
+                    </div>
+                    <figcaption className="mt-5 text-center text-[0.78rem] font-medium text-[var(--faint)]">
+                      {slug === "oak"
+                        ? "Oak: reasoning tool loop (live tools, cited answer)"
+                        : `${caseStudy.title}: system architecture`}
                     </figcaption>
                   </figure>
                 )}

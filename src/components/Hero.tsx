@@ -111,24 +111,6 @@ export function Hero() {
               priority
               className="h-full w-full object-cover object-[center_15%] saturate-[0.92] contrast-[1.02]"
             />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-50% to-[color-mix(in_srgb,var(--background)_55%,transparent)]"
-            />
-            <div className="absolute inset-x-4 bottom-4 z-10 flex items-center justify-between gap-3 rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[color-mix(in_srgb,var(--surface-1)_88%,transparent)] px-4 py-3.5 backdrop-blur-md">
-              <div>
-                <p className="text-[0.8rem] font-semibold leading-snug text-[var(--foreground)]">
-                  Gowtam Ramanujam
-                </p>
-                <p className="mt-0.5 text-[0.72rem] font-medium text-[var(--faint)]">
-                  Open to architecture engagements
-                </p>
-              </div>
-              <span
-                aria-hidden="true"
-                className="h-2 w-2 flex-shrink-0 rounded-full bg-[#3d9a6a] shadow-[0_0_0_4px_rgba(61,154,106,0.18)]"
-              />
-            </div>
           </div>
         </div>
       </div>

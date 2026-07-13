@@ -238,6 +238,34 @@ body::before {
   animation: orbit-spin 28s linear infinite;
 }
 
+/* Oak tool-orbit draw-in and spoke pulse */
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dashflow {
+  to {
+    stroke-dashoffset: -8;
+  }
+}
+
+.draw-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-stroke 0.8s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.draw-fade {
+  opacity: 0;
+  animation: fade-in 0.4s ease both;
+}
+
+.dashflow {
+  animation: dashflow 0.5s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -255,6 +283,20 @@ body::before {
   }
 
   .orbit-ring {
+    animation: none;
+  }
+
+  .draw-fade {
+    animation: none;
+    opacity: 1;
+  }
+
+  .draw-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .dashflow {
     animation: none;
   }
 }
