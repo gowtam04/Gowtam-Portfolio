@@ -8,10 +8,9 @@ export function CaseStudies() {
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading
-            index="03"
-            label="Work"
-            title="Work"
-            lede="Selected projects showing how I architect AI systems and agents, from requirements through production deployment, each with a full case study."
+            label="Selected work"
+            title="Case studies with the architecture left in."
+            lede="Flagship systems up front. Everything else as a clean index. Outcomes and decisions, not marketing copy."
           />
         </Reveal>
 

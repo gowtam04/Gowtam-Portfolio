@@ -3,44 +3,71 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Design tokens: "the spec sheet, elevated"
- * Graphite neutrals + one ember accent. Light mode is the print rendition.
- * See docs/design/fable-ui-strategy.md for the full system.
+ * Design tokens: "Warm Authority"
+ * Warm ink / cream paper + copper accent. Human editorial, not cold graphite.
+ * Visual reference: docs/design/redesign-preview.html
  */
 :root {
-  --background: #fafaf9;
-  --surface-1: #ffffff;
-  --surface-2: #f4f4f2;
-  --border: #e9e9e6;
-  --border-strong: #dcdcd8;
-  --frame: rgba(27, 27, 26, 0.05);
-  --foreground: #1b1b1a;
-  --muted: #5c5c58;
-  --faint: #6f6f6a;
-  --accent: #c9552a;
-  --accent-hover: #a8441f;
-  --accent-subtle: rgba(201, 85, 42, 0.07);
-  --accent-foreground: #ffffff;
-  --shadow-raised: 0 1px 2px rgba(27, 27, 26, 0.05), 0 4px 12px rgba(27, 27, 26, 0.06);
-  --shadow-overlay: 0 4px 8px rgba(27, 27, 26, 0.08), 0 12px 32px rgba(27, 27, 26, 0.12);
+  --background: #f6f1e8;
+  --surface-1: #fffcf7;
+  --surface-2: #efe8db;
+  --border: rgba(26, 22, 18, 0.1);
+  --border-strong: rgba(26, 22, 18, 0.18);
+  --foreground: #1a1612;
+  --muted: #4a433c;
+  --faint: #8a8074;
+  --accent: #b4532a;
+  --accent-hover: #933f1c;
+  --accent-subtle: rgba(180, 83, 42, 0.1);
+  --accent-glow: rgba(180, 83, 42, 0.22);
+  --accent-foreground: #fffaf4;
+  --shadow-raised: 0 1px 2px rgba(26, 22, 18, 0.04),
+    0 12px 32px rgba(26, 22, 18, 0.06);
+  --shadow-overlay: 0 4px 12px rgba(26, 22, 18, 0.06),
+    0 24px 64px rgba(26, 22, 18, 0.1);
+  --radius: 18px;
+  --radius-sm: 10px;
+  --noise-opacity: 0.035;
+  --hero-glow: radial-gradient(
+      ellipse 70% 55% at 75% 20%,
+      rgba(180, 83, 42, 0.14),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 15% 80%,
+      rgba(90, 120, 110, 0.08),
+      transparent 55%
+    );
 }
 
 .dark {
-  --background: #0b0b0c;
-  --surface-1: #121214;
-  --surface-2: #1a1a1d;
-  --border: #232326;
-  --border-strong: #2e2e32;
-  --frame: rgba(244, 244, 245, 0.04);
-  --foreground: #f4f4f5;
-  --muted: #a3a3ab;
-  --faint: #8b8b93;
-  --accent: #e8703a;
-  --accent-hover: #f5915f;
-  --accent-subtle: rgba(232, 112, 58, 0.08);
-  --accent-foreground: #0b0b0c;
-  --shadow-raised: none;
-  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --background: #12100e;
+  --surface-1: #1c1916;
+  --surface-2: #241f1b;
+  --border: rgba(245, 239, 230, 0.09);
+  --border-strong: rgba(245, 239, 230, 0.16);
+  --foreground: #f5efe6;
+  --muted: #b5aaa0;
+  --faint: #7d7369;
+  --accent: #e08a58;
+  --accent-hover: #f0a070;
+  --accent-subtle: rgba(224, 138, 88, 0.12);
+  --accent-glow: rgba(224, 138, 88, 0.28);
+  --accent-foreground: #1a120c;
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.2), 0 16px 40px rgba(0, 0, 0, 0.35);
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.35),
+    0 32px 72px rgba(0, 0, 0, 0.45);
+  --noise-opacity: 0.05;
+  --hero-glow: radial-gradient(
+      ellipse 70% 55% at 78% 18%,
+      rgba(224, 138, 88, 0.16),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 12% 75%,
+      rgba(72, 110, 100, 0.1),
+      transparent 55%
+    );
 }
 
 @theme inline {
@@ -54,8 +81,8 @@
   --color-surface-2: var(--surface-2);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --font-sans: var(--font-instrument);
-  --font-mono: var(--font-plex-mono);
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-fraunces);
 }
 
 html {
@@ -65,8 +92,21 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-instrument), system-ui, sans-serif;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+}
+
+/* Soft film grain: humanizes flat digital surfaces */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
 /* Selection styling */
@@ -107,34 +147,40 @@ body {
 }
 
 /* ---------------------------------------------------------------------------
- * Spec-sheet furniture
+ * Label / meta / stat utilities (Warm Authority)
+ * Class names kept for migration; no longer mono drafting register.
  * ------------------------------------------------------------------------- */
 
-/* Mono uppercase label: section indices, metadata keys, badges */
+/* Section kickers, badges, small meta keys */
 @utility mono-label {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-size: 0.75rem;
-  font-weight: 500;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--faint);
 }
 
-/* Mono metadata value: stacks, years, captions */
+/* Metadata values: stacks, years, captions */
 @utility mono-meta {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-family: var(--font-jakarta), system-ui, sans-serif;
   font-size: 0.8125rem;
-  font-weight: 400;
+  font-weight: 500;
   color: var(--muted);
 }
 
-/* Mono display numerals: stat bands */
+/* Display numerals: stat bands (Fraunces) */
 @utility mono-stat {
-  font-family: var(--font-plex-mono), ui-monospace, monospace;
-  font-weight: 500;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
   color: var(--foreground);
+}
+
+/* Display headings helper */
+@utility font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
 }
 
 /* ---------------------------------------------------------------------------
@@ -162,9 +208,9 @@ body {
   }
 }
 
-@keyframes draw-stroke {
+@keyframes orbit-spin {
   to {
-    stroke-dashoffset: 0;
+    transform: rotate(360deg);
   }
 }
 
@@ -187,27 +233,9 @@ body {
   animation: fade-up 0.6s cubic-bezier(0.2, 0, 0, 1) both;
 }
 
-/* Hero schematic draw-in: strokes trace once, labels fade in after */
-.draw-path {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw-stroke 0.8s cubic-bezier(0.2, 0, 0, 1) both;
-}
-
-.draw-fade {
-  opacity: 0;
-  animation: fade-in 0.4s ease both;
-}
-
-/* Tool-orbit loop: hot spokes march their dashes toward the agent core */
-@keyframes dashflow {
-  to {
-    stroke-dashoffset: -8;
-  }
-}
-
-.dashflow {
-  animation: dashflow 0.5s linear infinite;
+/* Soft orbit ring around hero portrait */
+.orbit-ring {
+  animation: orbit-spin 28s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -221,18 +249,12 @@ body {
     transition: none;
   }
 
-  .hero-enter,
-  .draw-fade {
+  .hero-enter {
     animation: none;
     opacity: 1;
   }
 
-  .draw-path {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-
-  .dashflow {
+  .orbit-ring {
     animation: none;
   }
 }

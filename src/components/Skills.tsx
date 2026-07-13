@@ -41,37 +41,35 @@ const skills = [
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 px-6 py-24">
+    <section
+      id="skills"
+      className="scroll-mt-24 border-t border-[var(--border)] px-6 py-24"
+    >
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading
-            index="04"
             label="Capabilities"
-            title="Skills & Expertise"
-            lede="Core competencies for designing and shipping AI systems and agents."
+            title="Where depth lives."
+            lede="Not a laundry list of tools. The competencies that show up when systems have to work under real constraints."
           />
         </Reveal>
 
-        {/* Capabilities matrix */}
-        <div className="grid border-t border-[var(--border)] md:grid-cols-2 md:gap-x-16">
-          {skills.map((skill, index) => (
-            <Reveal key={skill.title} delay={(index % 2) * 60}>
-              <div className="group flex gap-5 border-b border-[var(--border)] py-6">
-                <span className="mono-label w-7 flex-shrink-0 pt-1 transition-colors duration-150 group-hover:text-[var(--accent)]">
+        <Reveal delay={60}>
+          <div className="flex flex-wrap gap-2.5">
+            {skills.map((skill, index) => (
+              <span
+                key={skill.title}
+                title={skill.description}
+                className="rounded-full border border-[var(--border)] bg-[var(--surface-1)] px-4 py-2.5 text-[0.9rem] font-medium text-[var(--muted)] transition-colors duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--accent-subtle)] hover:text-[var(--foreground)]"
+              >
+                <span className="mr-1.5 font-bold text-[var(--accent)]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <div>
-                  <h3 className="text-base font-semibold text-[var(--foreground)]">
-                    {skill.title}
-                  </h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
-                    {skill.description}
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+                {skill.title}
+              </span>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

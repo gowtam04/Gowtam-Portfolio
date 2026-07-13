@@ -4,12 +4,12 @@ export const alt = "Gowtam Ramanujam - AI Architect";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BACKGROUND = "#0b0b0c";
-const FOREGROUND = "#f4f4f5";
-const MUTED = "#a3a3ab";
-const FAINT = "#77777f";
-const ACCENT = "#e8703a";
-const BORDER = "#232326";
+const BACKGROUND = "#12100e";
+const FOREGROUND = "#f5efe6";
+const MUTED = "#b5aaa0";
+const FAINT = "#7d7369";
+const ACCENT = "#e08a58";
+const BORDER = "rgba(245, 239, 230, 0.12)";
 
 export default async function Image() {
   return new ImageResponse(
@@ -33,13 +33,14 @@ export default async function Image() {
               height: 4,
               backgroundColor: ACCENT,
               marginRight: 16,
+              borderRadius: 2,
             }}
           />
           <span
             style={{
               fontSize: 22,
-              fontWeight: 500,
-              letterSpacing: 4,
+              fontWeight: 600,
+              letterSpacing: 3,
               textTransform: "uppercase",
               color: FAINT,
             }}
@@ -64,7 +65,7 @@ export default async function Image() {
             style={{
               marginTop: 20,
               fontSize: 34,
-              fontWeight: 400,
+              fontWeight: 500,
               color: ACCENT,
             }}
           >
@@ -84,8 +85,7 @@ export default async function Image() {
           <span
             style={{
               fontSize: 20,
-              letterSpacing: 3,
-              textTransform: "uppercase",
+              letterSpacing: 2,
               color: MUTED,
             }}
           >
@@ -94,12 +94,11 @@ export default async function Image() {
           <span
             style={{
               fontSize: 20,
-              letterSpacing: 3,
-              textTransform: "uppercase",
+              letterSpacing: 1,
               color: FAINT,
             }}
           >
-            Intelligent Systems / Autonomous Agents
+            Intelligent systems · Autonomous agents
           </span>
         </div>
       </div>

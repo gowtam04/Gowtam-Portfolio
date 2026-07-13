@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-const instrumentSans = Instrument_Sans({
-  variable: "--font-instrument",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-jakarta",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -54,17 +53,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${instrumentSans.variable} ${plexMono.variable} antialiased`}
+        className={`${fraunces.variable} ${plusJakarta.variable} antialiased`}
         suppressHydrationWarning
       >
-        <ThemeProvider>
-          {/* Drafting-margin frame: hairline rules at the content column edges */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none fixed inset-y-0 left-1/2 z-0 hidden w-full max-w-[68rem] -translate-x-1/2 border-x border-[var(--frame)] xl:block"
-          />
-          <div className="relative z-10">{children}</div>
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

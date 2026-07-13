@@ -36,9 +36,8 @@ export default function CaseStudiesPage() {
       <main className="px-6 pb-24 pt-28">
         <div className="mx-auto max-w-5xl">
           <SectionHeading
-            index="01"
-            label="Work"
-            title="Work"
+            label="Selected work"
+            title="Case studies with the architecture left in."
             lede="Selected projects showing how I architect AI systems and agents, from requirements through production deployment, each with a full case study."
           />
           <CaseStudiesGrid />

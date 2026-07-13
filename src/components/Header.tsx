@@ -33,27 +33,25 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[var(--background)]/85 backdrop-blur-md border-b border-[var(--border)]"
-          : "bg-transparent"
+          ? "border-b border-[var(--border)] bg-[var(--background)]/78 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
-      <nav className="max-w-5xl mx-auto px-6 py-4">
+      <nav className="mx-auto max-w-5xl px-6 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo / Name */}
           <Link
             href="/"
-            className="text-base font-semibold tracking-[-0.02em] text-[var(--foreground)] hover:text-[var(--accent)] transition-colors duration-150"
+            className="font-display text-[1.25rem] font-semibold tracking-[-0.02em] text-[var(--foreground)] transition-colors duration-150 hover:text-[var(--accent)]"
           >
-            Gowtam
+            Gowtam<span className="text-[var(--accent)]">.</span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden items-center gap-7 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
+                className="text-[0.9rem] font-medium text-[var(--muted)] transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
               </a>
@@ -61,39 +59,37 @@ export function Header() {
             <ThemeToggle />
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-4 md:hidden">
+          <div className="flex items-center gap-3 md:hidden">
             <ThemeToggle />
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md border border-[var(--border)] hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)] transition-colors duration-150"
+              className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] transition-colors duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)]"
               aria-label="Toggle menu"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
             >
               {isMenuOpen ? (
-                <X className="w-5 h-5 text-[var(--foreground)]" />
+                <X className="h-5 w-5 text-[var(--foreground)]" />
               ) : (
-                <Menu className="w-5 h-5 text-[var(--foreground)]" />
+                <Menu className="h-5 w-5 text-[var(--foreground)]" />
               )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <div
           id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            isMenuOpen ? "max-h-64 opacity-100 mt-4" : "max-h-0 opacity-0"
+          className={`overflow-hidden transition-all duration-300 ease-in-out md:hidden ${
+            isMenuOpen ? "mt-4 max-h-64 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="flex flex-col gap-4 py-4 border-t border-[var(--border)]">
+          <div className="flex flex-col gap-4 border-t border-[var(--border)] py-4">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={handleNavClick}
-                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
+                className="text-[0.95rem] font-medium text-[var(--muted)] transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
               </a>

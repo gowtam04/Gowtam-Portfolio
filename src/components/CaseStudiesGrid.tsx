@@ -20,7 +20,7 @@ function TypeDot({ projectType }: { projectType: ProjectType }) {
       aria-hidden="true"
       className={`inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full ${
         projectType === "professional"
-          ? "bg-[var(--accent)]"
+          ? "bg-[var(--accent)] shadow-[0_0_0_3px_var(--accent-subtle)]"
           : "bg-[var(--faint)]"
       }`}
     />
@@ -33,51 +33,56 @@ function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
     <Link
       href={`/case-studies/${caseStudy.slug}`}
-      className="group grid gap-8 rounded-lg border border-[var(--border)] bg-[var(--surface-1)] p-8 transition-colors duration-150 hover:border-[var(--border-strong)] md:grid-cols-[minmax(0,1fr)_300px] md:items-center"
+      className="group grid gap-0 overflow-hidden rounded-[calc(var(--radius)+2px)] border border-[var(--border)] bg-[var(--surface-1)] shadow-[var(--shadow-raised)] transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-overlay)] md:grid-cols-[1.15fr_0.85fr] md:items-stretch"
     >
-      <div>
-        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-          <span className="mono-label flex items-center gap-2">
+      <div className="flex flex-col justify-center p-8 md:p-9">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <span className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
             <TypeDot projectType={caseStudy.projectType} />
             {caseStudy.projectType === "independent"
               ? "Independent"
               : "Professional"}
           </span>
-          <span className="mono-label">{caseStudy.category}</span>
+          <span className="text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
+            {caseStudy.category}
+            {caseStudy.duration ? ` · ${caseStudy.duration}` : ""}
+          </span>
         </div>
 
-        <h3 className="mt-4 text-2xl font-semibold tracking-[-0.01em] text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+        <h3 className="font-display mt-4 text-[clamp(1.6rem,2.5vw,2rem)] font-medium tracking-[-0.025em] text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
           {caseStudy.title}
         </h3>
 
-        <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-[var(--muted)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] overflow-hidden">
+        <p className="mt-3 max-w-[42ch] text-[0.975rem] leading-[1.65] text-[var(--muted)] [display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:3] overflow-hidden">
           {caseStudy.description}
         </p>
 
         {caseStudy.stats && caseStudy.stats.length > 0 && (
-          <div className="mt-6 flex flex-wrap gap-x-10 gap-y-3">
+          <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3">
             {caseStudy.stats.slice(0, 2).map((stat) => (
               <div key={stat.label}>
-                <p className="mono-stat text-xl">{stat.value}</p>
-                <p className="mono-label mt-0.5">{stat.label}</p>
+                <p className="mono-stat text-[1.35rem]">{stat.value}</p>
+                <p className="mt-0.5 text-[0.75rem] font-medium text-[var(--faint)]">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>
         )}
 
-        <p className="mono-meta mt-6 text-xs">
+        <p className="mt-5 text-xs font-medium text-[var(--faint)]">
           {caseStudy.technologies.slice(0, 6).join(" · ")}
         </p>
 
-        <p className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+        <p className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
           Read case study
           <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
         </p>
       </div>
 
       {diagram && (
-        <div className="hidden rounded-md border border-[var(--border)] bg-[var(--background)] p-4 md:block">
-          {diagram}
+        <div className="relative hidden min-h-[220px] items-center justify-center border-l border-[var(--border)] bg-[radial-gradient(circle_at_30%_30%,var(--accent-subtle),transparent_50%),linear-gradient(145deg,var(--surface-2),var(--surface-1))] p-6 md:flex">
+          <div className="w-full max-w-[280px]">{diagram}</div>
         </div>
       )}
     </Link>
@@ -88,20 +93,20 @@ function IndexRow({ caseStudy }: { caseStudy: CaseStudy }) {
   return (
     <Link
       href={`/case-studies/${caseStudy.slug}`}
-      className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-[var(--border)] px-2 py-5 transition-colors duration-150 hover:bg-[var(--surface-1)] sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto_auto] sm:gap-6"
+      className="group grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 border-b border-[var(--border)] px-4 py-4 transition-colors duration-150 last:border-b-0 hover:bg-[var(--surface-2)] sm:grid-cols-[minmax(0,15rem)_minmax(0,1fr)_auto_auto] sm:gap-6"
     >
-      <span className="truncate text-[0.9375rem] font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
+      <span className="truncate text-[0.975rem] font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
         {caseStudy.title}
       </span>
       <span className="hidden truncate text-sm text-[var(--muted)] sm:block">
         {caseStudy.description}
       </span>
-      <span className="mono-label hidden items-center gap-2 md:flex">
+      <span className="hidden items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)] md:flex">
         <TypeDot projectType={caseStudy.projectType} />
         {caseStudy.category}
       </span>
       <span className="flex items-center gap-4">
-        <span className="mono-meta hidden text-xs sm:block">
+        <span className="hidden text-xs font-medium text-[var(--faint)] sm:block">
           {caseStudy.duration}
         </span>
         <ArrowRight className="h-4 w-4 text-[var(--faint)] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" />
@@ -123,66 +128,55 @@ export function CaseStudiesGrid() {
 
   return (
     <div>
-      {/* Filter tabs */}
-      <div className="flex flex-wrap items-center gap-6 border-b border-[var(--border)] pb-4">
+      <div className="mb-6 flex flex-wrap items-center gap-2">
         {filterOptions.map((option) => {
           const active = activeFilter === option.value;
           return (
             <button
               key={option.value}
               onClick={() => setActiveFilter(option.value)}
-              className={`mono-label flex cursor-pointer items-center gap-2 transition-colors duration-150 ${
+              className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-[0.82rem] font-semibold transition-all duration-150 ${
                 active
-                  ? "text-[var(--foreground)]"
-                  : "hover:text-[var(--foreground)]"
+                  ? "border-[var(--foreground)] bg-[var(--foreground)] text-[var(--background)]"
+                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--border-strong)] hover:text-[var(--foreground)]"
               }`}
             >
-              {active && (
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
-                />
-              )}
               {option.label}
             </button>
           );
         })}
-        <span className="mono-label ml-auto">
+        <span className="ml-auto text-[0.8rem] font-medium text-[var(--faint)]">
           {filtered.length} project{filtered.length !== 1 ? "s" : ""}
         </span>
       </div>
 
       {filtered.length > 0 ? (
         <>
-          {/* Featured panels */}
           {featured.length > 0 && (
-            <div className="mt-8 space-y-6">
+            <div className="space-y-5">
               {featured.map((cs) => (
                 <FeaturedPanel key={cs.slug} caseStudy={cs} />
               ))}
             </div>
           )}
 
-          {/* Compact index */}
           {rest.length > 0 && (
-            <div className="mt-10">
-              <p className="mono-label mb-2 px-2">More work</p>
-              <div className="border-t border-[var(--border)]">
-                {rest.map((cs) => (
-                  <IndexRow key={cs.slug} caseStudy={cs} />
-                ))}
-              </div>
+            <div className="mt-8 overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)]">
+              <p className="border-b border-[var(--border)] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
+                More work
+              </p>
+              {rest.map((cs) => (
+                <IndexRow key={cs.slug} caseStudy={cs} />
+              ))}
             </div>
           )}
         </>
       ) : (
-        /* Empty state */
         <div className="flex items-center gap-3 py-12">
-          <span className="mono-label">No matches</span>
-          <span aria-hidden="true" className="mono-label">/</span>
+          <span className="text-sm text-[var(--muted)]">No matches</span>
           <button
             onClick={() => setActiveFilter("all")}
-            className="mono-label cursor-pointer text-[var(--accent)] transition-colors duration-150 hover:text-[var(--accent-hover)]"
+            className="cursor-pointer text-sm font-semibold text-[var(--accent)] transition-colors duration-150 hover:text-[var(--accent-hover)]"
           >
             Clear filter
           </button>

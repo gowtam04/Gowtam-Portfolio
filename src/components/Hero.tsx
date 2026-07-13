@@ -1,96 +1,137 @@
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
-import { HeroSchematic } from "./HeroSchematic";
 
 const proof = [
-  { value: "7+", label: "Years" },
-  { value: "15+", label: "Systems shipped" },
-  { value: "500K+", label: "Users" },
+  { value: "7+", label: "Years shipping" },
+  { value: "15+", label: "Systems in production" },
+  { value: "500K+", label: "Users impacted" },
 ];
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen items-center px-6 pb-24 pt-24">
-      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 lg:grid-cols-[minmax(0,1fr)_420px]">
+    <section className="relative isolate flex min-h-screen items-center px-6 pb-24 pt-28">
+      {/* Soft atmospheric glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 -top-[10%] -z-10 h-[110%]"
+        style={{ background: "var(--hero-glow)" }}
+      />
+
+      <div className="mx-auto grid w-full max-w-5xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
         <div>
           <p
-            className="hero-enter mono-label flex items-center gap-3"
+            className="hero-enter flex items-center gap-2.5 text-[0.8rem] font-semibold text-[var(--accent)]"
             style={{ animationDelay: "0ms" }}
           >
             <span
               aria-hidden="true"
-              className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
+              className="inline-block h-px w-6 bg-[var(--accent)]"
             />
-            AI Architect / Production Agent Systems
+            AI Architect · Production agent systems
           </p>
 
           <h1
-            className="hero-enter mt-8 text-[clamp(3rem,8vw,5.5rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-[var(--foreground)]"
+            className="hero-enter font-display mt-6 text-[clamp(3.1rem,7.5vw,5.25rem)] font-medium leading-[1.02] tracking-[-0.03em] text-[var(--foreground)]"
             style={{ animationDelay: "80ms" }}
           >
-            Gowtam
+            Systems that
             <br />
-            Ramanujam
+            <em className="font-medium italic text-[var(--accent)]">
+              think carefully
+            </em>
+            <br />
+            and ship cleanly.
           </h1>
 
           <p
-            className="hero-enter mt-8 max-w-[52ch] text-lg leading-relaxed text-[var(--muted)]"
+            className="hero-enter mt-6 max-w-[36rem] text-lg leading-[1.65] text-[var(--muted)]"
             style={{ animationDelay: "160ms" }}
           >
-            I design and ship AI systems and autonomous agents: tool loops,
-            multi-agent orchestration, and the integration patterns that turn
-            LLM capabilities into reliable production software.
+            I design and build AI systems and autonomous agents for teams that
+            need reliability, not demos. Tool loops, multi-agent orchestration,
+            and the integration patterns that turn model capability into
+            software you can trust.
           </p>
 
           <div
-            className="hero-enter mt-10 flex divide-x divide-[var(--border)]"
+            className="hero-enter mt-9 flex flex-wrap items-center gap-5"
             style={{ animationDelay: "240ms" }}
-          >
-            {proof.map((stat) => (
-              <div key={stat.label} className="pr-8 pl-8 first:pl-0">
-                <p className="mono-stat text-2xl">{stat.value}</p>
-                <p className="mono-label mt-1">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-
-          <div
-            className="hero-enter mt-10 flex flex-wrap items-center gap-6"
-            style={{ animationDelay: "320ms" }}
           >
             <a
               href="mailto:gowtam@gowtam.ai"
-              className="inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-3 text-sm font-medium text-[var(--accent-foreground)] transition-colors duration-150 hover:bg-[var(--accent-hover)] active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3.5 text-sm font-semibold text-[var(--accent-foreground)] shadow-[0_1px_0_rgba(255,255,255,0.12)_inset,0_8px_24px_var(--accent-glow)] transition-colors duration-150 hover:bg-[var(--accent-hover)] active:scale-[0.98]"
             >
-              Email me
+              Start a conversation
+              <ArrowRight className="h-4 w-4" />
             </a>
             <a
               href="#case-studies"
-              className="group inline-flex items-center gap-2 text-sm font-medium text-[var(--foreground)] transition-colors duration-150 hover:text-[var(--accent)]"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-[var(--foreground)] transition-colors duration-150 hover:text-[var(--accent)]"
             >
-              View case studies
+              See selected work
               <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
             </a>
           </div>
+
+          <div
+            className="hero-enter mt-11 flex flex-wrap gap-x-10 gap-y-5 border-t border-[var(--border)] pt-7"
+            style={{ animationDelay: "320ms" }}
+          >
+            {proof.map((stat) => (
+              <div key={stat.label}>
+                <p className="mono-stat text-[1.75rem] leading-none">
+                  {stat.value}
+                </p>
+                <p className="mt-1.5 text-[0.8rem] font-medium text-[var(--faint)]">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
 
+        {/* Portrait */}
         <div
-          className="hero-enter hidden lg:block"
-          style={{ animationDelay: "400ms" }}
+          className="hero-enter relative mx-auto hidden w-full max-w-[400px] justify-self-center lg:block"
+          style={{ animationDelay: "200ms" }}
         >
-          <HeroSchematic />
+          <div
+            aria-hidden="true"
+            className="orbit-ring pointer-events-none absolute inset-[-8%] -z-10 rounded-full border border-dashed border-[color-mix(in_srgb,var(--accent)_35%,transparent)] opacity-55"
+          >
+            <span className="absolute top-[12%] right-[18%] h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_16px_var(--accent-glow)]" />
+          </div>
+
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[calc(var(--radius)+6px)] bg-[var(--surface-2)] shadow-[var(--shadow-overlay)]">
+            <Image
+              src="/images/profile.jpg"
+              alt="Gowtam Ramanujam"
+              width={800}
+              height={799}
+              priority
+              className="h-full w-full object-cover object-[center_15%] saturate-[0.92] contrast-[1.02]"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent from-50% to-[color-mix(in_srgb,var(--background)_55%,transparent)]"
+            />
+            <div className="absolute inset-x-4 bottom-4 z-10 flex items-center justify-between gap-3 rounded-[var(--radius-sm)] border border-[var(--border-strong)] bg-[color-mix(in_srgb,var(--surface-1)_88%,transparent)] px-4 py-3.5 backdrop-blur-md">
+              <div>
+                <p className="text-[0.8rem] font-semibold leading-snug text-[var(--foreground)]">
+                  Gowtam Ramanujam
+                </p>
+                <p className="mt-0.5 text-[0.72rem] font-medium text-[var(--faint)]">
+                  Open to architecture engagements
+                </p>
+              </div>
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 flex-shrink-0 rounded-full bg-[#3d9a6a] shadow-[0_0_0_4px_rgba(61,154,106,0.18)]"
+              />
+            </div>
+          </div>
         </div>
       </div>
-
-      {/* Scroll cue */}
-      <a
-        href="#about"
-        aria-label="Scroll to About section"
-        className="hero-enter absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3"
-        style={{ animationDelay: "600ms" }}
-      >
-        <span className="mono-label text-[10px]">Scroll</span>
-        <span aria-hidden="true" className="h-10 w-px bg-[var(--border-strong)]" />
-      </a>
     </section>
   );
 }

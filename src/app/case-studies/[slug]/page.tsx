@@ -115,12 +115,13 @@ function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
 
 function SectionHeader({ index, title }: { index: string; title: string }) {
   return (
-    <div className="mb-6 flex items-center gap-4">
-      <span className="mono-label text-[var(--accent)]">{index}</span>
-      <h2 className="text-xl font-semibold tracking-[-0.01em] text-[var(--foreground)]">
+    <div className="mb-6">
+      <p className="mb-2 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[var(--accent)]">
+        {index}
+      </p>
+      <h2 className="font-display text-xl font-medium tracking-[-0.01em] text-[var(--foreground)] sm:text-2xl">
         {title}
       </h2>
-      <span aria-hidden="true" className="h-px flex-1 bg-[var(--border)]" />
     </div>
   );
 }
@@ -164,24 +165,23 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
           <article>
             {/* Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2">
+            <nav
+              aria-label="Breadcrumb"
+              className="mb-8 flex items-center gap-2 text-[0.8rem] font-medium text-[var(--faint)]"
+            >
               <Link
                 href="/case-studies"
-                className="mono-label transition-colors duration-150 hover:text-[var(--foreground)]"
+                className="transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 Work
               </Link>
-              <span aria-hidden="true" className="mono-label">
-                /
-              </span>
-              <span className="mono-label text-[var(--foreground)]">
-                {caseStudy.title}
-              </span>
+              <span aria-hidden="true">/</span>
+              <span className="text-[var(--foreground)]">{caseStudy.title}</span>
             </nav>
 
             {/* Header */}
             <header>
-              <h1 className="text-4xl font-semibold leading-[1.05] tracking-[-0.02em] text-[var(--foreground)] sm:text-5xl">
+              <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-[-0.02em] text-[var(--foreground)] sm:text-5xl">
                 {caseStudy.title}
               </h1>
               <p className="mt-5 max-w-[62ch] text-lg leading-relaxed text-[var(--muted)]">
@@ -193,7 +193,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   href={externalCta.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-7 inline-flex items-center gap-2 rounded-md bg-[var(--accent)] px-5 py-2.5 text-sm font-medium text-[var(--accent-foreground)] transition-colors duration-150 hover:bg-[var(--accent-hover)]"
+                  className="mt-7 inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-[var(--accent-foreground)] shadow-[0_8px_24px_var(--accent-glow)] transition-colors duration-150 hover:bg-[var(--accent-hover)]"
                 >
                   {externalCta.label}
                   <ExternalLink className="h-4 w-4" />
@@ -201,27 +201,33 @@ export default async function CaseStudyPage({ params }: PageProps) {
               )}
 
               {/* Metadata band */}
-              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-[var(--border)] py-5 lg:grid-cols-4">
+              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] px-5 py-5 shadow-[var(--shadow-raised)] lg:grid-cols-4">
                 <div>
-                  <dt className="mono-label">Role</dt>
-                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
+                    Role
+                  </dt>
+                  <dd className="mt-1.5 text-sm font-medium text-[var(--foreground)]">
                     {caseStudy.role}
                   </dd>
                 </div>
                 <div>
-                  <dt className="mono-label">Year</dt>
-                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
+                    Year
+                  </dt>
+                  <dd className="mt-1.5 text-sm font-medium text-[var(--foreground)]">
                     {caseStudy.duration}
                   </dd>
                 </div>
                 <div>
-                  <dt className="mono-label">Type</dt>
-                  <dd className="mono-meta mt-1.5 flex items-center gap-2 text-[var(--foreground)]">
+                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
+                    Type
+                  </dt>
+                  <dd className="mt-1.5 flex items-center gap-2 text-sm font-medium text-[var(--foreground)]">
                     <span
                       aria-hidden="true"
                       className={`inline-block h-1.5 w-1.5 rounded-full ${
                         caseStudy.projectType === "professional"
-                          ? "bg-[var(--accent)]"
+                          ? "bg-[var(--accent)] shadow-[0_0_0_3px_var(--accent-subtle)]"
                           : "bg-[var(--faint)]"
                       }`}
                     />
@@ -231,16 +237,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   </dd>
                 </div>
                 <div>
-                  <dt className="mono-label">
+                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
                     {caseStudy.clientName ? "Client" : "Category"}
                   </dt>
-                  <dd className="mono-meta mt-1.5 text-[var(--foreground)]">
+                  <dd className="mt-1.5 text-sm font-medium text-[var(--foreground)]">
                     {caseStudy.clientName ?? caseStudy.category}
                   </dd>
                 </div>
                 <div className="col-span-2 lg:col-span-4">
-                  <dt className="mono-label">Stack</dt>
-                  <dd className="mono-meta mt-1.5">
+                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
+                    Stack
+                  </dt>
+                  <dd className="mt-1.5 text-sm font-medium text-[var(--muted)]">
                     {caseStudy.technologies.join(" · ")}
                   </dd>
                 </div>
@@ -249,7 +257,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               {/* Outcome stat band */}
               {caseStudy.stats && caseStudy.stats.length > 0 && (
                 <div
-                  className={`grid grid-cols-2 gap-x-6 gap-y-8 border-b border-[var(--border)] py-8 ${
+                  className={`mt-6 grid grid-cols-2 gap-x-6 gap-y-8 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] px-5 py-8 shadow-[var(--shadow-raised)] ${
                     caseStudy.stats.length === 3
                       ? "sm:grid-cols-3"
                       : caseStudy.stats.length >= 4
@@ -263,7 +271,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
                         value={stat.value}
                         className="mono-stat block text-3xl sm:text-4xl"
                       />
-                      <p className="mono-label mt-2">{stat.label}</p>
+                      <p className="mt-2 text-[0.8rem] font-medium text-[var(--faint)]">
+                        {stat.label}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -285,10 +295,10 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <section id="solution" className="scroll-mt-28">
                 <SectionHeader index="03" title="The Solution" />
                 {diagram && (
-                  <figure className="mb-8 rounded-lg border border-[var(--border)] bg-[var(--surface-1)] p-5 sm:p-7">
+                  <figure className="mb-8 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-5 shadow-[var(--shadow-raised)] sm:p-7">
                     {diagram}
-                    <figcaption className="mono-label mt-4">
-                      {caseStudy.title} / system architecture
+                    <figcaption className="mt-4 text-[0.78rem] font-medium text-[var(--faint)]">
+                      {caseStudy.title}: system architecture
                     </figcaption>
                   </figure>
                 )}
@@ -305,7 +315,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     >
                       <span
                         aria-hidden="true"
-                        className="mt-[0.7em] h-px w-3 flex-shrink-0 bg-[var(--accent)]"
+                        className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_0_4px_var(--accent-subtle)]"
                       />
                       <span className="leading-[1.65]">{result}</span>
                     </li>
@@ -313,12 +323,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 </ul>
 
                 {caseStudy.testimonial && (
-                  <blockquote className="mt-10 rounded-lg border-l-2 border-[var(--accent)] bg-[var(--surface-1)] p-6">
+                  <blockquote className="mt-10 rounded-[var(--radius)] border-l-[3px] border-[var(--accent)] bg-[var(--surface-1)] p-6 shadow-[var(--shadow-raised)]">
                     <p className="leading-relaxed text-[var(--foreground)]">
                       &ldquo;{caseStudy.testimonial}&rdquo;
                     </p>
                     {caseStudy.clientName && (
-                      <footer className="mono-label mt-4">
+                      <footer className="mt-4 text-[0.8rem] font-semibold text-[var(--faint)]">
                         {caseStudy.clientName}
                       </footer>
                     )}
@@ -335,7 +345,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <div>
                 {prev && (
                   <Link href={`/case-studies/${prev.slug}`} className="group inline-block">
-                    <p className="mono-label flex items-center gap-2">
+                    <p className="flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
                       <ArrowLeft className="h-3 w-3 transition-transform duration-150 group-hover:-translate-x-0.5" />
                       Previous
                     </p>
@@ -348,7 +358,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
               <div className="text-right">
                 {next && (
                   <Link href={`/case-studies/${next.slug}`} className="group inline-block">
-                    <p className="mono-label flex items-center justify-end gap-2">
+                    <p className="flex items-center justify-end gap-2 text-[0.78rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
                       Next
                       <ArrowRight className="h-3 w-3 transition-transform duration-150 group-hover:translate-x-0.5" />
                     </p>

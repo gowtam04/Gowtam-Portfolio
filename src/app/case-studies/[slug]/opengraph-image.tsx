@@ -5,11 +5,11 @@ export const alt = "Case Study - Gowtam Ramanujam";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BACKGROUND = "#0b0b0c";
-const FOREGROUND = "#f4f4f5";
-const MUTED = "#a3a3ab";
-const ACCENT = "#e8703a";
-const BORDER = "#232326";
+const BACKGROUND = "#12100e";
+const FOREGROUND = "#f5efe6";
+const MUTED = "#b5aaa0";
+const ACCENT = "#e08a58";
+const BORDER = "rgba(245, 239, 230, 0.12)";
 
 export async function generateStaticParams() {
   const slugs = getAllCaseStudySlugs();
@@ -55,13 +55,14 @@ export default async function Image({ params }: ImageProps) {
               height: 4,
               backgroundColor: ACCENT,
               marginRight: 16,
+              borderRadius: 2,
             }}
           />
           <span
             style={{
               fontSize: 22,
-              fontWeight: 500,
-              letterSpacing: 4,
+              fontWeight: 600,
+              letterSpacing: 3,
               textTransform: "uppercase",
               color: ACCENT,
             }}
@@ -97,7 +98,7 @@ export default async function Image({ params }: ImageProps) {
             style={{
               fontSize: 20,
               fontWeight: 500,
-              letterSpacing: 2,
+              letterSpacing: 1,
               color: FOREGROUND,
             }}
           >
@@ -106,8 +107,7 @@ export default async function Image({ params }: ImageProps) {
           <span
             style={{
               fontSize: 20,
-              letterSpacing: 3,
-              textTransform: "uppercase",
+              letterSpacing: 2,
               color: MUTED,
             }}
           >

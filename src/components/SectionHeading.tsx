@@ -1,24 +1,22 @@
 interface SectionHeadingProps {
-  index: string;
+  /** Kept for call-site back-compat; not rendered in Warm Authority */
+  index?: string;
   label: string;
   title: string;
   lede?: string;
 }
 
-export function SectionHeading({ index, label, title, lede }: SectionHeadingProps) {
+export function SectionHeading({ label, title, lede }: SectionHeadingProps) {
   return (
-    <div className="mb-14">
-      <div className="mb-6 flex items-center gap-4">
-        <span className="mono-label">
-          {index} / {label}
-        </span>
-        <span aria-hidden="true" className="h-px flex-1 bg-[var(--border)]" />
-      </div>
-      <h2 className="text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.02em] text-[var(--foreground)] sm:text-[2rem]">
+    <div className="mb-12 max-w-[36rem]">
+      <p className="mb-3 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[var(--accent)]">
+        {label}
+      </p>
+      <h2 className="font-display text-[clamp(2rem,3.5vw,2.65rem)] font-medium leading-[1.15] tracking-[-0.025em] text-[var(--foreground)]">
         {title}
       </h2>
       {lede && (
-        <p className="mt-4 max-w-[62ch] text-lg leading-relaxed text-[var(--muted)]">
+        <p className="mt-3.5 text-[1.05rem] leading-[1.65] text-[var(--muted)]">
           {lede}
         </p>
       )}

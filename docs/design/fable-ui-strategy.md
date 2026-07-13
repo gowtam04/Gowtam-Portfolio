@@ -1,8 +1,10 @@
 # UI Design Strategy - gowtam.ai
 
+> **Superseded (2026-07).** The live site now follows **Warm Authority** (Fraunces + Plus Jakarta Sans, warm ink/cream, copper accent, photo-forward hero). See `docs/design/redesign-preview.html` and current `src/app/globals.css`. This document is historical: the earlier "spec sheet, elevated" pass that shipped and later felt too robotic.
+
 > Fable design pass · 2026-07-05 · commit 264ba79
 > Seen via: live screenshots (dev server, dark + light themes, desktop + mobile), plus a full design-token inventory of the source
-> Status: **strategy only - no code changed.** Implementation is a separate pass.
+> Status: **historical.** Do not re-apply this direction without explicit request.
 
 ## TL;DR
 

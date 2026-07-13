@@ -11,7 +11,7 @@ const items = [
 
 /**
  * Slim sticky table of contents for case study pages (xl screens only).
- * Tracks the section in view and marks it with an ember tick.
+ * Tracks the section in view and marks it with a copper tick.
  */
 export function CaseStudyToc() {
   const [active, setActive] = useState("overview");
@@ -38,7 +38,9 @@ export function CaseStudyToc() {
   return (
     <aside className="absolute -left-56 top-0 hidden h-full w-40 xl:block">
       <nav aria-label="On this page" className="sticky top-32">
-        <p className="mono-label mb-4 text-[var(--foreground)]">Contents</p>
+        <p className="mb-4 text-[0.78rem] font-bold uppercase tracking-[0.05em] text-[var(--foreground)]">
+          Contents
+        </p>
         <ul className="space-y-3">
           {items.map((item) => {
             const isActive = active === item.id;
@@ -46,10 +48,10 @@ export function CaseStudyToc() {
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className={`mono-label flex items-center gap-2 transition-colors duration-150 ${
+                  className={`flex items-center gap-2 text-[0.8rem] font-medium transition-colors duration-150 ${
                     isActive
                       ? "text-[var(--foreground)]"
-                      : "hover:text-[var(--foreground)]"
+                      : "text-[var(--faint)] hover:text-[var(--foreground)]"
                   }`}
                 >
                   <span

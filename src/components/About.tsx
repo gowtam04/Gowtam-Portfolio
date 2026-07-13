@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { SectionHeading } from "./SectionHeading";
 import { Reveal } from "./Reveal";
 import { CountUp } from "./CountUp";
@@ -18,85 +17,78 @@ const stats = [
 
 export function About() {
   return (
-    <section id="about" className="scroll-mt-24 px-6 py-24">
+    <section
+      id="about"
+      className="scroll-mt-24 border-t border-[var(--border)] px-6 py-24"
+    >
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <SectionHeading index="01" label="About" title="About Me" />
+          <SectionHeading
+            label="About"
+            title="An architect who still writes the hard parts."
+            lede="Blueprints that survive contact with production. Hands-on when it matters. Clear about tradeoffs either way."
+          />
         </Reveal>
 
-        <div className="grid items-start gap-12 md:grid-cols-5">
-          {/* Photo */}
-          <Reveal className="md:col-span-2">
-            <div className="aspect-square overflow-hidden rounded-lg border border-[var(--border)]">
-              <Image
-                src="/images/profile.jpg"
-                alt="Gowtam Ramanujam"
-                width={400}
-                height={400}
-                priority
-                className="h-full w-full object-cover saturate-[0.88]"
-              />
-            </div>
-            <div className="mt-3 flex items-center justify-between">
-              <span className="mono-label">Gowtam Ramanujam</span>
-              <span className="mono-label">AI Architect</span>
+        <div className="grid gap-5 md:grid-cols-2 md:gap-6">
+          <Reveal>
+            <div className="h-full rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-7 shadow-[var(--shadow-raised)]">
+              <h3 className="font-display text-[1.35rem] font-medium tracking-[-0.02em] text-[var(--foreground)]">
+                How I work with clients
+              </h3>
+              <p className="mt-4 text-[0.975rem] leading-[1.7] text-[var(--muted)]">
+                I translate business problems into technical blueprints: agent
+                architectures, data flows, API contracts, and phased build plans
+                with explicit tradeoffs.
+              </p>
+              <p className="mt-4 text-[0.975rem] leading-[1.7] text-[var(--muted)]">
+                Requirements discovery comes first, then deliberate architecture,
+                then disciplined execution with AI-assisted engineering. Working
+                systems, not just diagrams.
+              </p>
             </div>
           </Reveal>
 
-          {/* Bio Content */}
-          <Reveal delay={80} className="md:col-span-3">
-            <div className="space-y-5">
-              <p className="max-w-[68ch] leading-[1.65] text-[var(--foreground)]">
-                I&apos;m an AI Architect with 7+ years of experience designing,
-                building, and shipping software systems. I specialize in
-                architecting AI systems and autonomous agents: tool loops,
-                multi-agent orchestration, model selection, and the integration
-                patterns that turn LLM capabilities into reliable production
-                software.
+          <Reveal delay={80}>
+            <div className="h-full rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-7 shadow-[var(--shadow-raised)]">
+              <h3 className="font-display text-[1.35rem] font-medium tracking-[-0.02em] text-[var(--foreground)]">
+                What I bring into a team
+              </h3>
+              <p className="mt-4 text-[0.975rem] leading-[1.7] text-[var(--muted)]">
+                The same rigor, hands-on: design docs, model and infrastructure
+                decisions, and shipping. I specialize in tool loops, multi-agent
+                orchestration, model selection, and the integration patterns that
+                make LLMs reliable software.
               </p>
-
-              <p className="max-w-[68ch] leading-[1.65] text-[var(--muted)]">
-                For clients, I translate business problems into technical
-                blueprints: agent architectures, data flows, API contracts, and
-                phased build plans with explicit tradeoffs. For teams hiring an
-                architect, I bring the same rigor hands-on: I write the design
-                docs, make the model and infrastructure decisions, and ship
-                working systems, not just diagrams. Requirements discovery
-                comes first, then deliberate architecture, then disciplined
-                execution with AI-assisted engineering.
-              </p>
-
-              <div className="border-t border-[var(--border)] pt-6">
-                <p className="mono-label mb-4">Selected proof</p>
-                <ul className="space-y-3">
-                  {selectedProof.map((item) => (
-                    <li
-                      key={item}
-                      className="flex items-start gap-3 text-sm leading-relaxed text-[var(--muted)]"
-                    >
-                      <span
-                        aria-hidden="true"
-                        className="mt-[0.65em] h-px w-3 flex-shrink-0 bg-[var(--accent)]"
-                      />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ul className="mt-6 space-y-3.5 border-t border-[var(--border)] pt-6">
+                {selectedProof.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-3 text-[0.925rem] leading-relaxed text-[var(--muted)]"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--accent)] shadow-[0_0_0_4px_var(--accent-subtle)]"
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </Reveal>
         </div>
 
-        {/* Stat band */}
         <Reveal delay={120}>
-          <div className="mt-16 grid grid-cols-1 divide-y divide-[var(--border)] border-y border-[var(--border)] sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          <div className="mt-10 grid grid-cols-3 gap-6 border-t border-[var(--border)] pt-10 sm:gap-10">
             {stats.map((stat) => (
-              <div key={stat.label} className="py-8 sm:px-8 sm:first:pl-0">
+              <div key={stat.label}>
                 <CountUp
                   value={stat.value}
-                  className="mono-stat block text-[2.5rem] leading-none"
+                  className="mono-stat block text-[2.25rem] leading-none sm:text-[2.5rem]"
                 />
-                <p className="mono-label mt-3">{stat.label}</p>
+                <p className="mt-2.5 text-[0.8rem] font-medium text-[var(--faint)]">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

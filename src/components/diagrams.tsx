@@ -2,11 +2,10 @@ import type { ReactNode } from "react";
 
 /*
  * Architecture diagrams for flagship case studies, drawn in site tokens so
- * they follow the theme. Hairline strokes, mono labels, ember on the
- * critical path: redlines on an engineering drawing, not decoration.
+ * they follow the theme. Soft strokes and copper on the critical path.
  */
 
-const MONO = "var(--font-plex-mono), ui-monospace, monospace";
+const LABEL_FONT = "var(--font-jakarta), system-ui, sans-serif";
 
 interface BoxProps {
   x: number;
@@ -36,7 +35,7 @@ function Box({ x, y, w, h, label, sub, accent }: BoxProps) {
         x={cx}
         y={labelY}
         textAnchor="middle"
-        fontFamily={MONO}
+        fontFamily={LABEL_FONT}
         fontSize={13}
         fontWeight={500}
         letterSpacing="0.06em"
@@ -49,7 +48,7 @@ function Box({ x, y, w, h, label, sub, accent }: BoxProps) {
           x={cx}
           y={y + h / 2 + 15}
           textAnchor="middle"
-          fontFamily={MONO}
+          fontFamily={LABEL_FONT}
           fontSize={10}
           letterSpacing="0.06em"
           fill={accent ? "var(--accent)" : "var(--muted)"}
@@ -79,7 +78,7 @@ function Caption({
       x={x}
       y={y}
       textAnchor={anchor}
-      fontFamily={MONO}
+      fontFamily={LABEL_FONT}
       fontSize={10}
       letterSpacing="0.08em"
       fill={accent ? "var(--accent)" : "var(--muted)"}

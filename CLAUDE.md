@@ -35,9 +35,9 @@ See `src/app/case-studies/[slug]/page.tsx` for the canonical example. This appli
 - Defaults to `dark` theme with `enableSystem={false}` (no OS preference fallback).
 - Color tokens live as CSS variables in `src/app/globals.css` under `:root` and `.dark`. Components read them as `text-[var(--foreground)]`, `bg-[var(--background)]`, etc.
 - `globals.css` declares `@custom-variant dark (&:where(.dark, .dark *));` so Tailwind's `dark:` variant follows the `.dark` class (not `prefers-color-scheme`). Without this line, Tailwind `dark:` utilities would ignore the in-app theme toggle and respond only to the OS setting. Do not remove it.
-- The token set is graphite neutrals plus one ember accent (`--accent`), with surfaces (`--surface-1`, `--surface-2`) and text tiers (`--foreground`, `--muted`, `--faint`). Project-type badges are mono microlabels with a dot (ember = professional, neutral = independent); the old `--personal` / `--client` variables no longer exist.
+- The token set is warm ink / cream paper plus one copper accent (`--accent`), with surfaces (`--surface-1`, `--surface-2`) and text tiers (`--foreground`, `--muted`, `--faint`). Project-type badges use a soft label with a dot (copper = professional, neutral = independent); the old `--personal` / `--client` variables no longer exist.
 
-**Design system.** The visual language ("the spec sheet, elevated") is documented in `docs/design/fable-ui-strategy.md`: Instrument Sans + IBM Plex Mono, mono section labels (`.mono-label` / `.mono-meta` / `.mono-stat` utilities in `globals.css`), hairline rules, and a restrained motion grammar (`Reveal`, `CountUp`, `.hero-enter`, all honoring `prefers-reduced-motion`).
+**Design system.** Visual language is **Warm Authority** (human editorial, professional AI architect): Fraunces + Plus Jakarta Sans, copper kickers, pill CTAs, soft elevation, restrained motion (`Reveal`, `CountUp`, `.hero-enter`, `prefers-reduced-motion`). Reference: `docs/design/redesign-preview.html`. Utility class names `.mono-label` / `.mono-meta` / `.mono-stat` remain but are no longer monospace.
 
 **Theme-aware assets.** Architecture diagrams are inline SVG components (`src/components/diagrams.tsx`) that consume CSS variables, so they follow the theme automatically. For raster images that must differ per theme, render both variants and toggle with Tailwind `dark:` classes (`block dark:hidden` / `hidden dark:block`).
 
@@ -52,7 +52,7 @@ See `src/app/case-studies/[slug]/page.tsx` for the canonical example. This appli
 ### File Layout
 
 - `src/app/`: App Router pages, layouts, metadata, route segments (includes `robots.ts`, `sitemap.ts`, `not-found.tsx`, `icon.svg`, `apple-icon.tsx`)
-- `src/components/`: UI components (Header, Hero, HeroSchematic, About, Process, TimelineSpine, CaseStudies, CaseStudiesGrid, CaseStudyBody, CaseStudyToc, Skills, Contact, Footer, SectionHeading, Reveal, CountUp, diagrams, ThemeProvider, ThemeToggle)
+- `src/components/`: UI components (Header, Hero, About, AgentAnatomy, CaseStudies, CaseStudiesGrid, CaseStudyBody, CaseStudyToc, Skills, Contact, Footer, SectionHeading, Reveal, CountUp, diagrams, ThemeProvider, ThemeToggle)
 - `src/lib/case-studies.ts`: case study data and helpers
 - `public/diagrams/`: Excalidraw source files (`.excalidraw`). Exports to PNG go in `public/images/`.
 - `PDFs/`: client deliverable PDFs (not part of the build)

@@ -1,24 +1,26 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { Sun, Moon } from "lucide-react";
 
-export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+const emptySubscribe = () => () => {};
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export function ThemeToggle() {
+  const mounted = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false
+  );
+  const { theme, setTheme } = useTheme();
 
   if (!mounted) {
     return (
       <button
-        className="p-2 rounded-md border border-[var(--border)] bg-transparent"
+        className="grid h-10 w-10 place-items-center rounded-full border border-[var(--border)] bg-transparent"
         aria-label="Toggle theme"
       >
-        <div className="w-5 h-5" />
+        <div className="h-4 w-4" />
       </button>
     );
   }
@@ -26,13 +28,13 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-md border border-[var(--border)] bg-transparent hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)] transition-colors duration-150 cursor-pointer"
+      className="grid h-10 w-10 cursor-pointer place-items-center rounded-full border border-[var(--border)] bg-transparent text-[var(--muted)] transition-colors duration-150 hover:border-[var(--border-strong)] hover:bg-[var(--surface-1)] hover:text-[var(--foreground)]"
       aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
     >
       {theme === "dark" ? (
-        <Sun className="w-5 h-5 text-[var(--foreground)]" />
+        <Sun className="h-4 w-4" />
       ) : (
-        <Moon className="w-5 h-5 text-[var(--foreground)]" />
+        <Moon className="h-4 w-4" />
       )}
     </button>
   );
