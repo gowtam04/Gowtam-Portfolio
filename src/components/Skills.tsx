@@ -3,21 +3,6 @@ import { Reveal } from "./Reveal";
 
 const skills = [
   {
-    title: "AI System Architecture",
-    description:
-      "End-to-end system design: data flows, integrations, infrastructure, and model selection for production AI.",
-  },
-  {
-    title: "Agentic AI Design",
-    description:
-      "Designing autonomous agents that reason, plan, and execute complex tasks with tool use and structured outputs.",
-  },
-  {
-    title: "Multi-Agent Orchestration",
-    description:
-      "Coordinating specialized agents with routing, task delegation, and shared context across complex workflows.",
-  },
-  {
     title: "Requirements Discovery",
     description:
       "Stakeholder interviews, workflow mapping, and edge-case analysis to define what systems actually need to do.",
@@ -28,6 +13,11 @@ const skills = [
       "Technical blueprints, architecture tradeoffs, and phased build plans that turn requirements into shippable systems.",
   },
   {
+    title: "Production Delivery",
+    description:
+      "Shipping under real constraints: integrations, observability, cutovers, and systems that stay up after launch.",
+  },
+  {
     title: "Cross-functional Leadership",
     description:
       "Leading diverse teams of engineers, designers, and stakeholders to deliver results.",
@@ -36,6 +26,11 @@ const skills = [
     title: "Stakeholder Communication",
     description:
       "Translating technical decisions for executives, engineering teams, and clients with clarity and alignment.",
+  },
+  {
+    title: "AI-assisted Engineering",
+    description:
+      "Using AI to move faster on implementation without skipping design rigor, reviews, or production standards.",
   },
 ];
 
