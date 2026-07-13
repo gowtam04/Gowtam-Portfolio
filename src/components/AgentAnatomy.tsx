@@ -22,38 +22,12 @@ type Layer = {
   proof: LayerProof;
 };
 
+// Order is design dependency: shape the system, ground it, wire actions and
+// state, buy model capacity, enforce trust, then measure everything.
 const layers: Layer[] = [
   {
     id: "layer-01",
     mapIndex: "01",
-    mapName: "Model",
-    title: "Model",
-    description:
-      "Which model, at what reasoning effort, for which call. Routing and fallbacks are decided up front, with explicit cost and latency budgets, so capability is bought per call, not per system.",
-    artifacts: ["Model matrix", "Routing policy", "Latency budget"],
-    proof: {
-      study: "Oak",
-      slug: "oak",
-      line: "Provider-agnostic stack: Grok by default, Claude and GPT as drop-in operator switches with no rebuild.",
-    },
-  },
-  {
-    id: "layer-02",
-    mapIndex: "02",
-    mapName: "Tools",
-    title: "Tools",
-    description:
-      "The contract surface between the model and the world: small, typed, deterministic tools with schemas that are hard to misuse and errors that tell the model what to do next.",
-    artifacts: ["Tool specs", "IO schemas", "Error contracts"],
-    proof: {
-      study: "Oak",
-      slug: "oak",
-      line: "Fourteen small tools supply facts; the model composes mechanics conclusions instead of reciting stat blocks.",
-    },
-  },
-  {
-    id: "layer-03",
-    mapIndex: "03",
     mapName: "Orchestration",
     title: "Orchestration",
     description:
@@ -63,6 +37,34 @@ const layers: Layer[] = [
       study: "Annie ACS",
       slug: "annie-acs",
       line: "Patient path is route, retrieve, respond, not a free-form free-for-all. Insights is a second, scoped agent for staff.",
+    },
+  },
+  {
+    id: "layer-02",
+    mapIndex: "02",
+    mapName: "Knowledge",
+    title: "Knowledge and retrieval",
+    description:
+      "The ground truth the system is allowed to reason over: corpora, indexes, schemas, and retrieval paths. Facts come from owned data with clear provenance, not from model memory.",
+    artifacts: ["Corpora", "Indexes", "Retrieval paths"],
+    proof: {
+      study: "Annie ACS",
+      slug: "annie-acs",
+      line: "Procedure media is delivered only via structured SSE from retrieval, never model text, so URLs cannot be hallucinated.",
+    },
+  },
+  {
+    id: "layer-03",
+    mapIndex: "03",
+    mapName: "Tools",
+    title: "Tools",
+    description:
+      "The contract surface between the model and the world: small, typed, deterministic tools with schemas that are hard to misuse and errors that tell the model what to do next.",
+    artifacts: ["Tool specs", "IO schemas", "Error contracts"],
+    proof: {
+      study: "Oak",
+      slug: "oak",
+      line: "Fourteen small tools supply facts; the model composes mechanics conclusions instead of reciting stat blocks.",
     },
   },
   {
@@ -82,15 +84,15 @@ const layers: Layer[] = [
   {
     id: "layer-05",
     mapIndex: "05",
-    mapName: "Evals",
-    title: "Evals and observability",
+    mapName: "Model",
+    title: "Model",
     description:
-      "The harness that makes the system improvable: regression suites, traces on every run, and eval gates on every change. A demo is not evidence; passing evals is.",
-    artifacts: ["Eval suite", "Traces", "Regression gates"],
+      "Which model, at what reasoning effort, for which call. Routing and fallbacks are decided up front, with explicit cost and latency budgets, so capability is bought per call, not per system.",
+    artifacts: ["Model matrix", "Routing policy", "Latency budget"],
     proof: {
-      study: "Annie ACS",
-      slug: "annie-acs",
-      line: "Procedure media is delivered only via structured SSE from retrieval, never model text, so URLs cannot be hallucinated.",
+      study: "Oak",
+      slug: "oak",
+      line: "Provider-agnostic stack: Grok by default, Claude and GPT as drop-in operator switches with no rebuild.",
     },
   },
   {
@@ -99,12 +101,26 @@ const layers: Layer[] = [
     mapName: "Guardrails",
     title: "Guardrails",
     description:
-      "Where humans stay in the loop: permissioned actions, uncertainty surfaced instead of smoothed over, and hard stops in front of anything irreversible.",
-    artifacts: ["Permissions", "HITL gates", "Hard stops"],
+      "Where trust is enforced: grounding and citations, permissioned actions, uncertainty surfaced instead of smoothed over, policy constraints, and hard stops in front of anything irreversible.",
+    artifacts: ["Grounding", "Permissions", "HITL gates", "Hard stops"],
     proof: {
       study: "Annie ACS",
       slug: "annie-acs",
       line: "Insights has no mutating tools. Status, export, and filters require explicit staff confirmation, with cited sessions.",
+    },
+  },
+  {
+    id: "layer-07",
+    mapIndex: "07",
+    mapName: "Harness",
+    title: "Evals and observability",
+    description:
+      "Two jobs in one harness. Offline: regression suites and eval gates so changes are measurable before they ship. Online: traces, cost, and latency on every run so production stays inspectable. A demo is not evidence; passing evals is.",
+    artifacts: ["Eval suite", "Traces", "Regression gates"],
+    proof: {
+      study: "Oak",
+      slug: "oak",
+      line: "Every answer is a schema-validated object: answer, reasoning, citations, uncertainty flag, and game generation, so correctness is checkable field by field.",
     },
   },
 ];
@@ -286,7 +302,7 @@ export function AgentAnatomy() {
           <SectionHeading
             label="System"
             title="Anatomy of an agent system"
-            lede="How I decide, then the six layers I design before a demo. Each layer is grounded in Oak or Annie ACS."
+            lede="How I decide, then the seven layers I design before a demo. Each layer is grounded in Oak or Annie ACS."
           />
         </Reveal>
 
