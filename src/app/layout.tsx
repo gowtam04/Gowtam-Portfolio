@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
@@ -57,6 +58,13 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>{children}</ThemeProvider>
+        {/* Annie floating widget (staging) - remove when testing is done */}
+        <Script
+          src="https://annie-acs-backend-staging.fly.dev/embed/annie.js"
+          data-mode="floating"
+          data-position="bottom-right"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
