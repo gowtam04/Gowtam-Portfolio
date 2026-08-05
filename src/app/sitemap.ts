@@ -18,6 +18,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,
     },
+    {
+      url: `${baseUrl}/xrplook`,
+      lastModified: "2026-08-04",
+      changeFrequency: "monthly",
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/xrplook/privacy`,
+      lastModified: "2026-08-04",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/xrplook/support`,
+      lastModified: "2026-08-04",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   // Dynamic case study pages
