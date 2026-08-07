@@ -5,11 +5,11 @@ export const alt = "Case Study - Gowtam Ramanujam";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BACKGROUND = "#12100e";
-const FOREGROUND = "#f5efe6";
-const MUTED = "#b5aaa0";
-const ACCENT = "#e08a58";
-const BORDER = "rgba(245, 239, 230, 0.12)";
+const BACKGROUND = "#0b1218";
+const FOREGROUND = "#e8eef3";
+const MUTED = "#8b9aab";
+const ACCENT = "#3db8d4";
+const BORDER = "rgba(232, 238, 243, 0.12)";
 
 export async function generateStaticParams() {
   const slugs = getAllCaseStudySlugs();

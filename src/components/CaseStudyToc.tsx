@@ -11,7 +11,7 @@ const items = [
 
 /**
  * Slim sticky table of contents for case study pages (xl screens only).
- * Tracks the section in view and marks it with a copper tick.
+ * Tracks the section in view and marks it with a cyan tick.
  */
 export function CaseStudyToc() {
   const [active, setActive] = useState("overview");

@@ -115,8 +115,8 @@ Follow the established pattern used in `src/app/case-studies/[slug]/page.tsx`:
 - Tailwind CSS v4 is imported via `@import "tailwindcss";`.
 - `@custom-variant dark (&:where(.dark, .dark *));` wires Tailwind `dark:` utilities to the `.dark` class (not `prefers-color-scheme`). Do not remove it.
 - Tailwind color tokens are mapped through `@theme inline` in `src/app/globals.css`.
-- Project-type badges use a soft pill/label with a dot: copper (`--accent`) dot = professional, neutral (`--faint`) dot = independent. The old `--personal` / `--client` variables no longer exist.
-- Design direction: **Warm Authority** (warm ink / cream paper + copper accent). Tokens: `--background`, `--surface-1`, `--surface-2`, `--border`, `--border-strong`, `--foreground`, `--muted`, `--faint`, `--accent`, `--accent-hover`, `--accent-subtle`, `--accent-glow`. Visual reference: `docs/design/redesign-preview.html`. Historical note: `docs/design/fable-ui-strategy.md` (superseded "spec sheet" pass).
+- Project-type badges use a soft pill/label with a dot: cyan (`--accent`) dot = professional, neutral (`--faint`) dot = independent. The old `--personal` / `--client` variables no longer exist.
+- Design direction: **Midnight Current** (deep navy / cool paper + cyan current). Aligned with X profile (@GowtamAI). Tokens: `--background`, `--surface-1`, `--surface-2`, `--border`, `--border-strong`, `--foreground`, `--muted`, `--faint`, `--accent`, `--accent-hover`, `--accent-subtle`, `--accent-glow`. Kickers, links, focus, primary CTAs, and diagrams all use `--accent` (cyan). Visual reference: `docs/design/redesign-preview.html`. Historical notes: `docs/design/fable-ui-strategy.md` (superseded "spec sheet" pass); Warm Authority (cream + copper) was the prior live direction.
 
 Guidelines:
 

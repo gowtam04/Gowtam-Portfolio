@@ -3,69 +3,70 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * Design tokens: "Warm Authority"
- * Warm ink / cream paper + copper accent. Human editorial, not cold graphite.
+ * Design tokens: "Midnight Current"
+ * Deep navy / cool paper + cyan current as the single system accent.
+ * Aligned with X profile (@GowtamAI): banner glow + pool cyan.
  * Visual reference: docs/design/redesign-preview.html
  */
 :root {
-  --background: #f6f1e8;
-  --surface-1: #fffcf7;
-  --surface-2: #efe8db;
-  --border: rgba(26, 22, 18, 0.1);
-  --border-strong: rgba(26, 22, 18, 0.18);
-  --foreground: #1a1612;
-  --muted: #4a433c;
-  --faint: #8a8074;
-  --accent: #b4532a;
-  --accent-hover: #933f1c;
-  --accent-subtle: rgba(180, 83, 42, 0.1);
-  --accent-glow: rgba(180, 83, 42, 0.22);
-  --accent-foreground: #fffaf4;
-  --shadow-raised: 0 1px 2px rgba(26, 22, 18, 0.04),
-    0 12px 32px rgba(26, 22, 18, 0.06);
-  --shadow-overlay: 0 4px 12px rgba(26, 22, 18, 0.06),
-    0 24px 64px rgba(26, 22, 18, 0.1);
+  --background: #eef3f7;
+  --surface-1: #ffffff;
+  --surface-2: #e2e9f0;
+  --border: rgba(15, 23, 32, 0.1);
+  --border-strong: rgba(15, 23, 32, 0.18);
+  --foreground: #0f1720;
+  --muted: #4a5a6a;
+  --faint: #6b7c8c;
+  --accent: #0e7a94;
+  --accent-hover: #0a6278;
+  --accent-subtle: rgba(14, 122, 148, 0.1);
+  --accent-glow: rgba(14, 122, 148, 0.22);
+  --accent-foreground: #f0fafc;
+  --shadow-raised: 0 1px 2px rgba(15, 23, 32, 0.04),
+    0 12px 32px rgba(15, 23, 32, 0.06);
+  --shadow-overlay: 0 4px 12px rgba(15, 23, 32, 0.06),
+    0 24px 64px rgba(15, 23, 32, 0.1);
   --radius: 18px;
   --radius-sm: 10px;
-  --noise-opacity: 0.035;
+  --noise-opacity: 0.03;
   --hero-glow: radial-gradient(
       ellipse 70% 55% at 75% 20%,
-      rgba(180, 83, 42, 0.14),
+      rgba(14, 122, 148, 0.14),
       transparent 60%
     ),
     radial-gradient(
       ellipse 50% 40% at 15% 80%,
-      rgba(90, 120, 110, 0.08),
+      rgba(11, 18, 24, 0.06),
       transparent 55%
     );
 }
 
 .dark {
-  --background: #12100e;
-  --surface-1: #1c1916;
-  --surface-2: #241f1b;
-  --border: rgba(245, 239, 230, 0.09);
-  --border-strong: rgba(245, 239, 230, 0.16);
-  --foreground: #f5efe6;
-  --muted: #b5aaa0;
-  --faint: #7d7369;
-  --accent: #e08a58;
-  --accent-hover: #f0a070;
-  --accent-subtle: rgba(224, 138, 88, 0.12);
-  --accent-glow: rgba(224, 138, 88, 0.28);
-  --accent-foreground: #1a120c;
-  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.2), 0 16px 40px rgba(0, 0, 0, 0.35);
-  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.35),
-    0 32px 72px rgba(0, 0, 0, 0.45);
-  --noise-opacity: 0.05;
+  --background: #0b1218;
+  --surface-1: #121a22;
+  --surface-2: #1a2430;
+  --border: rgba(232, 238, 243, 0.08);
+  --border-strong: rgba(232, 238, 243, 0.15);
+  --foreground: #e8eef3;
+  --muted: #8b9aab;
+  --faint: #5c6b7a;
+  --accent: #3db8d4;
+  --accent-hover: #5ecce4;
+  --accent-subtle: rgba(61, 184, 212, 0.12);
+  --accent-glow: rgba(61, 184, 212, 0.28);
+  --accent-foreground: #0b1218;
+  --shadow-raised: 0 1px 2px rgba(0, 0, 0, 0.25), 0 16px 40px rgba(0, 0, 0, 0.4);
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.4),
+    0 32px 72px rgba(0, 0, 0, 0.5);
+  --noise-opacity: 0.045;
   --hero-glow: radial-gradient(
       ellipse 70% 55% at 78% 18%,
-      rgba(224, 138, 88, 0.16),
+      rgba(61, 184, 212, 0.18),
       transparent 58%
     ),
     radial-gradient(
       ellipse 45% 40% at 12% 75%,
-      rgba(72, 110, 100, 0.1),
+      rgba(40, 88, 120, 0.12),
       transparent 55%
     );
 }
@@ -147,7 +148,7 @@ body::before {
 }
 
 /* ---------------------------------------------------------------------------
- * Label / meta / stat utilities (Warm Authority)
+ * Label / meta / stat utilities (Midnight Current)
  * Class names kept for migration; no longer mono drafting register.
  * ------------------------------------------------------------------------- */
 

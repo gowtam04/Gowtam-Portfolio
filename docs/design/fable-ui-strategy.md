@@ -1,6 +1,6 @@
 # UI Design Strategy - gowtam.ai
 
-> **Superseded (2026-07).** The live site now follows **Warm Authority** (Fraunces + Plus Jakarta Sans, warm ink/cream, copper accent, photo-forward hero). See `docs/design/redesign-preview.html` and current `src/app/globals.css`. This document is historical: the earlier "spec sheet, elevated" pass that shipped and later felt too robotic.
+> **Superseded (2026-07).** The live site now follows **Midnight Current** (Fraunces + Plus Jakarta Sans, navy/cyan, photo-forward hero; X-aligned). Warm Authority (cream + copper) was an intermediate direction. See `docs/design/redesign-preview.html` and current `src/app/globals.css`. This document is historical: the earlier "spec sheet, elevated" pass that shipped and later felt too robotic.
 
 > Fable design pass · 2026-07-05 · commit 264ba79
 > Seen via: live screenshots (dev server, dark + light themes, desktop + mobile), plus a full design-token inventory of the source

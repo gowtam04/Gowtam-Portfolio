@@ -3,7 +3,7 @@ import { OakToolOrbit } from "./OakToolOrbit";
 
 /*
  * Architecture diagrams for flagship case studies, drawn in site tokens so
- * they follow the theme. Soft strokes and copper on the critical path.
+ * they follow the theme. Soft strokes and cyan on the critical path.
  * Oak uses the animated tool-orbit client component.
  */
 

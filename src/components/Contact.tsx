@@ -16,8 +16,8 @@ const channels = [
   },
   {
     label: "X",
-    value: "@gowtam",
-    href: "https://x.com/gowtam",
+    value: "@GowtamAI",
+    href: "https://x.com/GowtamAI",
     external: true,
   },
 ];

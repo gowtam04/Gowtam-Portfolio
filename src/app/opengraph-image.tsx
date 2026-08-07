@@ -4,12 +4,12 @@ export const alt = "Gowtam Ramanujam - AI Architect";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const BACKGROUND = "#12100e";
-const FOREGROUND = "#f5efe6";
-const MUTED = "#b5aaa0";
-const FAINT = "#7d7369";
-const ACCENT = "#e08a58";
-const BORDER = "rgba(245, 239, 230, 0.12)";
+const BACKGROUND = "#0b1218";
+const FOREGROUND = "#e8eef3";
+const MUTED = "#8b9aab";
+const FAINT = "#5c6b7a";
+const ACCENT = "#3db8d4";
+const BORDER = "rgba(232, 238, 243, 0.12)";
 
 export default async function Image() {
   return new ImageResponse(

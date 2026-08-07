@@ -1,5 +1,5 @@
 interface SectionHeadingProps {
-  /** Kept for call-site back-compat; not rendered in Warm Authority */
+  /** Kept for call-site back-compat; not rendered in Midnight Current */
   index?: string;
   label: string;
   title: string;

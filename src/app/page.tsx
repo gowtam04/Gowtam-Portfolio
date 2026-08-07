@@ -18,7 +18,7 @@ const personJsonLd = {
     "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
   sameAs: [
     "https://www.linkedin.com/in/gowtam-ramanujam",
-    "https://x.com/gowtam",
+    "https://x.com/GowtamAI",
   ],
   knowsAbout: [
     "Artificial Intelligence",

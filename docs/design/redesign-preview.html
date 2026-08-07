@@ -3,64 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>gowtam.ai · Redesign Preview · Warm Authority</title>
+  <title>gowtam.ai · Redesign Preview · Midnight Current</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ==========================================================================
-       Direction: "Warm Authority"
-       A human, editorial portfolio for a professional AI architect.
-       Less drafting-table / terminal. More trusted senior in the room.
+       Direction: "Midnight Current"
+       X-aligned cool authority for a professional AI architect.
+       Deep navy + cyan current as the single system accent (CTAs included).
        ========================================================================== */
 
     :root {
       --font-display: "Fraunces", Georgia, "Times New Roman", serif;
       --font-body: "Plus Jakarta Sans", system-ui, sans-serif;
 
-      /* Light: warm paper studio */
-      --bg: #f6f1e8;
-      --bg-elevated: #fffcf7;
-      --bg-soft: #efe8db;
-      --ink: #1a1612;
-      --ink-soft: #4a433c;
-      --ink-faint: #8a8074;
-      --line: rgba(26, 22, 18, 0.1);
-      --line-strong: rgba(26, 22, 18, 0.18);
-      --accent: #b4532a;
-      --accent-hover: #933f1c;
-      --accent-soft: rgba(180, 83, 42, 0.1);
-      --accent-glow: rgba(180, 83, 42, 0.22);
-      --on-accent: #fffaf4;
-      --shadow: 0 1px 2px rgba(26, 22, 18, 0.04), 0 12px 32px rgba(26, 22, 18, 0.06);
-      --shadow-lg: 0 4px 12px rgba(26, 22, 18, 0.06), 0 24px 64px rgba(26, 22, 18, 0.1);
+      /* Light: cool paper studio */
+      --bg: #eef3f7;
+      --bg-elevated: #ffffff;
+      --bg-soft: #e2e9f0;
+      --ink: #0f1720;
+      --ink-soft: #4a5a6a;
+      --ink-faint: #6b7c8c;
+      --line: rgba(15, 23, 32, 0.1);
+      --line-strong: rgba(15, 23, 32, 0.18);
+      --accent: #0e7a94;
+      --accent-hover: #0a6278;
+      --accent-soft: rgba(14, 122, 148, 0.1);
+      --accent-glow: rgba(14, 122, 148, 0.22);
+      --on-accent: #f0fafc;
+      --shadow: 0 1px 2px rgba(15, 23, 32, 0.04), 0 12px 32px rgba(15, 23, 32, 0.06);
+      --shadow-lg: 0 4px 12px rgba(15, 23, 32, 0.06), 0 24px 64px rgba(15, 23, 32, 0.1);
       --radius: 18px;
       --radius-sm: 10px;
-      --noise-opacity: 0.035;
-      --hero-glow: radial-gradient(ellipse 70% 55% at 75% 20%, rgba(180, 83, 42, 0.14), transparent 60%),
-                   radial-gradient(ellipse 50% 40% at 15% 80%, rgba(90, 120, 110, 0.08), transparent 55%);
+      --noise-opacity: 0.03;
+      --hero-glow: radial-gradient(ellipse 70% 55% at 75% 20%, rgba(14, 122, 148, 0.14), transparent 60%),
+                   radial-gradient(ellipse 50% 40% at 15% 80%, rgba(11, 18, 24, 0.06), transparent 55%);
     }
 
     [data-theme="dark"] {
-      /* Dark: warm night studio (not cold graphite) */
-      --bg: #12100e;
-      --bg-elevated: #1c1916;
-      --bg-soft: #241f1b;
-      --ink: #f5efe6;
-      --ink-soft: #b5aaa0;
-      --ink-faint: #7d7369;
-      --line: rgba(245, 239, 230, 0.09);
-      --line-strong: rgba(245, 239, 230, 0.16);
-      --accent: #e08a58;
-      --accent-hover: #f0a070;
-      --accent-soft: rgba(224, 138, 88, 0.12);
-      --accent-glow: rgba(224, 138, 88, 0.28);
-      --on-accent: #1a120c;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 16px 40px rgba(0, 0, 0, 0.35);
-      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.35), 0 32px 72px rgba(0, 0, 0, 0.45);
-      --noise-opacity: 0.05;
-      --hero-glow: radial-gradient(ellipse 70% 55% at 78% 18%, rgba(224, 138, 88, 0.16), transparent 58%),
-                   radial-gradient(ellipse 45% 40% at 12% 75%, rgba(72, 110, 100, 0.1), transparent 55%);
+      /* Dark: abyss + cyan current (X banner family) */
+      --bg: #0b1218;
+      --bg-elevated: #121a22;
+      --bg-soft: #1a2430;
+      --ink: #e8eef3;
+      --ink-soft: #8b9aab;
+      --ink-faint: #5c6b7a;
+      --line: rgba(232, 238, 243, 0.08);
+      --line-strong: rgba(232, 238, 243, 0.15);
+      --accent: #3db8d4;
+      --accent-hover: #5ecce4;
+      --accent-soft: rgba(61, 184, 212, 0.12);
+      --accent-glow: rgba(61, 184, 212, 0.28);
+      --on-accent: #0b1218;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 16px 40px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4), 0 32px 72px rgba(0, 0, 0, 0.5);
+      --noise-opacity: 0.045;
+      --hero-glow: radial-gradient(ellipse 70% 55% at 78% 18%, rgba(61, 184, 212, 0.18), transparent 58%),
+                   radial-gradient(ellipse 45% 40% at 12% 75%, rgba(40, 88, 120, 0.12), transparent 55%);
     }
 
     *,
@@ -1170,7 +1170,7 @@
       <span> · not wired into Next.js · open this file in a browser</span>
     </div>
     <div>
-      Direction: <code>Warm Authority</code>
+      Direction: <code>Midnight Current</code>
     </div>
   </div>
 
@@ -1545,10 +1545,10 @@
               </div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
-            <a class="channel" href="https://x.com/gowtam" target="_blank" rel="noopener">
+            <a class="channel" href="https://x.com/GowtamAI" target="_blank" rel="noopener">
               <div>
                 <strong>X</strong>
-                <span>@gowtam</span>
+                <span>@GowtamAI</span>
               </div>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </a>
@@ -1576,25 +1576,25 @@
       </p>
       <div class="notes-grid">
         <div class="note">
-          <h3>Thesis: Warm Authority</h3>
+          <h3>Thesis: Midnight Current</h3>
           <p>
-            Feel like a trusted senior architect in the room: calm, specific, human.
-            Professional without performing "AI aesthetic."
+            Same calm senior architect presence, now color-aligned with X (@GowtamAI):
+            deep navy field and a single cyan current for UI and primary CTAs.
           </p>
           <ul>
-            <li>References: Stripe Press, boutique architecture studios, Linear marketing (warmer)</li>
-            <li>Keep: evidence density, case study depth, outcomes</li>
-            <li>Drop: omnipresent mono labels, index numbers as identity, schematic-as-hero</li>
+            <li>References: X banner glow, pool cyan from avatar, professional headshot cool greys</li>
+            <li>Keep: evidence density, case study depth, outcomes, Fraunces + Jakarta</li>
+            <li>Drop: cream paper, copper accent, warm-brown shadows, competing red CTAs</li>
           </ul>
         </div>
         <div class="note">
           <h3>Foundation changes</h3>
           <ul>
             <li><strong>Type:</strong> Fraunces (display) + Plus Jakarta Sans (UI/body)</li>
-            <li><strong>Color:</strong> warm ink / cream paper + copper accent (not cold graphite + ember redline)</li>
+            <li><strong>Color:</strong> navy / cool paper + cyan accent (kickers, links, CTAs)</li>
             <li><strong>Shape:</strong> softer 18px radius, pill CTAs, subtle grain</li>
-            <li><strong>Depth:</strong> soft multi-layer shadows + warm surface steps</li>
-            <li><strong>Hero:</strong> photo + idea-led headline, not name + circuit diagram</li>
+            <li><strong>Depth:</strong> soft multi-layer shadows + cool surface steps</li>
+            <li><strong>Hero:</strong> photo + cyan radial glow (banner language), not copper</li>
           </ul>
         </div>
         <div class="note">
