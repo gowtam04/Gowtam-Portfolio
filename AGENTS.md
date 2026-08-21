@@ -207,3 +207,9 @@ Follow existing conventions in the files you edit:
 - No GitHub Copilot instructions found at `.github/copilot-instructions.md`.
 
 If any of these are added later, update this file to reflect them.
+
+## Cursor Cloud specific instructions
+
+- Single service: the Next.js dev server (`npm run dev`), served at `http://localhost:3000`. Dependencies are refreshed automatically on startup via `npm install`, so no manual install is needed before running commands.
+- Standard commands are documented above (`npm run dev`, `npm run lint`, `npm run build`, `npm run start`). `npm run build` is the de facto typecheck since there is no dedicated `typecheck` script and no test runner.
+- Next 16 uses Turbopack for both `dev` and `build`; the build statically prerenders the homepage plus every `/case-studies/[slug]` route from `getAllCaseStudySlugs()`, so adding/renaming a case study slug changes the set of generated pages.
