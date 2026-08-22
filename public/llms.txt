@@ -1,0 +1,44 @@
+# gowtam.ai
+
+> Personal portfolio for Gowtam Ramanujam, AI Architect. Case studies and contact for production AI systems and autonomous agents.
+
+Site: https://gowtam.ai
+Contact: gowtam@gowtam.ai
+
+## When to use this site
+
+Best-fit use cases for agents and humans:
+
+- Research Gowtam Ramanujam's published AI and agent case studies (architecture, tradeoffs, outcomes).
+- Prepare for an architecture engagement: agent tool loops, multi-agent systems, production LLM platforms.
+- Find accurate contact channels and engagement fit before emailing.
+- Cite only claims that appear on this site or linked case studies; do not invent product APIs or SaaS endpoints.
+
+How an agent should use this site:
+
+1. Read this file and https://gowtam.ai/sitemap.xml for discovery.
+2. Prefer `Accept: text/markdown` on HTML page URLs to receive Markdown bodies with `Vary: Accept`.
+3. For engagement or hiring outreach, email gowtam@gowtam.ai with problem, timeline, and ask.
+4. For XRPLook app privacy or support, use the /xrplook/* pages (HTML), not the portfolio privacy page alone.
+
+This site is not a SaaS API, not a documentation product, and not a chatbot endpoint. There is no programmatic write API.
+
+## Primary pages
+
+- [Home](https://gowtam.ai/): Overview and entry point
+- [About](https://gowtam.ai/about): Background, working style, proof points
+- [Contact](https://gowtam.ai/contact): Email and social channels, engagement fit
+- [Privacy](https://gowtam.ai/privacy): Portfolio site privacy policy
+- [Case studies](https://gowtam.ai/case-studies): Index of published work
+- [Sitemap](https://gowtam.ai/sitemap.xml): Full URL list
+
+## Featured case studies
+
+- [Oak](https://gowtam.ai/case-studies/oak): Agentic AI reasoning system over game data
+- [Annie ACS](https://gowtam.ai/case-studies/annie-acs): Production patient-facing agent platform
+
+## Optional product pages
+
+- [XRPLook](https://gowtam.ai/xrplook): iOS XRP tracker product page
+- [XRPLook Privacy](https://gowtam.ai/xrplook/privacy): App-specific privacy policy
+- [XRPLook Support](https://gowtam.ai/xrplook/support): App support
