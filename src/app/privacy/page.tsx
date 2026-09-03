@@ -62,6 +62,12 @@ export default function PrivacyPage() {
                 XRPLook privacy
               </Link>
               <Link
+                href="/someday/privacy"
+                className="text-[var(--accent)] hover:text-[var(--accent-hover)]"
+              >
+                Someday privacy
+              </Link>
+              <Link
                 href="/contact"
                 className="text-[var(--accent)] hover:text-[var(--accent-hover)]"
               >

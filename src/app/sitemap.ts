@@ -54,6 +54,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/someday/privacy`,
+      lastModified: "2026-09-02",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/someday/support`,
+      lastModified: "2026-09-02",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   // Dynamic case study pages

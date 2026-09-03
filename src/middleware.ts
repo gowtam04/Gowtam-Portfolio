@@ -121,7 +121,12 @@ export function middleware(req: NextRequest) {
   }
 
   // Skip Markdown negotiation for product pages in this pass
-  if (pathname === "/xrplook" || pathname.startsWith("/xrplook/")) {
+  if (
+    pathname === "/xrplook" ||
+    pathname.startsWith("/xrplook/") ||
+    pathname === "/someday" ||
+    pathname.startsWith("/someday/")
+  ) {
     const res = NextResponse.next();
     appendVaryAccept(res.headers);
     return res;
