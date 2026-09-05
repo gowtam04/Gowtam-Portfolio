@@ -66,6 +66,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.5,
     },
+    {
+      url: `${baseUrl}/dead-center/privacy`,
+      lastModified: "2026-09-04",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
+    {
+      url: `${baseUrl}/dead-center/support`,
+      lastModified: "2026-09-04",
+      changeFrequency: "yearly",
+      priority: 0.5,
+    },
   ];
 
   // Dynamic case study pages

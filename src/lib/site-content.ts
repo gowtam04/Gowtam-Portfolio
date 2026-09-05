@@ -107,13 +107,13 @@ export const privacyContent = {
   title: "Privacy Policy",
   headline: "Privacy for gowtam.ai",
   lastUpdated: "August 21, 2026",
-  lede: "This policy covers the personal portfolio site at gowtam.ai. It is separate from product-specific policies such as XRPLook and Someday.",
+  lede: "This policy covers the personal portfolio site at gowtam.ai. It is separate from product-specific policies such as XRPLook, Someday, and DEAD CENTER.",
   sections: [
     {
       heading: "1. Scope",
       paragraphs: [
         "This Privacy Policy applies to the website gowtam.ai, including pages such as the homepage, about, contact, case studies, and this privacy page. It describes what information is and is not collected when you browse the portfolio.",
-        "Apps and products linked from this site may have their own policies. For the XRPLook iOS app, see /xrplook/privacy. For Someday, see /someday/privacy.",
+        "Apps and products linked from this site may have their own policies. For the XRPLook iOS app, see /xrplook/privacy. For Someday, see /someday/privacy. For DEAD CENTER, see /dead-center/privacy.",
       ],
     },
     {
@@ -158,7 +158,7 @@ export const privacyContent = {
       heading: "8. Contact",
       paragraphs: [
         "Questions about this portfolio privacy policy: gowtam@gowtam.ai.",
-        "For XRPLook product privacy, use /xrplook/privacy. For Someday, use /someday/privacy. For general contact, see /contact.",
+        "For XRPLook product privacy, use /xrplook/privacy. For Someday, use /someday/privacy. For DEAD CENTER, use /dead-center/privacy. For general contact, see /contact.",
       ],
     },
   ],

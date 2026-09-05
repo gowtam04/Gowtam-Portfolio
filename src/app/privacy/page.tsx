@@ -68,6 +68,12 @@ export default function PrivacyPage() {
                 Someday privacy
               </Link>
               <Link
+                href="/dead-center/privacy"
+                className="text-[var(--accent)] hover:text-[var(--accent-hover)]"
+              >
+                DEAD CENTER privacy
+              </Link>
+              <Link
                 href="/contact"
                 className="text-[var(--accent)] hover:text-[var(--accent-hover)]"
               >
