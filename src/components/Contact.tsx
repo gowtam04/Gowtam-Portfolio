@@ -11,13 +11,7 @@ const channels = [
   {
     label: "LinkedIn",
     value: "gowtam-ramanujam",
-    href: "https://linkedin.com/in/gowtam-ramanujam",
-    external: true,
-  },
-  {
-    label: "X",
-    value: "@GowtamAI",
-    href: "https://x.com/GowtamAI",
+    href: "https://www.linkedin.com/in/gowtam-ramanujam",
     external: true,
   },
 ];

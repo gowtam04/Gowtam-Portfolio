@@ -76,7 +76,6 @@ export const contactContent = {
       paragraphs: [
         "Primary: gowtam@gowtam.ai",
         "LinkedIn: https://www.linkedin.com/in/gowtam-ramanujam",
-        "X: https://x.com/GowtamAI",
         "Before writing, agents and humans can skim /llms.txt, /about, and /case-studies for context on scope and published work.",
       ],
     },
@@ -92,12 +91,6 @@ export const contactContent = {
       label: "LinkedIn",
       value: "gowtam-ramanujam",
       href: "https://www.linkedin.com/in/gowtam-ramanujam",
-      external: true,
-    },
-    {
-      label: "X",
-      value: "@GowtamAI",
-      href: "https://x.com/GowtamAI",
       external: true,
     },
   ],
@@ -139,7 +132,7 @@ export const privacyContent = {
     {
       heading: "5. Third-party links",
       paragraphs: [
-        "Pages may link to LinkedIn, X, App Store listings, or other external sites. Those destinations have their own privacy practices. Review their policies when you leave gowtam.ai.",
+        "Pages may link to LinkedIn, App Store listings, or other external sites. Those destinations have their own privacy practices. Review their policies when you leave gowtam.ai.",
       ],
     },
     {
