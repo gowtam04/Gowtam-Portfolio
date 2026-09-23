@@ -22,7 +22,7 @@ export function HoverLabel() {
   const v = useMemo(() => new THREE.Vector3(), []);
 
   // Outer element is positioned here; the inner .room-chip owns its CSS entrance animation.
-  const { el, chip, text, hint } = useMemo(() => {
+  const { el, chip, text } = useMemo(() => {
     const wrap = document.createElement("div");
     wrap.setAttribute("aria-hidden", "true");
     Object.assign(wrap.style, {
@@ -40,11 +40,9 @@ export function HoverLabel() {
     Object.assign(c.style, { position: "absolute", left: "0", top: "0", translate: "-50% 0" });
     const t = document.createElement("span");
     t.className = "room-chip-text";
-    const h = document.createElement("span");
-    h.className = "room-chip-hint";
-    c.append(t, h);
+    c.append(t);
     wrap.append(c);
-    return { el: wrap, chip: c, text: t, hint: h };
+    return { el: wrap, chip: c, text: t };
   }, []);
 
   useEffect(() => {
@@ -67,8 +65,6 @@ export function HoverLabel() {
     const label = id === "switch" ? (s.lightsOn ? "Lights: on" : "Lights: off") : h.label;
     if (shown.current.id !== id || shown.current.label !== label) {
       text.textContent = label;
-      hint.textContent = h.hint;
-      hint.style.display = h.hint ? "" : "none";
       if (shown.current.id !== id) {
         // Restart the entrance animation for a new spot.
         chip.style.animation = "none";

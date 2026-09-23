@@ -177,11 +177,6 @@ body:has(.room-root) {
   box-shadow: 0 0 10px #3db8d4;
 }
 
-.room-chip-hint {
-  color: #8f9db4;
-  font-weight: 500;
-}
-
 @keyframes room-chip-in {
   from {
     opacity: 0;

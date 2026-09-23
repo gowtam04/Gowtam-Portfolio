@@ -144,7 +144,7 @@ export interface RoomSection {
   route: string;
   /** Bottom nav label. */
   navLabel: string;
-  /** Short hint shown in the hover chip ("the desk"). */
+  /** Short object hint ("the desk"), used in llms.txt. */
   hint: string;
   kicker: string;
   title: string;

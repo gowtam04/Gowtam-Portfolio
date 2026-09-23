@@ -24,7 +24,6 @@ export interface CameraView {
 export interface HotspotDef {
   id: SpotId;
   label: string;
-  hint: string;
   /** Where the hover chip and bobbing marker sit. */
   anchor: Vec3;
   /** Invisible hitbox: [cx, cy, cz, sx, sy, sz]. */
@@ -44,7 +43,7 @@ export const OVERVIEW_VIEW: CameraView = {
   radiusSheet: 8.3,
 };
 
-const section = (id: PanelSpotId) => ({ label: ROOM_SECTIONS[id].navLabel, hint: ROOM_SECTIONS[id].hint });
+const section = (id: PanelSpotId) => ({ label: ROOM_SECTIONS[id].navLabel });
 
 export const HOTSPOTS: Record<SpotId, HotspotDef> = {
   work: {
@@ -115,7 +114,6 @@ export const HOTSPOTS: Record<SpotId, HotspotDef> = {
   switch: {
     id: "switch",
     label: "Lights",
-    hint: "",
     anchor: [0.3, 2.85, -4.9],
     hit: [0.3, 2.55, -4.85, 0.5, 0.6, 0.4],
     priority: 3,
