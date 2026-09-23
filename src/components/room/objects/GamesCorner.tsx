@@ -9,7 +9,7 @@ import { useLampLevel } from "../Lighting";
 import { box, cachedGeometry, cylinder, mulberry32, plane, roundedBox, sphere } from "../geometry";
 import { C, screenMaterial, std, stdUnique } from "../materials";
 import type { DrawFn } from "../textures";
-import { canvasFont, createCanvasTexture, redraw, useFontsReady, useThrottledRedraw } from "../textures";
+import { createCanvasTexture, roundRect, useThrottledRedraw } from "../textures";
 
 /* ------------------------------------------------------------ layout */
 
@@ -50,69 +50,361 @@ function Part({ geometry, material, position, rotation, scale, shadow = true }: 
   );
 }
 
-/* ------------------------------------------------------------ poster */
+/* ------------------------------------------------------------ family photo */
 
-const drawPoster: DrawFn = (c, w, h) => {
-  const s = w / 256;
-  const gr = c.createLinearGradient(0, 0, 0, h);
-  gr.addColorStop(0, "#1b1f4a");
-  gr.addColorStop(0.55, "#8a3f7a");
-  gr.addColorStop(0.75, "#ff7a59");
-  gr.addColorStop(1, "#ffb36b");
-  c.fillStyle = gr;
-  c.fillRect(0, 0, w, h);
-  c.fillStyle = "rgba(255,255,255,.7)";
-  for (let i = 0; i < 30; i++) c.fillRect(((i * 97) % 256) * s, ((i * 53) % 132) * s, 2 * s, 2 * s);
+const HAIR = "#1b1514";
+const INK = "#241a17";
+const TAU = Math.PI * 2;
 
-  // striped synthwave sun
-  const sy = h * 0.62;
-  const sr = 70 * s;
-  c.save();
+function blob(c: CanvasRenderingContext2D, x: number, y: number, rx: number, ry: number, fill: string, rot = 0) {
   c.beginPath();
-  c.arc(w / 2, sy, sr, 0, Math.PI * 2);
-  c.clip();
-  const sg = c.createLinearGradient(0, sy - sr, 0, sy + sr);
-  sg.addColorStop(0, "#ffe27a");
-  sg.addColorStop(1, "#ff5e7a");
-  c.fillStyle = sg;
-  c.fillRect(0, 0, w, h);
-  c.fillStyle = "#8a3f7a";
-  for (let i = 0; i < 6; i++) c.fillRect(0, sy + i * 12 * s, w, (3 + i) * s);
+  c.ellipse(x, y, rx, ry, rot, 0, TAU);
+  c.fillStyle = fill;
+  c.fill();
+}
+
+/** Rounded-shoulder torso running off the bottom of the picture. */
+function torso(c: CanvasRenderingContext2D, cx: number, top: number, half: number, fill: string) {
+  const r = Math.min(26, half * 0.6);
+  c.beginPath();
+  c.moveTo(cx - half - 4, 300);
+  c.lineTo(cx - half, top + r);
+  c.quadraticCurveTo(cx - half, top, cx - half + r, top);
+  c.lineTo(cx + half - r, top);
+  c.quadraticCurveTo(cx + half, top, cx + half, top + r);
+  c.lineTo(cx + half + 4, 300);
+  c.closePath();
+  c.fillStyle = fill;
+  c.fill();
+}
+
+function stroke(c: CanvasRenderingContext2D, color: string, width: number) {
+  c.strokeStyle = color;
+  c.lineWidth = width;
+  c.lineCap = "round";
+  c.lineJoin = "round";
+  c.stroke();
+}
+
+/** Eyes, brows, cheeks and smile; `k` scales the spacing for the little one. */
+function features(c: CanvasRenderingContext2D, x: number, y: number, k = 1) {
+  const ex = 11 * k;
+  blob(c, x - ex, y - 2, 2.6 * k, 3 * k, INK);
+  blob(c, x + ex, y - 2, 2.6 * k, 3 * k, INK);
+  for (const sx of [-1, 1]) {
+    c.beginPath();
+    c.moveTo(x + sx * (ex - 6 * k), y - 12 * k);
+    c.quadraticCurveTo(x + sx * ex, y - 15 * k, x + sx * (ex + 6 * k), y - 12 * k);
+    stroke(c, HAIR, 2.4 * k);
+    blob(c, x + sx * (ex + 6 * k), y + 9 * k, 5 * k, 3 * k, "rgba(232,110,110,.35)");
+  }
+  c.beginPath();
+  c.arc(x, y + 9 * k, 7 * k, 0.15 * Math.PI, 0.85 * Math.PI);
+  stroke(c, "#5a2a22", 2.2 * k);
+}
+
+function glasses(c: CanvasRenderingContext2D, x: number, y: number, rx: number, round: boolean) {
+  c.fillStyle = "rgba(255,255,255,.14)";
+  for (const sx of [-1, 1]) {
+    const lx = x + sx * 11;
+    if (round) {
+      c.beginPath();
+      c.arc(lx, y - 2, 8, 0, TAU);
+    } else {
+      roundRect(c, lx - 8.5, y - 8, 17, 12.5, 3);
+    }
+    c.fill();
+    stroke(c, INK, 2.1);
+    // lens glint
+    c.beginPath();
+    c.moveTo(lx - 4, y - 5);
+    c.lineTo(lx - 1.5, y - 7);
+    stroke(c, "rgba(255,255,255,.75)", 1.4);
+  }
+  c.beginPath();
+  c.moveTo(x - 3, y - 4);
+  c.quadraticCurveTo(x, y - 6, x + 3, y - 4);
+  c.moveTo(x - 19, y - 4);
+  c.lineTo(x - rx + 1, y - 6);
+  c.moveTo(x + 19, y - 4);
+  c.lineTo(x + rx - 1, y - 6);
+  stroke(c, INK, 2);
+}
+
+function drawBackdrop(c: CanvasRenderingContext2D) {
+  const sky = c.createLinearGradient(0, 0, 0, 210);
+  sky.addColorStop(0, "#86c3e8");
+  sky.addColorStop(1, "#e3f1ef");
+  c.fillStyle = sky;
+  c.fillRect(0, 0, 400, 300);
+  const sun = c.createRadialGradient(345, 48, 6, 345, 48, 95);
+  sun.addColorStop(0, "rgba(255,244,200,1)");
+  sun.addColorStop(0.25, "rgba(255,232,170,.7)");
+  sun.addColorStop(1, "rgba(255,232,170,0)");
+  c.fillStyle = sun;
+  c.fillRect(0, 0, 400, 300);
+  for (const [cx, cy, k] of [
+    [70, 48, 1],
+    [205, 30, 0.8],
+  ]) {
+    for (const [dx, dy, r] of [
+      [-18, 4, 12],
+      [0, -3, 16],
+      [18, 3, 12],
+      [4, 6, 13],
+    ]) {
+      blob(c, cx + dx * k, cy + dy * k, r * k * 1.3, r * k, "#f8fbfc");
+    }
+  }
+  // far hills and trees
+  c.beginPath();
+  c.moveTo(0, 188);
+  c.bezierCurveTo(90, 160, 220, 200, 400, 172);
+  c.lineTo(400, 300);
+  c.lineTo(0, 300);
+  c.fillStyle = "#a8cf8e";
+  c.fill();
+  for (const [tx, ty, k] of [
+    [38, 176, 1],
+    [372, 168, 1.15],
+    [335, 178, 0.7],
+  ]) {
+    c.fillStyle = "#6b4a32";
+    c.fillRect(tx - 3 * k, ty, 6 * k, 34 * k);
+    blob(c, tx, ty - 14 * k, 20 * k, 24 * k, "#5f9c58");
+    blob(c, tx - 8 * k, ty - 4 * k, 13 * k, 12 * k, "#528d4d");
+    blob(c, tx + 6 * k, ty - 26 * k, 10 * k, 10 * k, "#6eab63");
+  }
+  // near meadow with a few flowers
+  c.beginPath();
+  c.moveTo(0, 226);
+  c.bezierCurveTo(120, 198, 260, 238, 400, 212);
+  c.lineTo(400, 300);
+  c.lineTo(0, 300);
+  c.fillStyle = "#7db86a";
+  c.fill();
+  for (let i = 0; i < 26; i++) {
+    const fx = (i * 67) % 400;
+    const fy = 236 + ((i * 29) % 60);
+    blob(c, fx, fy, 1.8, 1.8, i % 3 ? "#fff6e0" : "#ffd35a");
+  }
+}
+
+function drawWife(c: CanvasRenderingContext2D) {
+  const x = 122;
+  const y = 120;
+  const rx = 29;
+  const ry = 34;
+  const skin = "#a86e4d";
+  torso(c, x, 170, 50, "#e2766b");
+  // scoop neckline and neck
+  c.beginPath();
+  c.arc(x, 170, 17, 0, Math.PI);
+  c.fillStyle = skin;
+  c.fill();
+  c.fillStyle = skin;
+  c.fillRect(x - 9, y + 20, 18, 34);
+
+  c.save();
+  c.translate(x, y + 34);
+  c.rotate(0.1);
+  c.translate(-x, -(y + 34));
+  // shoulder-length hair behind the face
+  c.beginPath();
+  c.moveTo(x - rx - 7, y + 50);
+  c.bezierCurveTo(x - rx - 15, y + 8, x - rx - 12, y - ry - 14, x, y - ry - 7);
+  c.bezierCurveTo(x + rx + 12, y - ry - 14, x + rx + 15, y + 8, x + rx + 7, y + 50);
+  c.quadraticCurveTo(x + 14, y + 58, x + 11, y + 40);
+  c.lineTo(x - 11, y + 40);
+  c.quadraticCurveTo(x - 14, y + 58, x - rx - 7, y + 50);
+  c.fillStyle = HAIR;
+  c.fill();
+  blob(c, x, y, rx, ry, skin);
+  features(c, x, y);
+  // side-swept fringe
+  c.beginPath();
+  c.moveTo(x - rx - 1, y + 6);
+  c.bezierCurveTo(x - rx - 2, y - ry - 18, x + rx + 2, y - ry - 18, x + rx + 1, y + 6);
+  c.bezierCurveTo(x + rx - 5, y - 12, x + 6, y - 22, x - 8, y - 19);
+  c.bezierCurveTo(x - 17, y - 13, x - rx + 3, y - 6, x - rx - 1, y + 6);
+  c.fillStyle = HAIR;
+  c.fill();
+  glasses(c, x, y, rx, true);
   c.restore();
+}
 
-  // pixel skyline
-  c.fillStyle = "#231b3d";
-  const px = 8;
-  for (let x = 0; x < 256; x += px) {
-    const hh = 30 + Math.abs(Math.sin(x * 0.05) * 40) + (x % 24);
-    c.fillRect(x * s, h - hh * s, px * s, hh * s);
-  }
-
-  // perspective grid on the skyline base
-  c.strokeStyle = "rgba(34,211,238,.35)";
-  c.lineWidth = 1 * s;
-  const gy0 = h - 22 * s;
-  for (let i = -6; i <= 6; i++) {
+function drawGowtam(c: CanvasRenderingContext2D) {
+  const x = 226;
+  const y = 106;
+  const rx = 31;
+  const ry = 37;
+  const skin = "#9a6244";
+  torso(c, x, 160, 58, "#2b3f63");
+  c.fillStyle = skin;
+  c.fillRect(x - 10, y + 22, 20, 40);
+  // open collar: skin V with cyan-edged flaps
+  c.beginPath();
+  c.moveTo(x - 13, 160);
+  c.lineTo(x, 182);
+  c.lineTo(x + 13, 160);
+  c.fillStyle = skin;
+  c.fill();
+  for (const sx of [-1, 1]) {
     c.beginPath();
-    c.moveTo(w / 2 + i * 10 * s, gy0);
-    c.lineTo(w / 2 + i * 44 * s, h);
-    c.stroke();
+    c.moveTo(x + sx * 4, 160);
+    c.lineTo(x + sx * 20, 158);
+    c.lineTo(x + sx * 9, 178);
+    c.closePath();
+    c.fillStyle = "#3a5585";
+    c.fill();
+    stroke(c, "#22324f", 1.2);
   }
-  for (let k = 0; k < 3; k++) {
-    const yy = gy0 + (k * k + 1) * 3.2 * s;
-    c.beginPath();
-    c.moveTo(0, yy);
-    c.lineTo(w, yy);
-    c.stroke();
-  }
+  // ears, head
+  blob(c, x - rx, y + 2, 6, 9, skin);
+  blob(c, x + rx, y + 2, 6, 9, skin);
+  blob(c, x, y, rx, ry, skin);
+  features(c, x, y);
+  // moustache and goatee framing the smile
+  c.beginPath();
+  c.moveTo(x - 11, y + 10);
+  c.quadraticCurveTo(x, y + 2, x + 11, y + 10);
+  c.quadraticCurveTo(x, y + 6.5, x - 11, y + 10);
+  c.fillStyle = HAIR;
+  c.fill();
+  stroke(c, HAIR, 1.6);
+  c.beginPath();
+  c.moveTo(x - 10.5, y + 10);
+  c.quadraticCurveTo(x - 11, y + 20, x - 6, y + 24);
+  c.moveTo(x + 10.5, y + 10);
+  c.quadraticCurveTo(x + 11, y + 20, x + 6, y + 24);
+  stroke(c, HAIR, 1.8);
+  c.beginPath();
+  c.moveTo(x - 8, y + 22);
+  c.quadraticCurveTo(x, y + 19, x + 8, y + 22);
+  c.quadraticCurveTo(x + 5, y + 32, x, y + 35);
+  c.quadraticCurveTo(x - 5, y + 32, x - 8, y + 22);
+  c.fill();
+  // short hair cap
+  c.beginPath();
+  c.moveTo(x - rx - 2, y - 2);
+  c.bezierCurveTo(x - rx - 5, y - ry - 13, x + rx + 5, y - ry - 13, x + rx + 2, y - 2);
+  c.bezierCurveTo(x + rx - 3, y - 16, x + 8, y - 25, x - 4, y - 23);
+  c.bezierCurveTo(x - 16, y - 21, x - rx + 3, y - 14, x - rx - 2, y - 2);
+  c.fillStyle = HAIR;
+  c.fill();
+  glasses(c, x, y, rx, false);
+}
 
-  c.fillStyle = "#f7f2e8";
-  c.textAlign = "center";
-  c.textBaseline = "alphabetic";
-  c.font = canvasFont("body", 34 * s, 800);
-  c.fillText("PLAYER 1", w / 2, 62 * s);
-  c.font = canvasFont("display", 17 * s, 400, "italic");
-  c.fillText("press start", w / 2, 90 * s);
+function drawDaughter(c: CanvasRenderingContext2D) {
+  const x = 290;
+  const y = 150;
+  const r = 20;
+  const skin = "#ae7654";
+  const dadSkin = "#9a6244";
+  // dress, flared, sitting on dad's forearm
+  c.beginPath();
+  c.moveTo(x - 17, y + 22);
+  c.lineTo(x + 17, y + 22);
+  c.quadraticCurveTo(x + 24, y + 22, x + 24, y + 34);
+  c.lineTo(x + 32, y + 102);
+  c.quadraticCurveTo(x, y + 110, x - 30, y + 102);
+  c.lineTo(x - 24, y + 34);
+  c.quadraticCurveTo(x - 24, y + 22, x - 17, y + 22);
+  c.fillStyle = "#f2c440";
+  c.fill();
+  // legs dangling over his arm, little pink shoes
+  for (const [lx, ly, ex, ey] of [
+    [x - 2, y + 102, x + 6, y + 128],
+    [x + 16, y + 100, x + 27, y + 122],
+  ]) {
+    c.beginPath();
+    c.moveTo(lx, ly);
+    c.lineTo(ex, ey);
+    stroke(c, skin, 9);
+    blob(c, ex + 2, ey + 3, 7, 4.5, "#e86a92", 0.4);
+  }
+  // dad's arm under her, hand at her hip
+  c.beginPath();
+  c.moveTo(248, 266);
+  c.quadraticCurveTo(284, 272, x + 22, y + 98);
+  stroke(c, "#2b3f63", 16);
+  blob(c, x + 25, y + 95, 7.5, 7, dadSkin);
+  // puff sleeves and her hand on dad's chest
+  blob(c, x - 22, y + 29, 8.5, 6.5, "#f5d060");
+  blob(c, x + 22, y + 29, 8.5, 6.5, "#f5d060");
+  c.beginPath();
+  c.moveTo(x - 24, y + 34);
+  c.quadraticCurveTo(x - 32, y + 46, x - 40, y + 42);
+  stroke(c, skin, 7.5);
+  blob(c, x - 41, y + 41, 4.5, 4, skin);
+  c.fillStyle = skin;
+  c.fillRect(x - 6, y + 12, 12, 12);
+  // short bob behind the face
+  c.beginPath();
+  c.moveTo(x - r - 5, y + 13);
+  c.bezierCurveTo(x - r - 9, y - r - 12, x + r + 9, y - r - 12, x + r + 5, y + 13);
+  c.quadraticCurveTo(x + r, y + 17, x + r - 3, y + 11);
+  c.lineTo(x - r + 3, y + 11);
+  c.quadraticCurveTo(x - r, y + 17, x - r - 5, y + 13);
+  c.fillStyle = HAIR;
+  c.fill();
+  blob(c, x, y + 1, r, r, skin);
+  features(c, x, y + 3, 0.7);
+  // fringe with a little cyan clip
+  c.beginPath();
+  c.moveTo(x - r - 1, y + 2);
+  c.bezierCurveTo(x - r - 2, y - r - 12, x + r + 2, y - r - 12, x + r + 1, y + 2);
+  c.quadraticCurveTo(x + r - 4, y - 9, x + 8, y - 8);
+  c.quadraticCurveTo(x, y - 5, x - 8, y - 8);
+  c.quadraticCurveTo(x - r + 4, y - 9, x - r - 1, y + 2);
+  c.fillStyle = HAIR;
+  c.fill();
+  blob(c, x + 12, y - 12, 3.5, 2.4, "#22d3ee", -0.5);
+
+  // the doll: pink dress, yarn hair, dot eyes
+  const dx = x + 36;
+  const dy = y + 50;
+  c.beginPath();
+  c.moveTo(dx - 3, dy + 6);
+  c.lineTo(dx - 11, dy + 32);
+  c.lineTo(dx + 11, dy + 32);
+  c.lineTo(dx + 3, dy + 6);
+  c.fillStyle = "#f08bb0";
+  c.fill();
+  blob(c, dx, dy, 9, 9, "#c89a78");
+  c.beginPath();
+  c.arc(dx, dy - 1, 10, Math.PI * 1.05, Math.PI * 1.95);
+  stroke(c, "#d0562f", 4);
+  for (const sx of [-1, 1]) {
+    c.beginPath();
+    c.moveTo(dx + sx * 9, dy - 4);
+    c.quadraticCurveTo(dx + sx * 13, dy + 4, dx + sx * 10, dy + 11);
+    stroke(c, "#d0562f", 3);
+    blob(c, dx + sx * 3.2, dy, 1.2, 1.3, INK);
+  }
+  // her arm hugging the doll
+  c.beginPath();
+  c.moveTo(x + 22, y + 34);
+  c.quadraticCurveTo(x + 24, y + 70, dx + 6, dy + 18);
+  stroke(c, skin, 8);
+  blob(c, dx + 7, dy + 17, 5, 4.5, skin);
+}
+
+/** Illustrated portrait of Gowtam, his wife and their daughter, in 400 x 300 units. */
+const drawFamilyPhoto: DrawFn = (c, w, h) => {
+  c.save();
+  c.scale(w / 400, h / 300);
+  drawBackdrop(c);
+  drawWife(c);
+  drawGowtam(c);
+  drawDaughter(c);
+  // soft print vignette
+  const v = c.createRadialGradient(200, 150, 110, 200, 150, 260);
+  v.addColorStop(0, "rgba(60,36,14,0)");
+  v.addColorStop(1, "rgba(60,36,14,.26)");
+  c.fillStyle = v;
+  c.fillRect(0, 0, 400, 300);
+  c.restore();
 };
 
 /* ------------------------------------------------------------ TV game */
@@ -411,13 +703,12 @@ function BeanBag() {
   );
 }
 
-function Poster() {
-  const tex = useMemo(() => createCanvasTexture(512, 660, drawPoster), []);
-  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#ffffff", map: tex, roughness: 0.7 }), [tex]);
-  const fontsReady = useFontsReady();
-  useEffect(() => {
-    if (fontsReady) redraw(tex);
-  }, [fontsReady, tex]);
+/** Family photo frame: outer size along the wall, moulding width, depth off the wall. */
+const PHOTO = { w: 1.5, h: 1.2, rail: 0.07, depth: 0.06, picW: 1.2, picH: 0.9 };
+
+function FamilyPhoto() {
+  const tex = useMemo(() => createCanvasTexture(1024, 768, drawFamilyPhoto), []);
+  const mat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#ffffff", map: tex, roughness: 0.6 }), [tex]);
   useEffect(
     () => () => {
       mat.dispose();
@@ -425,11 +716,33 @@ function Poster() {
     },
     [mat, tex],
   );
+  const { w, h, rail, depth, picW, picH } = PHOTO;
+  const wood = std(C.walnut, { roughness: 0.55 });
+  const rails: [number, number, number, number][] = [
+    [0, h / 2 - rail / 2, w, rail],
+    [0, -h / 2 + rail / 2, w, rail],
+    [-w / 2 + rail / 2, 0, rail, h - rail * 2 + 0.01],
+    [w / 2 - rail / 2, 0, rail, h - rail * 2 + 0.01],
+  ];
   return (
-    <>
-      <Part geometry={roundedBox(0.05, 1.95, 1.55, 0.02)} material={std("#1b1f27")} position={[-4.97, 3.75, 3.1]} />
-      <mesh geometry={plane(1.43, 1.83)} material={mat} position={[-4.94, 3.75, 3.1]} rotation={[0, Math.PI / 2, 0]} receiveShadow />
-    </>
+    // local +z faces the room (+x world); local +x runs toward -z world
+    <group position={[-5, 3.7, 3.1]} rotation={[0, Math.PI / 2, 0]}>
+      <group rotation={[0, 0, -0.008]}>
+        <mesh geometry={box(w - 0.02, h - 0.02, 0.02)} material={std("#3b2a20")} position={[0, 0, 0.012]} />
+        {rails.map(([x, y, rw, rh]) => (
+          <mesh
+            key={`${x}:${y}`}
+            geometry={roundedBox(rw, rh, depth, 0.012)}
+            material={wood}
+            position={[x, y, depth / 2]}
+            castShadow
+            receiveShadow
+          />
+        ))}
+        <mesh geometry={plane(w - rail * 2, h - rail * 2)} material={std(C.cream, { roughness: 0.9 })} position={[0, 0, depth - 0.025]} receiveShadow />
+        <mesh geometry={plane(picW, picH)} material={mat} position={[0, 0, depth - 0.022]} receiveShadow />
+      </group>
+    </group>
   );
 }
 
@@ -501,8 +814,8 @@ function ArcLamp() {
 
 /**
  * Games corner: TV (live pixel auto-runner), media stand, console, game cases,
- * bean bag with controller, and the PLAYER 1 poster (all the `games` hotspot),
- * plus the TV glow and the arc floor lamp (decor, outside the hotspot).
+ * and bean bag with controller (all the `games` hotspot), plus the TV glow, the
+ * arc floor lamp and the family photo above the TV (decor, outside the hotspot).
  */
 export function GamesCorner() {
   return (
@@ -510,8 +823,8 @@ export function GamesCorner() {
       <Hotspot id="games">
         <TvAndStand />
         <BeanBag />
-        <Poster />
       </Hotspot>
+      <FamilyPhoto />
       <TvLight />
       <ArcLamp />
     </>

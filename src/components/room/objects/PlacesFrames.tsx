@@ -134,7 +134,7 @@ function matDraw(def: FrameDef): DrawFn {
 
 /* ------------------------------------------------------------ frames */
 
-/** Left wall, between the window's right curtain (z ~0.36) and the PLAYER 1 poster (z ~2.33). */
+/** Left wall, between the window's right curtain (z ~0.36) and the family photo (z ~2.35). */
 const FRAMES: FrameDef[] = [
   {
     place: "usa",

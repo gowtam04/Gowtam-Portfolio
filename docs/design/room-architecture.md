@@ -133,7 +133,7 @@ Keep to these so pieces do not collide. Values are approximate; report your fina
 | Window, curtains, sill cactus (cars) | left wall, z -3.5..-0.3 (curtains to z ~-4.2 and ~0.36) | Shell and street |
 | Car keys hook (cars) | left wall, z ~-4.55, y ~3.35 (make it bigger and easier to spot than the prototype) | Wall pieces |
 | **USA and India frames (places)** | left wall, z ~0.45..2.2, y ~3.0..3.9, two frames side by side (India nearer the window or either order, your call) | Wall pieces |
-| PLAYER 1 poster | left wall, z 2.3..3.9, y 2.8..4.7 | Games corner |
+| Family photo (decor, not a hotspot) | left wall, z 2.35..3.85, y 3.1..4.3 | Games corner |
 | TV, stand, console, cases | left wall, z 1.6..4.6, floor to y 2.3 | Games corner |
 | Bean bag + controller | floor, around (-2.4, 0, 3.15) | Games corner |
 | **Arc floor lamp** | moved off the left wall strip (its old pole at z 1.25 collides with the frames): base near (-3.3, 0, 4.5) arching over the bean bag, or another spot in the front-left that keeps the frames clear | Games corner |

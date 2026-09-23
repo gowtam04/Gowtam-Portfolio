@@ -68,8 +68,8 @@ export const HOTSPOTS: Record<SpotId, HotspotDef> = {
     id: "games",
     ...section("games"),
     anchor: [-4.45, 2.7, 3.1],
-    // Tall enough to include the PLAYER 1 poster (y 2.8..4.7); z stops short of the frames.
-    hit: [-3.4, 2.35, 3.05, 3.3, 4.7, 3.1],
+    // TV, stand and bean bag only (y 0..2.5): the family photo above is decor.
+    hit: [-3.4, 1.25, 3.05, 3.3, 2.5, 3.1],
     priority: 0,
     marker: true,
     view: { target: [-4.3, 1.95, 3.0], dir: [1, 0.22, -0.28], radius: 1.9 },
