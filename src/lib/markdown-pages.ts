@@ -237,6 +237,15 @@ function blockToMarkdown(block: RoomBlock, level: number, opts: RenderOptions): 
       lines.push("");
       break;
     }
+    case "timeline": {
+      if (block.heading) lines.push(`${hashes(level)} ${block.heading}`, "");
+      for (const stop of block.stops) {
+        const note = stop.note ? `: ${stop.note}` : "";
+        lines.push(`- **${stop.years}**, ${stop.place}${note}`);
+      }
+      lines.push("");
+      break;
+    }
     case "chips": {
       lines.push(`${hashes(level)} ${block.heading}`, "");
       for (const item of block.items) {

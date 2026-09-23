@@ -109,6 +109,35 @@ function SpecBlock({ block }: { block: Block<"spec"> }) {
   );
 }
 
+function TimelineBlock({ block }: { block: Block<"timeline"> }) {
+  return (
+    <section className="room-block">
+      {block.heading ? <h2 className="room-h">{block.heading}</h2> : null}
+      <ol className="room-timeline">
+        {block.stops.map((stop) => (
+          <li
+            key={stop.years}
+            className={stop.current ? "room-tl-stop room-tl-current" : "room-tl-stop"}
+            data-country={stop.country === "India" ? "in" : "us"}
+            aria-current={stop.current ? "true" : undefined}
+          >
+            <span className="room-tl-dot" aria-hidden="true" />
+            <div className="room-tl-top">
+              <span className="room-tl-years">{stop.years}</span>
+              <span className="room-tl-country">
+                <i aria-hidden="true" />
+                {stop.country}
+              </span>
+            </div>
+            <p className="room-tl-place">{stop.place}</p>
+            {stop.note ? <p className="room-tl-note">{stop.note}</p> : null}
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 function ChipsBlock({ block }: { block: Block<"chips"> }) {
   return (
     <section className="room-block">
@@ -264,6 +293,8 @@ export function PanelBlock({ block, projects }: { block: RoomBlock; projects: Ro
       return <FactsBlock block={block} />;
     case "spec":
       return <SpecBlock block={block} />;
+    case "timeline":
+      return <TimelineBlock block={block} />;
     case "chips":
       return <ChipsBlock block={block} />;
     case "stat":

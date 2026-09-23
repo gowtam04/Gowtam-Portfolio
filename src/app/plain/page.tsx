@@ -147,6 +147,23 @@ function Block({ block, projects }: { block: RoomBlock; projects: RoomProject[] 
           </dl>
         </div>
       );
+    case "timeline":
+      return (
+        <div>
+          {block.heading ? <h3 className={LABEL}>{block.heading}</h3> : null}
+          <ol className="mt-3 divide-y divide-[var(--border)] border-y border-[var(--border)]">
+            {block.stops.map((stop) => (
+              <li key={stop.years} className="grid gap-1 py-3 sm:grid-cols-[12rem_1fr] sm:gap-4">
+                <span className="text-[0.85rem] font-semibold tabular-nums text-[var(--muted)]">{stop.years}</span>
+                <span className="text-[0.98rem] text-[var(--foreground)]">
+                  {stop.place}
+                  {stop.note ? <span className="text-[var(--muted)]">. {stop.note}</span> : null}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      );
     case "chips":
       return (
         <div>

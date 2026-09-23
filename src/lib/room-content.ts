@@ -115,6 +115,16 @@ export interface SpecRow {
   value: RichText;
 }
 
+export interface TimelineStop {
+  /** Year span as shown, e.g. "1999–2009" or "2025–now". */
+  years: string;
+  place: string;
+  country: "USA" | "India";
+  note?: string;
+  /** The stop that is still going; gets the live marker. */
+  current?: boolean;
+}
+
 export type RoomBlock =
   /** Project cards from `getRoomProjects()`, passed in as a prop. */
   | { type: "projects"; heading: string; allHref: string; allLabel: string }
@@ -122,6 +132,8 @@ export type RoomBlock =
   | { type: "facts"; heading?: string; items: RichText[] }
   /** Label/value rows. */
   | { type: "spec"; heading?: string; rows: SpecRow[] }
+  /** A vertical, oldest-first timeline of dated stops. */
+  | { type: "timeline"; heading?: string; stops: TimelineStop[] }
   /** A row of chips, typically placeholders. */
   | { type: "chips"; heading: string; items: RichText[] }
   /** A big number with a caption. */
@@ -284,24 +296,37 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     kicker: "Where I've lived",
     title: "Two homes",
     lead: [
-      "I grew up in Idaho, moved to India for high school and college, then came back to the US for work. These days I live near Sacramento. Both countries show up in how I think, what I build, and what I care about.",
+      "I was born in Vermont, grew up in Idaho, and moved to India for high school and college. Work brought me back to the US, marriage took me back to India, and in 2025 our baby arrived and we moved back to the US as a family. Both countries show up in how I think, what I build, and what I care about.",
     ],
     blocks: [
       {
-        type: "spec",
+        type: "timeline",
         heading: "The route so far",
-        rows: [
-          { label: "Grew up", value: ["Idaho"] },
-          { label: "High school and college", value: ["India"] },
-          { label: "Work", value: ["Back to the United States"] },
-          { label: "Now", value: ["Near Sacramento, California"] },
+        stops: [
+          { years: "1996–1999", place: "Vermont", country: "USA", note: "Where I was born" },
+          { years: "1999–2009", place: "Idaho", country: "USA", note: "Where I grew up" },
+          { years: "2009–2019", place: "India", country: "India", note: "High school and college" },
+          { years: "2019–2023", place: "United States", country: "USA", note: "Back to the US for work" },
+          {
+            years: "2023–2025",
+            place: "India",
+            country: "India",
+            note: "Got married and spent a few years there with my wife",
+          },
+          {
+            years: "2025–now",
+            place: "Near Sacramento, California",
+            country: "USA",
+            note: "Our baby arrived, and we moved back to the US as a family",
+            current: true,
+          },
         ],
       },
     ],
     meta: {
       title: `Places | ${SITE_NAME}`,
       description:
-        "The frames in Gowtam's room: growing up in Idaho, high school and college in India, and back to the United States for work, now near Sacramento.",
+        "The frames in Gowtam's room: born in Vermont, raised in Idaho, school and college in India, work in the US, married in India, and now back near Sacramento with his family.",
     },
   },
   contact: {
