@@ -159,7 +159,7 @@ Keep to these so pieces do not collide. Values are approximate; report your fina
 | 872-916 | Games corner |
 | 918-981 | Poster, snake plant, rug, arc lamp |
 | 983-1008 | Cat (replaced by Teeko) |
-| 1010-1112 | Street, houses, trees, street lamp, red car |
+| 1010-1112 | Street, houses, trees, street lamp, BMW M235i Gran Coupe |
 | 1114-1165 | Sky, stars, moon, clouds, stencil portal |
 | 1167-1250 | Lights and time of day |
 | 1252-1381 | Code and game screen textures |
