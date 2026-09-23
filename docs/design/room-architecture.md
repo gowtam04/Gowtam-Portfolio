@@ -55,11 +55,14 @@ page.tsx (server, metadata)                 e.g. src/app/work/page.tsx
 const store = useRoomStore();          // stable; use inside useFrame
 store.getState().openSpot;             // read without re-rendering
 store.fx.lampLevel;                    // eased 0..1 lamp level, per frame
+store.fx.teeko;                        // { x, z, heading, awake }: Teeko's live floor pose, per frame
 const phase = useRoom((s) => s.phase); // subscribe (re-renders on change)
 const actions = useRoomActions();      // openSpot, closeSpot, toggleLights, setTimeMode, pokeTeeko, invalidateShadows...
 ```
 
 State: `openSpot`, `hoveredSpot`, `navFocus`, `lightsOn`, `timeMode`, `phase`, `firstClickDone`, `teekoPokedAt`, `sheet`, `reducedMotion`, `ready`, `failed`.
+
+`store.fx.teeko` is written every frame by `Teeko.tsx` (world x/z, heading as rotation.y in radians, and `awake` = up and off his bed). It is read by `Interaction.tsx` (his pick box follows him), `HoverLabel.tsx` (the chip follows him), and `CameraRig.tsx` (the teeko view target follows him). Its initial value is his bed, (0.85, 1.35).
 
 **3D components must not re-render per frame.** Read `store.getState()` / `store.fx` inside `useFrame`. Subscribe with `useRoom` only for rare changes (phase, lightsOn if you prefer).
 
@@ -72,11 +75,18 @@ Each object file exports one named component with no props, e.g. `export functio
 - **Materials.** `std(color, opts)` returns a shared cached `MeshStandardMaterial` (roughness 0.82). Never mutate it. For anything you animate, use `stdUnique(...)` or your own `useMemo` material, and set `userData={{ noHighlight: true }}` on that mesh if it sits inside a `<Hotspot>` (the wrapper clones materials on mount; animated ones must keep their identity). Use `screenMaterial(tex)` for screens (unlit, not tone mapped).
 - **Geometry.** `roundedBox(w,h,d,r?)` (the prototype's `rbox`), `box`, `cylinder`, `sphere`, `plane` return cached shared geometries: never mutate them. For custom geometry, create it in `useMemo` and dispose it on unmount. `rodTransform(a, b)` gives position/quaternion/scale for a unit-height cylinder between two points. `mulberry32(seed)` / `seededRange(seed)` for stable procedural layouts.
 - **Canvas textures.** `createCanvasTexture(w, h, draw, { nearest, srgb, repeat })` inside `useMemo`; `redraw(tex, draw?)`; `useThrottledRedraw(tex, fps, draw)` for animated screens (code 20fps, game 24fps); `roundRect`; `softTexture()` (shared radial falloff for steam, glows, blobs; do not dispose). For text use `g.font = canvasFont("display" | "body" | "hand", sizePx, weight)` (Fraunces, Plus Jakarta Sans, Caveat) and redraw static text when `useFontsReady()` flips true.
-- **Shadows.** `castShadow` / `receiveShadow` on meshes as in the prototype. The shadow map is static; it re-renders only when asked. If something moves in a way that should move its shadow (Teeko's hop), call `store.actions.invalidateShadows(frames)` or set `store.fx.shadowFrames`.
+- **Shadows.** `castShadow` / `receiveShadow` on meshes as in the prototype. The shadow map is static; it re-renders only when asked. If something moves in a way that should move its shadow, call `store.actions.invalidateShadows(frames)` or set `store.fx.shadowFrames`. Teeko does not need this: he moves every frame while awake, so he does not cast into the static shadow map and uses his own soft blob shadow on the floor instead (his bed still casts and receives as before).
 - **Time of day.** `const { phase, config } = usePhase()` (from `Lighting.tsx`) gives `"night" | "dawn" | "day" | "dusk"` and the `TODS` preset (`sky`, `stars`, `moon`, ...). Apply phase-dependent emissives in an effect on `phase`.
 - **Lamps.** `const lampLevel = useLampLevel()` returns a getter; inside `useFrame`, `light.intensity = 22 * lampLevel()`. It eases toward `lightsOn` (instant under reduced motion).
 - **Reduced motion.** `store.getState().reducedMotion`: skip bobbing, hops, and parallax-like motion (ambient screen animation may continue).
 - **Performance.** Reuse geometries/materials, no per-frame allocations inside `useFrame` (hoist vectors), keep draw calls reasonable (merge tiny repeated parts or use `<Instances>` from drei when there are dozens), throttle canvas redraws.
+
+### Teeko (`objects/Teeko.tsx`)
+
+- **Behavior by phase.** Day and dusk: awake, he gets out of his bed and roams (walks and runs) around the open floor. Night and dawn: asleep, curled in his bed on the rug at (0.85, 0, 1.35).
+- **Interaction.** Hovering him while awake makes him stop and look at the camera. Clicking yips (`pokeTeeko`) and opens his panel (`/about#teeko`); the camera frames him wherever he is.
+- **Live pose.** He writes `store.fx.teeko` (`x`, `z`, `heading`, `awake`) every frame. The `teeko` entry in `hotspots.ts` holds his bed values; while `awake` is true, the x/z of his hit box (`Interaction.tsx`), hover chip anchor (`HoverLabel.tsx`), and view target (`CameraRig.tsx`) follow his live position instead.
+- **Shadow.** He uses a soft blob shadow on the floor and does not cast into the static shadow map, so moving him never needs `invalidateShadows`.
 
 ### Practical lights (who owns which)
 
@@ -101,8 +111,11 @@ wall #efe4d2   wain #7f9d8c   trim #f6efe3   cap #3e2c23   base #4a3428
 oak #cfa57a    walnut #8a5a3c dark #1a1f2a   navy #24324d  coral #e8704f
 cream #f3ede2  mustard #d8a25e cyan #22d3ee  brass #c9a15a teal #2a8f8a
 red #d93b3b    glass #9cc3dd  warmLight #ffc98a
-TEEKO: coat #1d1b22, coatLift #2e2a33, muzzle #4a3f3b, chest #3d3842, innerEar #5a4446,
-       nose #0b0a0d, eye #07070a, tongue #e98a8a, bed #b5543f, bedCushion #e9d8bf
+TEEKO: coat #1d1b22, coatLift #2e2a33, tan #b8834f, tanShade #8f6238, muzzle #b8834f (tan),
+       chest #3d3842, innerEar #5a4446, nose #0b0a0d, eye #07070a, eyeHighlight #ffffff,
+       tongue #e98a8a, bed #b5543f, bedCushion #e9d8bf
+       (black-and-tan coat: tan chest and throat, belly, lower legs and paws, under-tail,
+       two eyebrow dots, cheeks, and muzzle; face and back black)
 ```
 
 ## Layout reservations
@@ -126,7 +139,7 @@ Keep to these so pieces do not collide. Values are approximate; report your fina
 | **Arc floor lamp** | moved off the left wall strip (its old pole at z 1.25 collides with the frames): base near (-3.3, 0, 4.5) arching over the bean bag, or another spot in the front-left that keeps the frames clear | Games corner |
 | Snake plant | floor, back-left corner (-4.3, 0, -4.3) | Wall pieces (Decor) |
 | Rug | floor, centered (-0.4, 0.02, 1.15), ~5.2 x 3.9 oval | Wall pieces (Decor) |
-| Teeko + dog bed (teeko) | on the rug near (0.85, 0, 1.35) | Teeko |
+| Teeko + dog bed (teeko) | bed on the rug at (0.85, 0, 1.35); awake, Teeko roams the open floor | Teeko |
 
 ## Hotspot registry (initial values, tuned in Phase 2)
 
@@ -138,7 +151,7 @@ Keep to these so pieces do not collide. Values are approximate; report your fina
 | cars | Cars / the window | (-4.95,3.1,-2.4), (.8,4.1,5.3) | (-5.2,2.95,-1.9), (1,.13,.02), 2.25 |
 | about | About / the wall | (-2.2,3.35,-4.8), (3.5,2.5,.5) | (-2.2,3.35,-4.85), (.1,.05,1), 1.75 |
 | places | Places / the frames | (-4.85,3.45,1.3), (.5,1.3,2.0) | (-4.9,3.45,1.3), (1,.1,.05), 1.3 |
-| teeko | Teeko / asleep | (.85,.35,1.35), (1.3,.8,1.2) | (.85,.4,1.35), (.6,.8,1), .8 |
+| teeko | Teeko / the dog; anchor (.85,.95,1.35) | (.85,.35,1.35), (1.3,.8,1.2); x/z follow `fx.teeko` while awake | (.85,.32,1.35), (.6,.75,1), .85; target x/z follow `fx.teeko` while awake |
 | switch | Lights | (.3,2.55,-4.85), (.5,.6,.4), priority 3 | none (toggles lights) |
 
 ## Prototype map (`docs/design/prototypes/room-3d.html`)

@@ -106,7 +106,10 @@ const me: PhotoFn = (c, w, h) => {
   c.fill();
 };
 
-/** Teeko: a small black chihuahua with big upright ears, sitting on the dog bed, tongue out. */
+/**
+ * Teeko: a small black-and-tan chihuahua with big upright ears, sitting on the dog bed, tongue out.
+ * Tan points: chest and throat, lower front legs and paws, cheeks, muzzle, and two eyebrow dots.
+ */
 const teeko: PhotoFn = (c, w, h) => {
   // warm wall with a soft window glow, rug-teal floor
   const bg = c.createRadialGradient(w * 0.3, h * 0.2, 4, w * 0.3, h * 0.2, w);
@@ -127,7 +130,6 @@ const teeko: PhotoFn = (c, w, h) => {
   c.fill();
 
   const coat = "#1f1c24";
-  const lift = "#3a3540";
   // ears: huge, wide-set, flaring out at 45 degrees with rounded tips
   const ear = (sx: number) => {
     c.fillStyle = coat;
@@ -149,26 +151,39 @@ const teeko: PhotoFn = (c, w, h) => {
   };
   ear(-1);
   ear(1);
-  // body (sitting) and a lighter chest blaze
+  // body (sitting) and the tan chest and throat
   c.fillStyle = coat;
   c.beginPath();
   c.ellipse(64, 100, 20, 20, 0, 0, Math.PI * 2);
   c.fill();
-  c.fillStyle = lift;
+  c.fillStyle = TEEKO.tan;
   c.beginPath();
-  c.ellipse(64, 99, 9, 12, 0, 0, Math.PI * 2);
+  c.ellipse(64, 95, 10, 16, 0, 0, Math.PI * 2);
   c.fill();
-  // front legs and paws
+  // front legs: black at the shoulder, tan from the elbow down to the paws
   c.fillStyle = coat;
   roundRect(c, 53, 98, 8, 20, 4);
   c.fill();
   roundRect(c, 67, 98, 8, 20, 4);
   c.fill();
-  c.fillStyle = lift;
+  c.fillStyle = TEEKO.tan;
+  roundRect(c, 53, 106, 8, 12, 4);
+  c.fill();
+  roundRect(c, 67, 106, 8, 12, 4);
+  c.fill();
   c.beginPath();
   c.ellipse(57, 117.5, 5.5, 3, 0, 0, Math.PI * 2);
   c.ellipse(71, 117.5, 5.5, 3, 0, 0, Math.PI * 2);
   c.fill();
+  // toe lines
+  c.strokeStyle = TEEKO.tanShade;
+  c.lineWidth = 0.9;
+  c.beginPath();
+  [55.2, 58.8, 69.2, 72.8].forEach((x) => {
+    c.moveTo(x, 116.2);
+    c.lineTo(x, 119.6);
+  });
+  c.stroke();
   // head: apple dome, a touch wider at the cheeks
   c.fillStyle = coat;
   c.beginPath();
@@ -182,7 +197,16 @@ const teeko: PhotoFn = (c, w, h) => {
   c.beginPath();
   c.arc(64, 86, 3.4, 0, Math.PI * 2);
   c.fill();
-  // short, rounded muzzle
+  // tan cheeks, then the short, rounded tan muzzle over them
+  c.fillStyle = TEEKO.tan;
+  c.beginPath();
+  c.ellipse(52.5, 67, 6.5, 5, -0.35, 0, Math.PI * 2);
+  c.ellipse(75.5, 67, 6.5, 5, 0.35, 0, Math.PI * 2);
+  c.fill();
+  c.fillStyle = TEEKO.tanShade;
+  c.beginPath();
+  c.ellipse(64, 69, 11.6, 8.8, 0, 0, Math.PI * 2);
+  c.fill();
   c.fillStyle = TEEKO.muzzle;
   c.beginPath();
   c.ellipse(64, 68, 11, 8.5, 0, 0, Math.PI * 2);
@@ -199,6 +223,12 @@ const teeko: PhotoFn = (c, w, h) => {
   c.quadraticCurveTo(60.5, 74.5, 64, 71.5);
   c.quadraticCurveTo(67.5, 74.5, 71, 71);
   c.stroke();
+  // tan eyebrow dots
+  c.fillStyle = TEEKO.tan;
+  c.beginPath();
+  c.ellipse(51, 42.5, 3, 2.3, -0.2, 0, Math.PI * 2);
+  c.ellipse(77, 42.5, 3, 2.3, 0.2, 0, Math.PI * 2);
+  c.fill();
   // eyes: big, round, shiny
   [53, 75].forEach((x) => {
     c.fillStyle = "#57505f";

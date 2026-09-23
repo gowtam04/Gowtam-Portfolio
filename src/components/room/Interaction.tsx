@@ -23,6 +23,8 @@ export function Interaction() {
   const hitMaterial = useMemo(() => new THREE.MeshBasicMaterial({ visible: false }), []);
   const pointer = useRef({ x: 2, y: 2, inside: false, down: null as null | [number, number] });
   const teekoTimer = useRef<number | null>(null);
+  /** Teeko's hitbox: moved each frame to follow him while he roams. */
+  const teekoBox = useRef<THREE.Mesh | null>(null);
 
   const pick = useMemo(() => {
     const ndc = new THREE.Vector2();
@@ -98,6 +100,20 @@ export function Interaction() {
   }, [gl, pick, store]);
 
   useFrame(() => {
+    // Follow Teeko while he is off his bed, else rest on the bed. Updating the
+    // matrix here keeps this frame's hover pick and the next pointer-up in sync.
+    const box = teekoBox.current;
+    if (box) {
+      const t = store.fx.teeko;
+      const [hx, , hz] = HOTSPOTS.teeko.hit;
+      const x = t.awake ? t.x : hx;
+      const z = t.awake ? t.z : hz;
+      if (box.position.x !== x || box.position.z !== z) {
+        box.position.x = x;
+        box.position.z = z;
+        box.updateMatrixWorld();
+      }
+    }
     const p = pointer.current;
     const id = p.inside && !p.down ? pick(p.x, p.y) : null;
     if (store.getState().hoveredSpot !== id) store.actions.setHovered(id);
@@ -113,6 +129,7 @@ export function Interaction() {
             key={h.id}
             ref={(m) => {
               if (m && !boxes.current.includes(m)) boxes.current.push(m);
+              if (m && h.id === "teeko") teekoBox.current = m;
             }}
             position={[cx, cy, cz]}
             userData={{ spot: h.id }}

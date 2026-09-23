@@ -45,6 +45,12 @@ export interface RoomFx {
   shadowFrames: number;
   /** Pointer position in NDC (-1..1), updated by Interaction. */
   pointer: { x: number; y: number };
+  /**
+   * Teeko's live floor position (world x/z), heading (radians, rotation.y) and
+   * whether he is awake and off his bed. Written every frame by Teeko; read by
+   * picking, the hover chip, and the camera so his hotspot follows him.
+   */
+  teeko: { x: number; z: number; heading: number; awake: boolean };
 }
 
 type HistoryMode = "push" | "replace" | "none";
@@ -94,7 +100,12 @@ export function createRoomStore(
     photos,
   };
   const listeners = new Set<() => void>();
-  const fx: RoomFx = { lampLevel: 1, shadowFrames: 60, pointer: { x: 0, y: 0 } };
+  const fx: RoomFx = {
+    lampLevel: 1,
+    shadowFrames: 60,
+    pointer: { x: 0, y: 0 },
+    teeko: { x: 0.85, z: 1.35, heading: 0.6, awake: false },
+  };
   let lightsTouched = false;
   // True when the open panel was pushed on top of the overview entry, so closing can go Back.
   let backToOverview = false;

@@ -74,7 +74,11 @@ export function HoverLabel() {
       shown.current = { id, label };
     }
     camera.updateMatrixWorld();
-    v.set(h.anchor[0], h.anchor[1], h.anchor[2]).project(camera);
+    // Teeko's chip follows him while he roams (anchor is his bed).
+    const t = store.fx.teeko;
+    if (id === "teeko" && t.awake) v.set(t.x, h.anchor[1], t.z);
+    else v.set(h.anchor[0], h.anchor[1], h.anchor[2]);
+    v.project(camera);
     if (v.z > 1) {
       el.style.display = "none";
       return;

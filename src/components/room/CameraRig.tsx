@@ -6,6 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import type { PanelSpotId } from "@/lib/room-content";
 import type { CameraView } from "./hotspots";
 import { HOTSPOTS, OVERVIEW_VIEW } from "./hotspots";
+import type { RoomFx } from "./store";
 import { useRoomStore } from "./store";
 
 const TWEEN_MS = 900;
@@ -53,8 +54,17 @@ export function computeView(
   return { pos: look.clone().addScaledVector(dir, d), look, ox: -nx / 2, oy: ny / 2, d };
 }
 
-export function viewForSpot(spot: PanelSpotId | null): CameraView {
-  return (spot && HOTSPOTS[spot].view) || OVERVIEW_VIEW;
+/**
+ * The camera view for a spot. Teeko's registry view frames his bed; while he is
+ * awake it is re-aimed at his live position (he stops while his panel is open,
+ * so reading it when the tween starts is enough).
+ */
+export function viewForSpot(spot: PanelSpotId | null, fx?: RoomFx): CameraView {
+  const view = (spot && HOTSPOTS[spot].view) || OVERVIEW_VIEW;
+  if (spot === "teeko" && fx?.teeko.awake) {
+    return { ...view, target: [fx.teeko.x, view.target[1], fx.teeko.z] };
+  }
+  return view;
 }
 
 /** Camera tween between the overview and hotspot views, plus overview mouse parallax. */
@@ -74,7 +84,7 @@ export function CameraRig() {
 
   const target = (): CamState & { d: number } => {
     const s = store.getState();
-    return computeView(viewForSpot(s.openSpot), s.openSpot !== null, aspect.current, s.sheet, camera.fov);
+    return computeView(viewForSpot(s.openSpot, store.fx), s.openSpot !== null, aspect.current, s.sheet, camera.fov);
   };
 
   // Snap on first mount (deep links start zoomed), then tween on changes.

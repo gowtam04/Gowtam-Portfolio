@@ -22,11 +22,14 @@ export const C = {
   warmLight: "#ffc98a",
 } as const;
 
-/** Teeko's coat: black, lifted just enough to read in low light. */
+/** Teeko's coat: black and tan, the black lifted just enough to read in low light. */
 export const TEEKO = {
   coat: "#1d1b22",
   coatLift: "#2e2a33",
-  muzzle: "#4a3f3b",
+  /** Tan points: chest, belly, legs, under-tail, eyebrow dots, cheeks, muzzle. */
+  tan: "#b8834f",
+  tanShade: "#8f6238",
+  muzzle: "#b8834f",
   chest: "#3d3842",
   innerEar: "#5a4446",
   nose: "#0b0a0d",

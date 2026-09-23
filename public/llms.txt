@@ -34,7 +34,7 @@ This site is not a SaaS API, not a documentation product, and not a chatbot endp
 - [Places](https://gowtam.ai/places): The frames. India and the United States, the two countries he has called home
 - [Cars](https://gowtam.ai/cars): The window. Driving, open roads, and cars
 - [Games](https://gowtam.ai/games): The console. Games he plays and the game studio he co-founded
-- [Teeko](https://gowtam.ai/about#teeko): The sleeping black chihuahua on the rug (a section of /about)
+- [Teeko](https://gowtam.ai/about#teeko): The black chihuahua who naps on the rug and roams the room (a section of /about)
 - [Contact](https://gowtam.ai/contact): The phone. Email and LinkedIn, engagement fit
 
 ## Text and reference pages

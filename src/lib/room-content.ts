@@ -277,7 +277,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
       {
         type: "teeko-teaser",
         heading: "Meet Teeko",
-        text: "The real owner of this room is a black chihuahua. He is usually asleep on the rug.",
+        text: "The real owner of this room is a black chihuahua. He naps on the rug at night and patrols the room by day.",
         cta: "Say hi to Teeko",
       },
       { type: "longer", summary: "The longer version", source: "about" },
@@ -367,7 +367,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     id: "teeko",
     route: "/about#teeko",
     navLabel: "Teeko",
-    hint: "asleep",
+    hint: "the dog",
     kicker: "Head of security",
     title: "Teeko",
     lead: [
@@ -499,7 +499,7 @@ export const ROOM_INTRO = {
   plainLabel: "plain version",
   plainHref: "/plain",
   summary:
-    "An interactive 3D room that maps what Gowtam Ramanujam cares about: a desk for his AI architecture work, a console for games, a window onto a street with his Storm Bay BMW M235i, a wall of photos, two framed homes (India and the United States), a phone for saying hi, and Teeko, a sleeping black chihuahua.",
+    "An interactive 3D room that maps what Gowtam Ramanujam cares about: a desk for his AI architecture work, a console for games, a window onto a street with his Storm Bay BMW M235i, a wall of photos, two framed homes (India and the United States), a phone for saying hi, and Teeko, a black chihuahua.",
   meta: {
     title: `${SITE_NAME} | ${SITE_ROLE}`,
     description:

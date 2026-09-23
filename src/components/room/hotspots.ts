@@ -105,6 +105,8 @@ export const HOTSPOTS: Record<SpotId, HotspotDef> = {
     id: "teeko",
     ...section("teeko"),
     label: "Teeko",
+    // anchor, hit and view.target are his bed. While he roams (store.fx.teeko.awake)
+    // their x/z follow his live position: Interaction, HoverLabel, CameraRig.
     anchor: [0.85, 0.95, 1.35],
     hit: [0.85, 0.35, 1.35, 1.3, 0.8, 1.2],
     priority: 1,
