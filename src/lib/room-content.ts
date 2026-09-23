@@ -494,6 +494,7 @@ export const LONGER_CONTENT: Record<"about" | "contact", LongerContent> = {
 export const ROOM_INTRO = {
   title: "Gowtam's room",
   subtitle: "click anything",
+  loading: "Loading the room",
   cornerName: SITE_NAME,
   cornerRole: SITE_ROLE,
   plainHref: "/plain",

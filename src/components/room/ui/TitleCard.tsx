@@ -14,7 +14,7 @@ function splitTitle(title: string): [string, string] {
 
 /**
  * "Gowtam's room / click anything". Shown on a fresh load of "/" only (deep
- * links start with `firstClickDone`), dismissed after ~3.4s, on the first
+ * links start with `firstClickDone`), dismissed ~3.4s after the room is ready, on the first
  * pointerdown, or when a spot opens. Its title is never the page's h1
  * (that's `CornerCard` or the open panel's title); it stays in the DOM,
  * faded out, after dismissal.
@@ -22,19 +22,21 @@ function splitTitle(title: string): [string, string] {
 export function TitleCard() {
   const openSpot = useRoom((s) => s.openSpot);
   const firstClickDone = useRoom((s) => s.firstClickDone);
+  // Hold the card until the room is on screen, so it is not gone before the scene appears.
+  const settled = useRoom((s) => s.ready || s.failed);
   const [dismissed, setDismissed] = useState(false);
   const visible = !dismissed && !firstClickDone;
 
   useEffect(() => {
     if (dismissed || firstClickDone) return;
-    const timer = window.setTimeout(() => setDismissed(true), DISMISS_MS);
+    const timer = settled ? window.setTimeout(() => setDismissed(true), DISMISS_MS) : 0;
     const onDown = () => setDismissed(true);
     window.addEventListener("pointerdown", onDown, { once: true });
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("pointerdown", onDown);
     };
-  }, [dismissed, firstClickDone]);
+  }, [dismissed, firstClickDone, settled]);
 
   const [lead, accent] = splitTitle(ROOM_INTRO.title);
   const title = (

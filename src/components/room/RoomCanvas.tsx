@@ -1,10 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { Scene } from "./Scene";
 import { useRoomStore } from "./store";
+
+/**
+ * Flags the store `ready` once a frame has actually been drawn. The first
+ * render compiles every shader, which can take seconds, so flipping `ready`
+ * on context creation would fade in a blank canvas and end the loader early.
+ */
+function FirstFrame() {
+  const store = useRoomStore();
+  const frames = useRef(0);
+  useFrame(() => {
+    frames.current += 1;
+    // useFrame runs before the render, so on the second tick the first frame is on screen.
+    if (frames.current === 2) store.setState({ ready: true });
+  });
+  return null;
+}
 
 /**
  * The WebGL canvas. Loaded with next/dynamic (ssr: false) from RoomExperience,
@@ -13,6 +29,9 @@ import { useRoomStore } from "./store";
 export default function RoomCanvas() {
   const store = useRoomStore();
   const [hidden, setHidden] = useState(false);
+
+  // Lets the loader know the three.js chunk has arrived.
+  useEffect(() => store.setState({ canvasLoaded: true }), [store]);
 
   // Pause the render loop while the tab is hidden.
   useEffect(() => {
@@ -34,10 +53,10 @@ export default function RoomCanvas() {
         gl.setClearColor(0x000000, 0);
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.shadowMap.autoUpdate = false;
-        requestAnimationFrame(() => store.setState({ ready: true }));
       }}
     >
       <Scene />
+      <FirstFrame />
     </Canvas>
   );
 }

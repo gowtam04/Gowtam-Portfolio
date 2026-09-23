@@ -379,6 +379,90 @@ body:has(.room-root) {
   }
 }
 
+/* ------------------------------------------------------------ loader (RoomLoader) */
+
+.room-loader {
+  position: absolute;
+  z-index: 16;
+  top: calc(50% + 104px);
+  left: 50%;
+  width: min(240px, calc(100vw - 64px));
+  transform: translateX(-50%);
+  text-align: center;
+  pointer-events: none;
+  transition:
+    opacity 0.5s ease 0.35s,
+    visibility 0s linear 0.85s;
+  animation: room-fade-in 0.6s ease both;
+}
+
+.room-loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.room-root[data-failed="true"] .room-loader {
+  display: none;
+}
+
+.room-loader-label {
+  margin: 0 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--r-muted);
+}
+
+.room-loader-track {
+  position: relative;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.18);
+}
+
+.room-loader-fill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--r-accent);
+  box-shadow: 0 0 12px var(--r-accent);
+  transform-origin: left center;
+  transition: transform 0.3s var(--r-ease);
+}
+
+/* A highlight sweeping the track: runs on the compositor, so it keeps moving during shader compiles. */
+.room-loader-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: translateX(-100%);
+  animation: room-loader-sweep 1.4s ease-in-out infinite;
+}
+
+@keyframes room-loader-sweep {
+  to {
+    transform: translateX(260%);
+  }
+}
+
+/* Keep the loader in the visible part of the room when a panel is open. */
+@media (min-width: 761px) and (orientation: landscape), (min-width: 1101px) {
+  .room-root[data-open="true"] .room-loader {
+    top: 50%;
+    left: calc((100% - min(460px, 45vw - 24px) - 32px) / 2);
+  }
+}
+
+@media (max-width: 760px), (orientation: portrait) and (max-width: 1100px) {
+  .room-root[data-open="true"] .room-loader {
+    top: 20%;
+  }
+}
+
 /* ------------------------------------------------------------ bottom nav */
 
 .room-nav {

@@ -39,7 +39,7 @@ page.tsx (server, metadata)                 e.g. src/app/work/page.tsx
   <RoomJsonLd spot="work" />
   <RoomExperience initialSpot="work" projects={getRoomProjects()} />   (client, SSR'd)
      <RoomProvider>                          store.tsx: per-instance store + URL sync
-       DOM UI: Panel, SpotNav, TitleCard, CornerCard, TimeControl, Fallback (ui/)
+       DOM UI: Panel, SpotNav, TitleCard, RoomLoader, CornerCard, TimeControl, Fallback (ui/)
        <RoomCanvas/>  (next/dynamic, ssr:false)
           <Scene/>: Lighting, CameraRig, Interaction, Markers, HoverLabel,
                     RoomShell, WindowStreet, DeskSet, GamesCorner,
@@ -60,7 +60,7 @@ const phase = useRoom((s) => s.phase); // subscribe (re-renders on change)
 const actions = useRoomActions();      // openSpot, closeSpot, toggleLights, setTimeMode, pokeTeeko, invalidateShadows...
 ```
 
-State: `openSpot`, `hoveredSpot`, `navFocus`, `lightsOn`, `timeMode`, `phase`, `firstClickDone`, `teekoPokedAt`, `sheet`, `reducedMotion`, `ready`, `failed`.
+State: `openSpot`, `hoveredSpot`, `navFocus`, `lightsOn`, `timeMode`, `phase`, `firstClickDone`, `teekoPokedAt`, `sheet`, `reducedMotion`, `canvasLoaded`, `ready` (first frame drawn), `failed`.
 
 `store.fx.teeko` is written every frame by `Teeko.tsx` (world x/z, heading as rotation.y in radians, and `awake` = up and off his bed). It is read by `Interaction.tsx` (his pick box follows him), `HoverLabel.tsx` (the chip follows him), and `CameraRig.tsx` (the teeko view target follows him). Its initial value is his bed, (0.85, 1.35).
 

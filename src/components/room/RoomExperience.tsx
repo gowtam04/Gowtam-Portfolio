@@ -11,6 +11,7 @@ import { CornerCard } from "./ui/CornerCard";
 import { CanvasBoundary, Fallback, useRoomBoot, useWebGLSupport } from "./ui/Fallback";
 import { LiveRegion } from "./ui/LiveRegion";
 import { Panel } from "./ui/Panel";
+import { RoomLoader } from "./ui/RoomLoader";
 import { SpotNav } from "./ui/SpotNav";
 import { TimeControl } from "./ui/TimeControl";
 import { TitleCard } from "./ui/TitleCard";
@@ -60,6 +61,7 @@ function RoomLayout({ projects }: { projects: RoomProject[] }) {
         ) : null}
       </div>
       <TitleCard />
+      <RoomLoader />
       <CornerCard />
       <TimeControl />
       <Fallback />

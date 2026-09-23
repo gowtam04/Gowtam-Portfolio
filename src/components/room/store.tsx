@@ -29,6 +29,8 @@ export interface RoomState {
   /** Bottom-sheet layout (narrow or portrait screens). */
   sheet: boolean;
   reducedMotion: boolean;
+  /** The canvas code has downloaded and mounted (the first frame is still pending). */
+  canvasLoaded: boolean;
   /** The canvas has rendered its first frame. */
   ready: boolean;
   /** WebGL unavailable or the 3D failed to load in time. */
@@ -95,6 +97,7 @@ export function createRoomStore(
     teekoPokedAt: 0,
     sheet: false,
     reducedMotion: false,
+    canvasLoaded: false,
     ready: false,
     failed: false,
     photos,
