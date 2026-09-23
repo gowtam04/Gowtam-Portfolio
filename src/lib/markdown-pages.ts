@@ -8,11 +8,13 @@ import {
   isInlineLink,
   LONGER_CONTENT,
   PANEL_SPOT_ORDER,
+  proseToRich,
   richTextToPlain,
   ROOM_INTRO,
   ROOM_PLACEHOLDERS,
   ROOM_SECTIONS,
   ROUTED_SPOTS,
+  type LongerContent,
   type PanelSpotId,
   type RichText,
   type RoomBlock,
@@ -168,26 +170,19 @@ function hashes(level: number): string {
   return "#".repeat(Math.min(level, 6));
 }
 
-type TrustContent = (typeof LONGER_CONTENT)[keyof typeof LONGER_CONTENT];
-
 /** The long-form About / Contact content, nested under a heading at `level`. */
-function longerToMarkdown(content: TrustContent, summary: string, level: number): string[] {
-  const lines: string[] = [
-    `${hashes(level)} ${summary}`,
-    "",
-    `**${content.headline}**`,
-    "",
-    content.lede,
-    "",
-  ];
+function longerToMarkdown(content: LongerContent, summary: string, level: number): string[] {
+  const lines: string[] = [`${hashes(level)} ${summary}`, ""];
+  if (content.headline) lines.push(`**${content.headline}**`, "");
+  if (content.lede) lines.push(content.lede, "");
   for (const section of content.sections) {
     lines.push(`${hashes(level + 1)} ${section.heading}`, "");
     for (const p of section.paragraphs) {
-      lines.push(p, "");
+      lines.push(richTextToMarkdown(proseToRich(p)), "");
     }
-    if ("bullets" in section && section.bullets) {
+    if (section.bullets) {
       for (const b of section.bullets) {
-        lines.push(`- ${b}`);
+        lines.push(`- ${richTextToMarkdown(proseToRich(b))}`);
       }
       lines.push("");
     }

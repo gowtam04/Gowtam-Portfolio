@@ -8,6 +8,7 @@ import type { RoomBlock, RoomSection } from "@/lib/room-content";
 import {
   LONGER_CONTENT,
   PANEL_SPOT_ORDER,
+  proseToRich,
   ROOM_INTRO,
   ROOM_PLACEHOLDERS,
   ROOM_SECTIONS,
@@ -82,20 +83,26 @@ function Longer({ block }: { block: Extract<RoomBlock, { type: "longer" }> }) {
   return (
     <div className="rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] p-6">
       <h3 className={LABEL}>{block.summary}</h3>
-      <p className="mt-3 font-display text-xl tracking-[-0.01em] text-[var(--foreground)]">{content.headline}</p>
-      <p className="mt-2 text-[0.95rem] leading-[1.65] text-[var(--muted)]">{content.lede}</p>
+      {content.headline ? (
+        <p className="mt-3 font-display text-xl tracking-[-0.01em] text-[var(--foreground)]">{content.headline}</p>
+      ) : null}
+      {content.lede ? <p className="mt-2 text-[0.95rem] leading-[1.65] text-[var(--muted)]">{content.lede}</p> : null}
       <div className="mt-6 space-y-6">
         {content.sections.map((s) => (
           <div key={s.heading}>
             <h4 className="text-[0.95rem] font-semibold text-[var(--foreground)]">{s.heading}</h4>
             <div className="mt-2 space-y-2.5 text-[0.95rem] leading-[1.65] text-[var(--muted)]">
-              {s.paragraphs.map((para) => (
-                <p key={para.slice(0, 48)}>{para}</p>
+              {s.paragraphs.map((para, i) => (
+                <p key={i}>
+                  <Rich text={proseToRich(para)} variant="site" linkClassName={LINK} />
+                </p>
               ))}
-              {"bullets" in s && s.bullets ? (
+              {s.bullets ? (
                 <ul className="list-disc space-y-1 pl-5 marker:text-[var(--accent)]">
-                  {s.bullets.map((b) => (
-                    <li key={b}>{b}</li>
+                  {s.bullets.map((b, i) => (
+                    <li key={i}>
+                      <Rich text={proseToRich(b)} variant="site" linkClassName={LINK} />
+                    </li>
                   ))}
                 </ul>
               ) : null}

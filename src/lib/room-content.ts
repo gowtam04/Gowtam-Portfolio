@@ -15,8 +15,6 @@ import {
   SITE_LINKEDIN,
   SITE_NAME,
   SITE_ROLE,
-  aboutContent,
-  contactContent,
 } from "@/lib/site-content";
 
 /* ------------------------------------------------------------ placeholders */
@@ -367,11 +365,105 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
   },
 };
 
+/** A paragraph or bullet in long-form content: plain prose, or rich text with placeholders and links. */
+export type LongerProse = string | RichText;
+
+export interface LongerContent {
+  headline?: string;
+  lede?: string;
+  sections: readonly {
+    heading: string;
+    paragraphs: readonly LongerProse[];
+    bullets?: readonly LongerProse[];
+  }[];
+}
+
+export function proseToRich(p: LongerProse): RichText {
+  return typeof p === "string" ? [p] : p;
+}
+
+const aboutLonger: LongerContent = {
+  sections: [
+    {
+      heading: "What I do",
+      paragraphs: [
+        "I design and build AI agents: systems where a language model has to call tools, work with real data, and give an answer someone can act on. Most of the job is the unglamorous middle part: picking the model, deciding what tools it gets, and planning for when it's wrong and how a person finds out.",
+        "The best example is Annie, a patient assistant for a cosmetic surgery practice. It answers procedure questions around the clock, pulls the right video from the practice's own library, and books consultations. I took it from a prototype that lost conversations on restart to a platform the staff run themselves. That includes a second agent that lets them ask plain-English questions across thousands of patient chats.",
+      ],
+    },
+    {
+      heading: "How I got here",
+      paragraphs: [
+        "Over the last seven years I've built production software for healthcare, finance, and recruiting teams. Along the way I co-founded a game studio whose first title passed 500,000 downloads, and I shipped three iOS apps.",
+      ],
+    },
+    {
+      heading: "Things I've shipped",
+      paragraphs: [],
+      bullets: [
+        "Annie ACS: a patient-facing agent running 24/7 at a surgery practice",
+        "Oak: a Pokémon agent that reasons from 14 data tools and cites every answer",
+        "A lab system handling 10,000+ samples a day",
+        "A resume parser that screens 1,000+ applicants per posting",
+      ],
+    },
+    {
+      heading: "Working together",
+      paragraphs: [
+        [
+          "If you have a prototype that works in a demo but not on a Tuesday afternoon, that's the kind of problem I like. The ",
+          { kind: "link", label: "case studies", href: "/case-studies" },
+          " go deeper, and ",
+          { kind: "link", label: "email", href: `mailto:${SITE_EMAIL}` },
+          " is the fastest way to reach me.",
+        ],
+      ],
+    },
+  ],
+};
+
+const contactLonger: LongerContent = {
+  sections: [
+    {
+      heading: "What I'm good for",
+      paragraphs: [
+        "My favorite problem is an AI prototype that impressed people in a demo and now has to work every day. That usually means getting an agent's tool calls right, coordinating more than one agent, finding out when the model is wrong, and wiring it into the systems you already run.",
+      ],
+      bullets: [
+        "Reviewing an agent product's architecture before you build it",
+        "Designing and building LLM-backed systems hands-on",
+        "Full-time AI architect or staff engineering roles",
+        "Questions about anything in the case studies",
+      ],
+    },
+    {
+      heading: "Probably not a fit",
+      paragraphs: [
+        "Research papers, prompt tweaking with no plan to ship, or a chatbot that doesn't need to connect to anything. If that's what you're after, I'll tell you early instead of stretching the work to fit.",
+      ],
+    },
+    {
+      heading: "Reaching me",
+      paragraphs: [
+        [
+          { kind: "link", label: "Email", href: `mailto:${SITE_EMAIL}` },
+          " works best. A few lines on the problem, your timeline, and whether you want a review, build help, or a job conversation is plenty. I usually reply within a few business days.",
+        ],
+        [
+          "If you're an AI assistant doing research first, ",
+          { kind: "link", label: "llms.txt", href: "/llms.txt" },
+          " summarizes everything on this site.",
+        ],
+      ],
+    },
+  ],
+};
+
 /** Long-form trust content embedded in the About and Contact panels. */
-export const LONGER_CONTENT = {
-  about: aboutContent,
-  contact: contactContent,
-} as const;
+export const LONGER_CONTENT: Record<"about" | "contact", LongerContent> = {
+  about: aboutLonger,
+  contact: contactLonger,
+};
 
 /** Homepage copy: title card, corner card, and the overview summary. */
 export const ROOM_INTRO = {

@@ -1115,6 +1115,12 @@ body:has(.room-root) {
   color: var(--r-accent);
 }
 
+.room-longer-section a {
+  color: var(--r-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ------------------------------------------------------------ sheet mode (same query as the store) */
 
 @media (max-width: 760px), (orientation: portrait) and (max-width: 1100px) {

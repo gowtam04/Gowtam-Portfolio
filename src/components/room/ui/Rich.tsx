@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import type { RichText, RoomBlock, RoomSection } from "@/lib/room-content";
-import { isPlaceholder } from "@/lib/room-content";
+import { LONGER_CONTENT, isPlaceholder, proseToRich } from "@/lib/room-content";
 import { Placeholder } from "./Placeholder";
 
 /**
@@ -50,6 +50,10 @@ function blockHasPlaceholder(block: RoomBlock): boolean {
       return block.items.some(richHasPlaceholder);
     case "spec":
       return block.rows.some((row) => richHasPlaceholder(row.value));
+    case "longer":
+      return LONGER_CONTENT[block.source].sections.some((s) =>
+        [...s.paragraphs, ...(s.bullets ?? [])].some((p) => richHasPlaceholder(proseToRich(p))),
+      );
     default:
       return false;
   }

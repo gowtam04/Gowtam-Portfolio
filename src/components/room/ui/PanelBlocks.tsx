@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import type { RoomBlock } from "@/lib/room-content";
-import { LONGER_CONTENT } from "@/lib/room-content";
+import { LONGER_CONTENT, proseToRich } from "@/lib/room-content";
 import type { RoomProject } from "@/lib/room-projects";
 import { useRoomActions } from "../store";
 import { Rich, isBarePlaceholder } from "./Rich";
@@ -209,18 +209,22 @@ function LongerBlock({ block }: { block: Block<"longer"> }) {
         </svg>
       </summary>
       <div className="room-longer-body">
-        <p className="room-longer-headline">{content.headline}</p>
-        <p className="room-longer-lede">{content.lede}</p>
+        {content.headline ? <p className="room-longer-headline">{content.headline}</p> : null}
+        {content.lede ? <p className="room-longer-lede">{content.lede}</p> : null}
         {content.sections.map((s) => (
           <div key={s.heading} className="room-longer-section">
             <h3>{s.heading}</h3>
-            {s.paragraphs.map((p) => (
-              <p key={p.slice(0, 48)}>{p}</p>
+            {s.paragraphs.map((p, i) => (
+              <p key={i}>
+                <Rich text={proseToRich(p)} />
+              </p>
             ))}
-            {"bullets" in s && s.bullets ? (
+            {s.bullets ? (
               <ul>
-                {s.bullets.map((b) => (
-                  <li key={b}>{b}</li>
+                {s.bullets.map((b, i) => (
+                  <li key={i}>
+                    <Rich text={proseToRich(b)} />
+                  </li>
                 ))}
               </ul>
             ) : null}
