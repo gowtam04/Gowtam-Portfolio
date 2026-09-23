@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
+import { Caveat, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
@@ -13,6 +13,14 @@ const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
   display: "swap",
+});
+
+// Handwriting for sticky notes drawn on canvas textures in the 3D room.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -53,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fraunces.variable} ${plusJakarta.variable} antialiased`}
+        className={`${fraunces.variable} ${plusJakarta.variable} ${caveat.variable} antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider>{children}</ThemeProvider>

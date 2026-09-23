@@ -1,66 +1,16 @@
-import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
-import { About } from "@/components/About";
-import { AgentAnatomy } from "@/components/AgentAnatomy";
-import { CaseStudies } from "@/components/CaseStudies";
-import { Skills } from "@/components/Skills";
-import { Contact } from "@/components/Contact";
-import { Footer } from "@/components/Footer";
+import type { Metadata } from "next";
+import { RoomExperience } from "@/components/room/RoomExperience";
+import { RoomJsonLd } from "@/components/room/seo/RoomJsonLd";
+import { roomMetadata } from "@/lib/room-metadata";
+import { getRoomProjects } from "@/lib/room-projects";
 
-const personJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Gowtam Ramanujam",
-  jobTitle: "AI Architect",
-  url: "https://gowtam.ai",
-  image: "https://gowtam.ai/images/profile.jpg",
-  description:
-    "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
-  sameAs: ["https://www.linkedin.com/in/gowtam-ramanujam"],
-  knowsAbout: [
-    "Artificial Intelligence",
-    "Agentic AI",
-    "AI System Architecture",
-    "Multi-Agent Systems",
-    "Machine Learning",
-    "Mobile App Development",
-    "Enterprise Software",
-  ],
-};
-
-const profilePageJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  mainEntity: {
-    "@type": "Person",
-    name: "Gowtam Ramanujam",
-    jobTitle: "AI Architect",
-    url: "https://gowtam.ai",
-    image: "https://gowtam.ai/images/profile.jpg",
-  },
-};
+export const metadata: Metadata = roomMetadata(null);
 
 export default function Home() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
-      />
-      <Header />
-      <main>
-        <Hero />
-        <About />
-        <AgentAnatomy />
-        <CaseStudies />
-        <Skills />
-        <Contact />
-      </main>
-      <Footer />
+      <RoomJsonLd spot={null} />
+      <RoomExperience initialSpot={null} projects={getRoomProjects()} />
     </>
   );
 }

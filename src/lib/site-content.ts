@@ -4,6 +4,7 @@ export const SITE_NAME = "Gowtam Ramanujam";
 export const SITE_URL = "https://gowtam.ai";
 export const SITE_EMAIL = "gowtam@gowtam.ai";
 export const SITE_ROLE = "AI Architect";
+export const SITE_LINKEDIN = "https://www.linkedin.com/in/gowtam-ramanujam";
 
 export const aboutContent = {
   title: "About",
@@ -75,7 +76,7 @@ export const contactContent = {
       heading: "Channels",
       paragraphs: [
         "Primary: gowtam@gowtam.ai",
-        "LinkedIn: https://www.linkedin.com/in/gowtam-ramanujam",
+        `LinkedIn: ${SITE_LINKEDIN}`,
         "Before writing, agents and humans can skim /llms.txt, /about, and /case-studies for context on scope and published work.",
       ],
     },
@@ -90,7 +91,7 @@ export const contactContent = {
     {
       label: "LinkedIn",
       value: "gowtam-ramanujam",
-      href: "https://www.linkedin.com/in/gowtam-ramanujam",
+      href: SITE_LINKEDIN,
       external: true,
     },
   ],

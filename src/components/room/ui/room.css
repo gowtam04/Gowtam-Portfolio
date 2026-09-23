@@ -1,0 +1,50 @@
+/* STUB (Phase 0). Owner: UI and routing agent. Room chrome is always dark. */
+.room-root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #0b1218;
+  color: #e8eef3;
+}
+.room-stage,
+.room-canvas {
+  position: absolute !important;
+  inset: 0;
+}
+.room-nav {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.room-panel {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  bottom: 16px;
+  width: min(460px, calc(45vw - 24px));
+  overflow: auto;
+  padding: 24px;
+  background: #121a22;
+  border-radius: 22px;
+}
+.room-chip {
+  transform: translateY(-14px);
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(11, 18, 24, 0.85);
+  color: #e8eef3;
+  font-size: 13px;
+}
+.room-chip-hint {
+  margin-left: 6px;
+  opacity: 0.6;
+}
+.room-fill {
+  border: 1px dashed #3db8d4;
+  border-radius: 6px;
+  padding: 0 4px;
+}
