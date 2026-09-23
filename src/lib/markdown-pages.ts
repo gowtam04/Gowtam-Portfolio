@@ -10,6 +10,7 @@ import {
   PANEL_SPOT_ORDER,
   richTextToPlain,
   ROOM_INTRO,
+  ROOM_PLACEHOLDERS,
   ROOM_SECTIONS,
   ROUTED_SPOTS,
   type PanelSpotId,
@@ -349,8 +350,9 @@ function plainToMarkdown(): string {
     "",
     ROOM_INTRO.summary,
     "",
-    "Bracketed items such as [City] are details not filled in yet.",
-    "",
+    ...(ROOM_PLACEHOLDERS.length > 0
+      ? ["Bracketed items such as [City] are details not filled in yet.", ""]
+      : []),
     "## Contents",
     "",
     ...sectionIndexLines(),

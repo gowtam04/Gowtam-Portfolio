@@ -194,21 +194,17 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
       {
         type: "chips",
         heading: "Now playing",
-        items: [[ph("Current game", "games.current-game")], [ph("Platform", "games.platform")]],
+        items: [["Pokemon Champions"], ["Cyberpunk 2077"], ["on Nintendo Switch 2"]],
       },
       {
         type: "chips",
         heading: "All-time favorites",
-        items: [
-          [ph("Favorite game 1", "games.favorite-1")],
-          [ph("Favorite game 2", "games.favorite-2")],
-          [ph("Favorite game 3", "games.favorite-3")],
-        ],
+        items: [["The Elder Scrolls V: Skyrim"], ["Pokemon"], ["Mario Party"]],
       },
       {
         type: "chips",
         heading: "Genres I keep coming back to",
-        items: [[ph("Genres", "games.genres")]],
+        items: [["RPGs"]],
       },
       {
         type: "stat",
@@ -236,13 +232,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
       {
         type: "spec",
         rows: [
-          { label: "Daily driver", value: [ph("Your car", "cars.daily-driver")] },
-          { label: "Dream car", value: [ph("Dream car", "cars.dream-car")] },
-          { label: "Favorite drive", value: [ph("Road or route", "cars.favorite-drive")] },
-          {
-            label: "What I love about it",
-            value: [ph("A sentence about why you love driving", "cars.why-driving")],
-          },
+          { label: "Daily driver", value: ["2022 BMW M235i"] },
         ],
       },
     ],
@@ -267,7 +257,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
         type: "facts",
         heading: "Quick facts",
         items: [
-          ["Based in ", ph("City", "about.city")],
+          ["Based in the Sacramento area"],
           ["Builds AI agents and iOS apps"],
           ["Co-founded a game studio"],
           ["Lived in India and the United States"],
@@ -296,35 +286,24 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     kicker: "Where I've lived",
     title: "The frames: two homes",
     lead: [
-      "Two countries have been home: India and the United States. Both show up in how I think, what I build, and what I care about.",
+      "I grew up in Idaho, moved to India for high school and college, then came back to the US for work. These days I live near Sacramento. Both countries show up in how I think, what I build, and what I care about.",
     ],
     blocks: [
       {
         type: "spec",
-        heading: "India",
+        heading: "The route so far",
         rows: [
-          { label: "Where", value: [ph("City or region", "places.india.where")] },
-          { label: "When", value: [ph("Years", "places.india.years")] },
-          { label: "What I miss most", value: [ph("What I miss most", "places.india.miss")] },
-        ],
-      },
-      {
-        type: "spec",
-        heading: "United States",
-        rows: [
-          { label: "Where", value: [ph("City or region", "places.us.where")] },
-          { label: "When", value: [ph("Years", "places.us.years")] },
-          {
-            label: "Favorite thing about living here",
-            value: [ph("Favorite thing about living here", "places.us.favorite")],
-          },
+          { label: "Grew up", value: ["Idaho"] },
+          { label: "High school and college", value: ["India"] },
+          { label: "Work", value: ["Back to the United States"] },
+          { label: "Now", value: ["Near Sacramento, California"] },
         ],
       },
     ],
     meta: {
       title: `Places | ${SITE_NAME}`,
       description:
-        "The frames in Gowtam's room: India and the United States, the two countries he has called home.",
+        "The frames in Gowtam's room: growing up in Idaho, high school and college in India, and back to the United States for work, now near Sacramento.",
     },
   },
   contact: {
@@ -369,21 +348,21 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     kicker: "Head of security",
     title: "Teeko",
     lead: [
-      "This is Teeko, a black chihuahua and the real owner of this room. I just pay rent.",
+      "This is Teeko, our family's black chihuahua and the real owner of this room. I just pay rent.",
     ],
     blocks: [
       {
         type: "spec",
         rows: [
-          { label: "Age", value: [ph("Age", "teeko.age")] },
-          { label: "Favorite snack", value: [ph("Favorite snack", "teeko.snack")] },
-          { label: "Signature move", value: [ph("Signature move", "teeko.signature-move")] },
+          { label: "Age", value: ["13 years"] },
+          { label: "Favorite snack", value: ["Green dental sticks"] },
+          { label: "Signature move", value: ["Shvonks"] },
         ],
       },
     ],
     meta: {
       title: `Teeko | ${SITE_NAME}`,
-      description: "Teeko, a black chihuahua and the real owner of Gowtam's room.",
+      description: "Teeko, the family's black chihuahua and the real owner of Gowtam's room.",
     },
   },
 };

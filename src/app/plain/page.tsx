@@ -5,7 +5,13 @@ import { Header } from "@/components/Header";
 import { PlaceholderLegend } from "@/components/room/ui/Placeholder";
 import { Rich, isBarePlaceholder } from "@/components/room/ui/Rich";
 import type { RoomBlock, RoomSection } from "@/lib/room-content";
-import { LONGER_CONTENT, PANEL_SPOT_ORDER, ROOM_INTRO, ROOM_SECTIONS } from "@/lib/room-content";
+import {
+  LONGER_CONTENT,
+  PANEL_SPOT_ORDER,
+  ROOM_INTRO,
+  ROOM_PLACEHOLDERS,
+  ROOM_SECTIONS,
+} from "@/lib/room-content";
 import type { RoomProject } from "@/lib/room-projects";
 import { getRoomProjects } from "@/lib/room-projects";
 import { SITE_NAME } from "@/lib/site-content";
@@ -277,9 +283,11 @@ export default function PlainPage() {
             ))}
           </div>
 
-          <div className="mt-16 border-t border-[var(--border)] pt-6">
-            <PlaceholderLegend variant="site" />
-          </div>
+          {ROOM_PLACEHOLDERS.length > 0 ? (
+            <div className="mt-16 border-t border-[var(--border)] pt-6">
+              <PlaceholderLegend variant="site" />
+            </div>
+          ) : null}
         </article>
       </main>
       <Footer />
