@@ -44,3 +44,6 @@ coverage/
 resume/
 /images/
 PDFs/
+
+# Map build downloads
+scripts/maps/.cache/
