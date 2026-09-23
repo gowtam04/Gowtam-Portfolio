@@ -89,22 +89,22 @@ export type PanelSpotId =
 /** Order of the bottom nav, /plain, and Markdown. */
 export const PANEL_SPOT_ORDER: readonly PanelSpotId[] = [
   "work",
-  "games",
-  "cars",
   "about",
   "places",
-  "contact",
+  "cars",
+  "games",
   "teeko",
+  "contact",
 ];
 
 /** Spots that own a dedicated route. Teeko lives at /about#teeko. */
 export type RoutedSpotId = Exclude<PanelSpotId, "teeko">;
 export const ROUTED_SPOTS: readonly RoutedSpotId[] = [
   "work",
-  "games",
-  "cars",
   "about",
   "places",
+  "cars",
+  "games",
   "contact",
 ];
 

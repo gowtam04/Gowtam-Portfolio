@@ -1,6 +1,6 @@
 # gowtam.ai
 
-> Personal site of Gowtam Ramanujam, AI Architect. The homepage is an interactive 3D room: each object opens a panel that is also its own crawlable URL (work, games, cars, about, places, contact). Case studies and contact details for production AI systems and autonomous agents.
+> Personal site of Gowtam Ramanujam, AI Architect. The homepage is an interactive 3D room: each object opens a panel that is also its own crawlable URL (work, about, places, cars, games, contact). Case studies and contact details for production AI systems and autonomous agents.
 
 Site: https://gowtam.ai
 Contact: gowtam@gowtam.ai
@@ -30,11 +30,11 @@ This site is not a SaaS API, not a documentation product, and not a chatbot endp
 
 - [Room overview](https://gowtam.ai/): The 3D room itself, plus links to every section
 - [Work](https://gowtam.ai/work): The desk. AI agents and systems work, with the list of case studies
-- [Games](https://gowtam.ai/games): The console. Games he plays and the game studio he co-founded
-- [Cars](https://gowtam.ai/cars): The window. Driving, open roads, and cars
 - [About](https://gowtam.ai/about): The wall. Background, quick facts, working style, proof points, and Teeko
-- [Teeko](https://gowtam.ai/about#teeko): The sleeping black chihuahua on the rug (a section of /about)
 - [Places](https://gowtam.ai/places): The frames. India and the United States, the two countries he has called home
+- [Cars](https://gowtam.ai/cars): The window. Driving, open roads, and cars
+- [Games](https://gowtam.ai/games): The console. Games he plays and the game studio he co-founded
+- [Teeko](https://gowtam.ai/about#teeko): The sleeping black chihuahua on the rug (a section of /about)
 - [Contact](https://gowtam.ai/contact): The phone. Email and LinkedIn, engagement fit
 
 ## Text and reference pages
