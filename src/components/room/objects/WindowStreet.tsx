@@ -74,7 +74,7 @@ const WALK_W = 1.2;
 const LAMP = { x: -15.85, z: -4.3, headX: -14.8, headY: 4.28 };
 /** Lantern post on the near sidewalk at the cut edge (emissive only, reads from the overview). */
 const LANTERN = { x: -8.75, z: -6.4, h: 2.2 };
-/** Parked car: group origin, uniform scale 0.8, nose toward -z. */
+/** Parked car (BMW M235i Gran Coupe): group origin, uniform scale 0.8, nose toward -z. */
 const CAR = { x: -11.4, y: -0.38, z: -2.1, s: 0.8 };
 /** Floating islet below the street edge (seen from the overview only). */
 const ISLET = { x: -32, top: -11.2, z: -22.4 };
@@ -589,6 +589,27 @@ function buildOutside(): Outside {
 
 /* ================================================================ the car */
 
+/*
+ * Gowtam's 2022 BMW M235i xDrive Gran Coupe (F44): Storm Bay Metallic, gloss
+ * black trim (kidneys, mirrors, roundels), dark tint, 18" bi-color double
+ * spokes with blue M Sport calipers. Local units before CAR.s: about 6 long on
+ * z (nose toward -z), 2.4 wide, 1.9 tall; y = 0 is the road and +x is the
+ * side the cars view sees. Side profiles are drawn in (s, y) with s = -z.
+ */
+const STORM_BAY = "#687a8b";
+const AXLE_F = -1.79;
+const AXLE_R = 1.75;
+const TIRE_R = 0.43;
+const ARCH_R = 0.52;
+const WHEEL_X = 1.02;
+/** Body extrusion depth (plus the 0.16 shoulder bevel each side = 2.4 wide). */
+const BODY_D = 2.08;
+/** Greenhouse extrusion depth; its glass sides sit at +-GH_HALF before tumblehome. */
+const GH_D = 1.9;
+const GH_HALF = GH_D / 2 + 0.04;
+
+type P2 = [number, number];
+
 interface Car {
   group: THREE.Group;
   lights: THREE.MeshStandardMaterial[];
@@ -598,80 +619,236 @@ interface Car {
   geometries: THREE.BufferGeometry[];
 }
 
+function polyShape(pts: P2[]): THREE.Shape {
+  return new THREE.Shape(pts.map(([s, y]) => new THREE.Vector2(s, y)));
+}
+
+/** Extrudes a side profile across x, centered on x = 0 (s maps to -z). */
+function extrudeSide(shape: THREE.Shape, depth: number, bevel = 0, bevelSize = bevel * 0.8): THREE.BufferGeometry {
+  const g = new THREE.ExtrudeGeometry(shape, {
+    depth,
+    curveSegments: 8,
+    bevelEnabled: bevel > 0,
+    bevelThickness: bevel,
+    bevelSize,
+    bevelSegments: 2,
+  });
+  g.rotateY(Math.PI / 2);
+  g.translate(-depth / 2, 0, 0);
+  return g;
+}
+
+/** Thin panel laid on the +x (side 1) or -x (side -1) face of the greenhouse. */
+function sidePanel(pts: P2[], side: number): THREE.BufferGeometry {
+  const g = extrudeSide(polyShape(pts), 0.02);
+  g.translate(side * (GH_HALF + 0.012), 0, 0);
+  return g;
+}
+
+/** Tumblehome: pull the greenhouse (and anything laid on it) in toward the roof. */
+function tumblehome(g: THREE.BufferGeometry): THREE.BufferGeometry {
+  const p = g.attributes.position;
+  for (let i = 0; i < p.count; i++) {
+    const t = THREE.MathUtils.clamp((p.getY(i) - 1.14) / 0.74, 0, 1);
+    p.setX(i, p.getX(i) * (1 - 0.2 * t));
+  }
+  g.computeVertexNormals();
+  return g;
+}
+
+/** Plan-view rounding: the corners of the nose and tail pull in toward the center line. */
+function pinch(z: number): number {
+  const t = Math.max(0, Math.abs(z) - 2.3) / 0.8;
+  return 1 - 0.1 * t * t;
+}
+
+function bodyShape(): THREE.Shape {
+  const s = new THREE.Shape();
+  s.moveTo(-2.93, 0.3);
+  // rear arch, sill, front arch
+  s.lineTo(-AXLE_R - ARCH_R, 0.3);
+  s.lineTo(-AXLE_R - ARCH_R, TIRE_R);
+  s.absarc(-AXLE_R, TIRE_R, ARCH_R, Math.PI, 0, true);
+  s.lineTo(-AXLE_R + ARCH_R, 0.2);
+  s.lineTo(-AXLE_F - ARCH_R, 0.2);
+  s.lineTo(-AXLE_F - ARCH_R, TIRE_R);
+  s.absarc(-AXLE_F, TIRE_R, ARCH_R, Math.PI, 0, true);
+  s.lineTo(-AXLE_F + ARCH_R, 0.3);
+  // nose, hood, beltline, trunk with its lip spoiler, rear bumper
+  s.lineTo(2.95, 0.3);
+  s.lineTo(3.02, 0.45);
+  s.lineTo(3.0, 0.62);
+  s.lineTo(2.85, 0.8);
+  s.lineTo(2.6, 0.88);
+  s.lineTo(1.6, 1.02);
+  s.lineTo(0.95, 1.1);
+  s.lineTo(-1.6, 1.14);
+  s.lineTo(-2.3, 1.16);
+  s.lineTo(-2.84, 1.18);
+  s.lineTo(-2.92, 1.22);
+  s.lineTo(-3.0, 1.0);
+  s.lineTo(-3.02, 0.5);
+  s.closePath();
+  return s;
+}
+
 function buildCar(): Car {
   const kit = materialKit();
   const { mat, own } = kit;
   const mb = new Merger();
   const group = new THREE.Group();
   const geometries: THREE.BufferGeometry[] = [];
+  const temp: THREE.BufferGeometry[] = [];
+  const tmp = (g: THREE.BufferGeometry) => (temp.push(g), g);
   const parent = new THREE.Matrix4().compose(
     new THREE.Vector3(CAR.x, CAR.y, CAR.z),
     new THREE.Quaternion(),
     new THREE.Vector3(CAR.s, CAR.s, CAR.s),
   );
-  const add = (m: THREE.Material, g: THREE.BufferGeometry, pos: V3, rot?: V3) => mb.add(m, g, pos, rot, 1, parent);
+  const add = (m: THREE.Material, g: THREE.BufferGeometry, pos: V3 = [0, 0, 0], rot?: V3) => mb.add(m, g, pos, rot, 1, parent);
 
-  const paint = mat(C.red, { metalness: 0.35, roughness: 0.32 });
-  const dark = mat("#1b1f27", { roughness: 0.6 });
-  const glassM = mat("#1f2c3c", { metalness: 0.5, roughness: 0.15, flatShading: true });
-  const chrome = mat("#d6dbe1", { metalness: 0.9, roughness: 0.25 });
-  const tire = mat("#15181f", { roughness: 0.9 });
-  const stripe = mat("#f6f1e7");
+  const paint = mat(STORM_BAY, { metalness: 0.25, roughness: 0.35 });
+  const gloss = mat("#0e1014", { metalness: 0.3, roughness: 0.2 });
+  const matte = mat("#1a1e24", { roughness: 0.85 });
+  const glassM = mat("#10151b", { metalness: 0.5, roughness: 0.1, flatShading: true });
+  const tireM = mat("#15181f", { roughness: 0.9 });
+  const rimM = mat("#2c3036", { metalness: 0.5, roughness: 0.45 });
+  const spokeM = mat("#c9ced4", { metalness: 0.7, roughness: 0.3 });
+  const caliperM = mat("#2a62d6", { metalness: 0.2, roughness: 0.45 });
+  const exhaustM = mat("#70757c", { metalness: 0.8, roughness: 0.3 });
+  const whiteM = mat("#e8edf2", { roughness: 0.5 });
 
-  add(paint, roundedBox(2.3, 0.74, 6.0, 0.24), [0, 0.67, 0]);
-  const cab = new THREE.BoxGeometry(2.0, 0.66, 3.0);
-  const cp = cab.attributes.position;
-  for (let i = 0; i < cp.count; i++) {
-    if (cp.getY(i) > 0) {
-      cp.setX(i, cp.getX(i) * 0.82);
-      const z = cp.getZ(i);
-      cp.setZ(i, z < 0 ? z + 0.8 : z - 0.45);
+  /* ---------- body and greenhouse */
+  const shell = extrudeSide(bodyShape(), BODY_D, 0.16, 0.07);
+  const sp = shell.attributes.position;
+  for (let i = 0; i < sp.count; i++) sp.setX(i, sp.getX(i) * pinch(sp.getZ(i)));
+  shell.computeVertexNormals();
+  add(paint, tmp(shell));
+  // dark wheel wells behind the arches
+  for (const z of [AXLE_F, AXLE_R]) add(matte, box(2.3, 0.45, 1.05), [0, 0.72, z]);
+
+  const glass: P2[] = [
+    [1.02, 1.1],
+    [0.55, 1.52],
+    [0.1, 1.8],
+    [-0.35, 1.9],
+    [-0.85, 1.87],
+    [-1.3, 1.76],
+    [-1.85, 1.46],
+    [-2.3, 1.18],
+    [-2.3, 1.1],
+  ];
+  add(glassM, tmp(tumblehome(extrudeSide(polyShape(glass), GH_D, 0.04))));
+  // roof panel over the glass, wide enough to cover the roof rails
+  const roof: P2[] = [
+    [0.08, 1.845],
+    [-0.35, 1.945],
+    [-0.85, 1.915],
+    [-1.32, 1.8],
+    [-1.32, 1.68],
+    [-0.85, 1.79],
+    [-0.35, 1.82],
+    [0.14, 1.72],
+  ];
+  add(paint, tmp(tumblehome(extrudeSide(polyShape(roof), GH_D + 0.1))));
+  for (const side of [1, -1]) {
+    // A-pillar, C-pillar with the Hofmeister kink, gloss B-pillar and Shadowline belt trim
+    const a: P2[] = [[1.06, 1.1], [0.57, 1.51], [0.1, 1.79], [0.0, 1.76], [0.45, 1.49], [0.88, 1.1]];
+    const c: P2[] = [[-2.28, 1.1], [-1.6, 1.1], [-1.44, 1.19], [-1.34, 1.34], [-1.05, 1.8], [-1.3, 1.74], [-1.85, 1.44], [-2.28, 1.16]];
+    const b: P2[] = [[0.0, 1.1], [-0.16, 1.1], [-0.34, 1.8], [-0.18, 1.82]];
+    const belt: P2[] = [[0.92, 1.14], [-1.62, 1.18], [-1.62, 1.23], [0.9, 1.19]];
+    add(paint, tmp(tumblehome(sidePanel(a, side))));
+    add(paint, tmp(tumblehome(sidePanel(c, side))));
+    add(gloss, tmp(tumblehome(sidePanel(b, side))));
+    add(gloss, tmp(tumblehome(sidePanel(belt, side))));
+  }
+
+  /* ---------- sides: door shut lines, sill insert, handles, mirrors */
+  for (const sx of [1, -1]) {
+    const x = sx * 1.203;
+    for (const z of [-1.17, 0.06, 1.17]) add(matte, box(0.012, 0.86, 0.018), [x, 0.64, z]);
+    add(gloss, box(0.03, 0.08, 2.3), [sx * 1.205, 0.27, 0]);
+    add(paint, box(0.05, 0.045, 0.2), [sx * 1.215, 0.98, -0.3]);
+    add(paint, box(0.05, 0.045, 0.2), [sx * 1.215, 0.99, 0.85]);
+    add(gloss, box(0.16, 0.06, 0.12), [sx * 1.25, 1.17, -0.78]);
+    add(gloss, roundedBox(0.26, 0.15, 0.2, 0.05), [sx * 1.38, 1.22, -0.76]);
+  }
+
+  /* ---------- front: connected kidneys, intakes, roundel */
+  for (const sx of [1, -1]) {
+    add(gloss, roundedBox(0.44, 0.34, 0.08, 0.06), [sx * 0.235, 0.58, -3.05], [0.2, 0, 0]);
+    add(matte, box(0.36, 0.26, 0.02), [sx * 0.235, 0.58, -3.095], [0.2, 0, 0]);
+    add(matte, box(0.32, 0.24, 0.05), [sx * 0.8, 0.42, -3.06]);
+    add(gloss, box(0.03, 0.24, 0.06), [sx * 0.8, 0.42, -3.07]);
+    // headlight housings on the sloped nose
+    add(gloss, box(0.52, 0.11, 0.03), [sx * 0.75, 0.758, -2.975], [0.69, 0, 0]);
+  }
+  add(matte, box(1.0, 0.13, 0.05), [0, 0.37, -3.05]);
+  add(gloss, cylinder(0.065, 0.065, 0.015, 16), [0, 0.912, -2.745], [-0.31, 0, 0]);
+  add(whiteM, cylinder(0.042, 0.042, 0.015, 16), [0, 0.92, -2.748], [-0.31, 0, 0]);
+
+  /* ---------- rear: taillight housings, diffuser, exhausts, plate, roundel */
+  for (const sx of [1, -1]) {
+    add(gloss, box(0.8, 0.14, 0.05), [sx * 0.74, 0.9, 3.08]);
+    add(exhaustM, cylinder(0.075, 0.075, 0.12, 14), [sx * 0.72, 0.33, 3.08], [Math.PI / 2, 0, 0]);
+    add(gloss, cylinder(0.055, 0.055, 0.02, 14), [sx * 0.72, 0.33, 3.135], [Math.PI / 2, 0, 0]);
+  }
+  add(gloss, box(2.0, 0.16, 0.08), [0, 0.34, 3.03]);
+  add(whiteM, box(0.5, 0.24, 0.02), [0, 0.66, 3.09]);
+  add(gloss, cylinder(0.06, 0.06, 0.015, 16), [0, 0.99, 3.085], [Math.PI / 2, 0, 0]);
+  add(whiteM, cylinder(0.038, 0.038, 0.015, 16), [0, 0.99, 3.092], [Math.PI / 2, 0, 0]);
+
+  /* ---------- wheels: open tires, dark barrels, machined double spokes, blue calipers */
+  const tread = cylinder(TIRE_R, TIRE_R, 0.3, 24, true);
+  const sidewall = tmp(new THREE.RingGeometry(0.3, TIRE_R, 24));
+  const lip = tmp(new THREE.TorusGeometry(0.3, 0.016, 4, 28));
+  for (const z of [AXLE_F, AXLE_R]) {
+    for (const sx of [1, -1]) {
+      const cx = sx * WHEEL_X;
+      const y = TIRE_R;
+      add(tireM, tread, [cx, y, z], [0, 0, Math.PI / 2]);
+      add(tireM, sidewall, [cx + sx * 0.15, y, z], [0, (sx * Math.PI) / 2, 0]);
+      add(tireM, sidewall, [cx - sx * 0.15, y, z], [0, (-sx * Math.PI) / 2, 0]);
+      add(rimM, cylinder(0.3, 0.3, 0.26, 20, true), [cx, y, z], [0, 0, Math.PI / 2]);
+      add(rimM, cylinder(0.3, 0.3, 0.02, 20), [cx + sx * 0.05, y, z], [0, 0, Math.PI / 2]);
+      add(caliperM, box(0.05, 0.17, 0.12), [cx + sx * 0.1, y + 0.13, z + 0.13], [0.8, 0, 0]);
+      add(spokeM, lip, [cx + sx * 0.15, y, z], [0, Math.PI / 2, 0]);
+      for (let i = 0; i < 5; i++) {
+        for (const d of [-0.15, 0.15]) {
+          const ang = (i / 5) * Math.PI * 2 + d;
+          add(spokeM, box(0.03, 0.24, 0.034), [cx + sx * 0.155, y + Math.cos(ang) * 0.16, z + Math.sin(ang) * 0.16], [ang, 0, 0]);
+        }
+      }
+      add(gloss, cylinder(0.055, 0.055, 0.04, 12), [cx + sx * 0.165, y, z], [0, 0, Math.PI / 2]);
     }
   }
-  cab.computeVertexNormals();
-  add(glassM, cab, [0, 1.37, 0.35]);
-  cab.dispose();
-  add(paint, box(1.6, 0.06, 1.72), [0, 1.72, 0.525]);
-  add(paint, box(0.06, 0.6, 0.12), [0.9, 1.37, 0.35]);
-  add(paint, box(0.06, 0.6, 0.12), [-0.9, 1.37, 0.35]);
-  add(paint, box(2.1, 0.05, 0.42), [0, 1.28, 2.72]);
-  add(dark, box(0.06, 0.24, 0.12), [-0.8, 1.14, 2.72]);
-  add(dark, box(0.06, 0.24, 0.12), [0.8, 1.14, 2.72]);
-  add(stripe, box(0.02, 0.08, 4.8), [1.16, 0.72, 0]);
-  add(stripe, box(0.02, 0.08, 4.8), [-1.16, 0.72, 0]);
-  add(dark, box(1.3, 0.16, 0.04), [0, 0.52, -3.0]);
-  add(paint, box(0.14, 0.1, 0.16), [1.12, 1.15, -0.55]);
-  add(paint, box(0.14, 0.1, 0.16), [-1.12, 1.15, -0.55]);
-  for (const [x, z] of [
-    [1.08, -1.9],
-    [-1.08, -1.9],
-    [1.08, 1.95],
-    [-1.08, 1.95],
-  ] as const) {
-    add(tire, cylinder(0.46, 0.46, 0.34, 20), [x, 0.46, z], [0, 0, Math.PI / 2]);
-    add(chrome, cylinder(0.27, 0.27, 0.36, 10), [x, 0.46, z], [0, 0, Math.PI / 2]);
-  }
-  const body = mb.build();
-  body.forEach((m) => {
+
+  mb.build().forEach((m) => {
     m.castShadow = true;
     geometries.push(m.geometry);
     group.add(m);
   });
+  temp.forEach((g) => g.dispose());
 
   // Lights animate per phase: own materials, excluded from the hover clone.
-  const head = own(new THREE.MeshStandardMaterial({ color: "#fff6d6", emissive: "#fff1c9", emissiveIntensity: 0.3 }));
+  const head = own(new THREE.MeshStandardMaterial({ color: "#eef5ff", emissive: "#e4eeff", emissiveIntensity: 0.3 }));
   const tail = own(new THREE.MeshStandardMaterial({ color: "#ff4455", emissive: "#ff2233", emissiveIntensity: 0.5 }));
   const lm = new Merger();
-  for (const x of [-0.72, 0.72]) {
-    lm.add(head, box(0.42, 0.12, 0.05), [x, 0.8, -2.99], undefined, 1, parent);
-    lm.add(tail, box(0.5, 0.1, 0.05), [x, 0.85, 2.99], undefined, 1, parent);
+  const lamp = (m: THREE.Material, g: THREE.BufferGeometry, pos: V3, rot?: V3) => lm.add(m, g, pos, rot, 1, parent);
+  for (const sx of [1, -1]) {
+    // slim LED bar on the nose slope, just proud of its housing
+    lamp(head, box(0.42, 0.035, 0.02), [sx * 0.76, 0.768, -2.99], [0.69, 0, 0]);
+    // L-shaped taillight wrapping onto the rear fender
+    lamp(tail, box(0.7, 0.05, 0.02), [sx * 0.76, 0.92, 3.11]);
+    lamp(tail, box(0.05, 0.12, 0.02), [sx * 1.08, 0.87, 3.11]);
+    lamp(tail, box(0.02, 0.06, 0.26), [sx * (1.2 * pinch(2.88) + 0.007), 0.92, 2.88]);
   }
   const glows: THREE.Sprite[] = [];
   const world = new THREE.Vector3();
-  for (const x of [-0.72, 0.72]) {
-    world.set(x, 0.8, -3.15).applyMatrix4(parent);
-    glows.push(glowSprite(kit, "#fff1c9", 0.9, [world.x, world.y, world.z]));
-    world.set(x, 0.85, 3.15).applyMatrix4(parent);
+  for (const x of [-0.74, 0.74]) {
+    world.set(x, 0.78, -3.15).applyMatrix4(parent);
+    glows.push(glowSprite(kit, "#eef4ff", 0.9, [world.x, world.y, world.z]));
+    world.set(x, 0.92, 3.25).applyMatrix4(parent);
     glows.push(glowSprite(kit, "#ff3344", 0.7, [world.x, world.y, world.z]));
   }
   lm.build().forEach((m) => {
@@ -683,12 +860,12 @@ function buildCar(): Car {
 
   // headlight wash on the road ahead (reaches the part of the street the overview sees)
   const beams: THREE.MeshBasicMaterial[] = [];
-  const front = CAR.z - 3 * CAR.s;
-  for (const x of [-0.58, 0.58]) {
+  const front = CAR.z - 3.05 * CAR.s;
+  for (const x of [-0.74, 0.74]) {
     const bm = own(
       new THREE.MeshBasicMaterial({
         map: softTexture(),
-        color: "#fff1c9",
+        color: "#f2f6ff",
         transparent: true,
         opacity: 0,
         depthWrite: false,
@@ -698,14 +875,14 @@ function buildCar(): Car {
     beams.push(bm);
     const beam = new THREE.Mesh(plane(1.5, front - ST_Z0), bm);
     beam.rotation.x = -Math.PI / 2;
-    beam.position.set(CAR.x + x, -0.365, (front + ST_Z0) / 2 - 0.1);
+    beam.position.set(CAR.x + x * CAR.s, -0.365, (front + ST_Z0) / 2 - 0.1);
     beam.userData.noHighlight = true;
     group.add(beam);
   }
 
   // soft shadow blob under the car
   const blob = new THREE.Mesh(
-    plane(3.2 * CAR.s, 7 * CAR.s),
+    plane(3.0 * CAR.s, 7 * CAR.s),
     own(
       new THREE.MeshBasicMaterial({ map: softTexture(), color: "#000000", transparent: true, opacity: 0.4, depthWrite: false }),
     ),

@@ -382,7 +382,7 @@ export const ROOM_INTRO = {
   plainLabel: "plain version",
   plainHref: "/plain",
   summary:
-    "An interactive 3D room that maps what Gowtam Ramanujam cares about: a desk for his AI architecture work, a console for games, a window onto a street with a red sports car, a wall of photos, two framed homes (India and the United States), a phone for saying hi, and Teeko, a sleeping black chihuahua.",
+    "An interactive 3D room that maps what Gowtam Ramanujam cares about: a desk for his AI architecture work, a console for games, a window onto a street with his Storm Bay BMW M235i, a wall of photos, two framed homes (India and the United States), a phone for saying hi, and Teeko, a sleeping black chihuahua.",
   meta: {
     title: `${SITE_NAME} | ${SITE_ROLE}`,
     description:
