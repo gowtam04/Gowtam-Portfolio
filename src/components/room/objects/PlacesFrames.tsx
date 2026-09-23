@@ -137,22 +137,22 @@ function matDraw(def: FrameDef): DrawFn {
 /** Left wall, between the window's right curtain (z ~0.36) and the PLAYER 1 poster (z ~2.33). */
 const FRAMES: FrameDef[] = [
   {
-    place: "india",
-    label: "INDIA",
-    pos: [-5, 3.47, 1.8],
-    tilt: 0.012,
-    frame: C.walnut,
-    draw: drawIndiaMap,
-    flag: flagIndia,
-  },
-  {
     place: "usa",
     label: "USA",
-    pos: [-5, 3.43, 0.9],
-    tilt: -0.01,
+    pos: [-5, 3.47, 1.8],
+    tilt: 0.012,
     frame: "#262a33",
     draw: drawUsaMap,
     flag: flagUsa,
+  },
+  {
+    place: "india",
+    label: "INDIA",
+    pos: [-5, 3.43, 0.9],
+    tilt: -0.01,
+    frame: C.walnut,
+    draw: drawIndiaMap,
+    flag: flagIndia,
   },
 ];
 
