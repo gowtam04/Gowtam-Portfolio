@@ -69,6 +69,10 @@ const M = {
   bezel: std("#161b26", { roughness: 0.35 }),
   sticky: std("#ffe27a"),
   keyboard: std("#1e2430", { roughness: 0.5 }),
+  kbPlate: std("#141922", { roughness: 0.8 }),
+  keyAlpha: std("#384154", { roughness: 0.55, flatShading: true }),
+  keyMod: std("#2a3142", { roughness: 0.55, flatShading: true }),
+  keyAccent: std("#5ee7f7", { roughness: 0.45, flatShading: true, emissive: C.cyan, emissiveIntensity: 0.35 }),
   kbGlow: std("#0b3a44", { emissive: C.cyan, emissiveIntensity: 0.9 }),
   mousePad: std("#26344f", { roughness: 0.9 }),
   mouse: std("#e9e6df", { roughness: 0.4 }),
@@ -303,26 +307,6 @@ function makeCodeDraw(uiFont: string): DrawFn {
 
 /* ================================================================ static canvas textures */
 
-const drawKeyboard: DrawFn = (g, w, h) => {
-  const s = w / 256;
-  g.save();
-  g.scale(s, h / 84);
-  g.fillStyle = "#1b2130";
-  g.fillRect(0, 0, 256, 84);
-  for (let r = 0; r < 4; r++) {
-    for (let k = 0; k < 14; k++) {
-      const hot = (r === 1 && (k === 2 || k === 3 || k === 4)) || (r === 0 && k === 3);
-      g.fillStyle = hot ? "#5ee7f7" : "#384154";
-      roundRect(g, 6 + k * 17.5, 6 + r * 17, 14, 13, 2);
-      g.fill();
-    }
-  }
-  g.fillStyle = "#384154";
-  roundRect(g, 60, 6 + 4 * 17 - 2, 120, 10, 2);
-  g.fill();
-  g.restore();
-};
-
 const drawPhone: DrawFn = (g, w, h) => {
   const W = 128;
   const H = 240;
@@ -418,6 +402,88 @@ const chairArmsGeo = () =>
     baked(new THREE.BoxGeometry(0.04, 0.26, 0.04), [-0.47, 0.95, 0.2]),
     baked(new THREE.BoxGeometry(0.04, 0.26, 0.04), [0.47, 0.95, 0.2]),
   ]);
+
+/* ---------------------------------------------------------------- keyboard (compact ANSI, keycaps in units) */
+
+type KeyKind = "alpha" | "mod" | "accent";
+type KeyDef = [width: number, kind: KeyKind];
+/** A key at an explicit spot: left edge and row (fractional rows drop a key lower), in units. */
+type PlacedKey = { x: number; row: number; w: number; kind: KeyKind };
+
+const keys = (count: number, kind: KeyKind = "alpha", w = 1): KeyDef[] =>
+  Array.from({ length: count }, () => [w, kind]);
+
+/** Main block, back row first, packed from the left edge. Accents: Esc, Enter and WASD. */
+const KB_ROWS: KeyDef[][] = [
+  // Esc, 1-0, - =, Backspace
+  [[1, "accent"], ...keys(12), [2, "mod"]],
+  // Tab, Q W ... P [ ], \
+  [[1.5, "mod"], [1, "alpha"], [1, "accent"], ...keys(10), [1.5, "mod"]],
+  // Caps, A S D, F ... L ; ', Enter
+  [[1.75, "mod"], ...keys(3, "accent"), ...keys(8), [2.25, "accent"]],
+  // Shift, Z ... /, Shift (short, to leave room for the Up arrow)
+  [[2.25, "mod"], ...keys(10), [1.75, "mod"]],
+  // Ctrl Win Alt, Space, Alt Fn
+  [...keys(3, "mod", 1.25), [6.25, "alpha"], ...keys(2, "mod", 1.25)],
+];
+
+/** Nav column set off by a gap, and an inverted-T arrow cluster dropped a quarter row below the main block. */
+const KB_EXTRA: PlacedKey[] = [
+  { x: 15.25, row: 0, w: 1, kind: "mod" }, // Del
+  { x: 15.25, row: 1, w: 1, kind: "mod" }, // PgUp
+  { x: 15.25, row: 2, w: 1, kind: "mod" }, // PgDn
+  { x: 14.25, row: 3.25, w: 1, kind: "mod" }, // Up
+  { x: 13.25, row: 4.25, w: 1, kind: "mod" }, // Left
+  { x: 14.25, row: 4.25, w: 1, kind: "mod" }, // Down
+  { x: 15.25, row: 4.25, w: 1, kind: "mod" }, // Right
+];
+
+const KB_WIDTH_U = 16.25;
+const KB_DEPTH_U = 5.25;
+
+const KB_KEYS: PlacedKey[] = [
+  ...KB_ROWS.flatMap((row, r) => {
+    let x = 0;
+    return row.map(([w, kind]) => {
+      const key = { x, row: r, w, kind };
+      x += w;
+      return key;
+    });
+  }),
+  ...KB_EXTRA,
+];
+
+const KB_CENTER: Vec3 = [2.25, 1.55, -3.95]; // y is the desk top
+const KB_U = 0.06;
+const KB_GAP = 0.008;
+const KB_CAP_H = 0.022;
+const KB_CAP_Y = KB_CENTER[1] + 0.047 + KB_CAP_H / 2;
+
+/** A keycap: a box whose top face is inset on every side, so it tapers like a real cap. */
+function keycap(w: number, d: number, h: number, inset = 0.009): THREE.BufferGeometry {
+  const geo = new THREE.BoxGeometry(w, h, d);
+  const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    if (pos.getY(i) <= 0) continue;
+    pos.setX(i, pos.getX(i) - Math.sign(pos.getX(i)) * inset);
+    pos.setZ(i, pos.getZ(i) - Math.sign(pos.getZ(i)) * inset);
+  }
+  geo.computeVertexNormals();
+  return geo;
+}
+
+const keycapsGeo = (kind: KeyKind) =>
+  merged(`kb-${kind}`, () => {
+    const x0 = KB_CENTER[0] - (KB_WIDTH_U * KB_U) / 2;
+    const z0 = KB_CENTER[2] - (KB_DEPTH_U * KB_U) / 2;
+    return KB_KEYS.filter((k) => k.kind === kind).map(({ x, row, w }) =>
+      baked(keycap(w * KB_U - KB_GAP, KB_U - KB_GAP, KB_CAP_H), [
+        x0 + (x + w / 2) * KB_U,
+        KB_CAP_Y,
+        z0 + (row + 0.5) * KB_U,
+      ]),
+    );
+  });
 
 /* ---------------------------------------------------------------- shelf layout (seeded, stable) */
 
@@ -562,26 +628,15 @@ function Monitor({ fontsReady }: { fontsReady: boolean }) {
 }
 
 function Keyboard() {
-  const kbTex = useMemo(() => createCanvasTexture(512, 168, drawKeyboard), []);
-  const kbMat = useMemo(() => new THREE.MeshStandardMaterial({ color: "#ffffff", map: kbTex, roughness: 0.6 }), [kbTex]);
   const spill = useGlowMaterial(C.cyan, 0.2);
-  useEffect(
-    () => () => {
-      kbTex.dispose();
-      kbMat.dispose();
-    },
-    [kbTex, kbMat],
-  );
   return (
     <group>
-      <Part geometry={roundedBox(1.05, 0.05, 0.36, 0.015)} material={M.keyboard} position={[2.25, 1.575, -3.95]} />
-      <mesh
-        geometry={plane(1.0, 0.32)}
-        material={kbMat}
-        position={[2.25, 1.602, -3.95]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        receiveShadow
-      />
+      <Part geometry={roundedBox(1.05, 0.045, 0.36, 0.015)} material={M.keyboard} position={[2.25, 1.5725, -3.95]} />
+      {/* Dark plate between the keycaps. */}
+      <Part geometry={box(0.99, 0.004, 0.33)} material={M.kbPlate} position={[2.25, 1.596, -3.95]} />
+      <Part geometry={keycapsGeo("alpha")} material={M.keyAlpha} />
+      <Part geometry={keycapsGeo("mod")} material={M.keyMod} />
+      <Part geometry={keycapsGeo("accent")} material={M.keyAccent} />
       {/* Cyan underglow: a thin rim peeking out plus a soft spill on the desk. */}
       <mesh geometry={box(1.07, 0.012, 0.38)} material={M.kbGlow} position={[2.25, 1.553, -3.95]} />
       <mesh
