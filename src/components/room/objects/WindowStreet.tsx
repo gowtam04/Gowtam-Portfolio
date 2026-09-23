@@ -75,8 +75,11 @@ const WALK_W = 1.2;
 const LAMP = { x: -15.85, z: -4.3, headX: -14.8, headY: 4.28 };
 /** Lantern post on the near sidewalk at the cut edge (emissive only, reads from the overview). */
 const LANTERN = { x: -8.75, z: -6.4, h: 2.2 };
-/** Parked car (BMW M235i Gran Coupe): group origin, uniform scale 0.8, nose toward -z. */
-const CAR = { x: -11.4, y: -0.38, z: -2.1, s: 0.8 };
+/**
+ * Parked car (BMW M235i Gran Coupe): group origin, uniform scale 0.8. It sits at
+ * the far curb (facing +z, with traffic) so the cars view sees it clear of the sill.
+ */
+const CAR = { x: -13.9, y: -0.38, z: -2.1, s: 0.8, yaw: Math.PI };
 /** Floating islet below the street edge (seen from the overview only). */
 const ISLET = { x: -32, top: -11.2, z: -22.4 };
 
@@ -594,9 +597,9 @@ function buildOutside(): Outside {
  * Gowtam's 2022 BMW M235i xDrive Gran Coupe (F44), a four-door fastback:
  * Storm Bay Metallic, gloss black trim (kidneys, mirrors, roundels), dark
  * tint, 18" bi-color double spokes with blue M Sport calipers. Local units
- * before CAR.s: about 6 long on z (nose toward -z), 2.4 wide, 1.92 tall;
- * y = 0 is the road and +x (the car's right side) faces the window. Side
- * profiles are drawn in (s, y) with s = -z, so the nose is +s.
+ * before CAR.s and CAR.yaw: about 6 long on z (nose toward -z), 2.4 wide,
+ * 1.92 tall; y = 0 is the road. Side profiles are drawn in (s, y) with
+ * s = -z, so the nose is +s.
  */
 const STORM_BAY = "#687a8b";
 const AXLE_F = -1.79;
@@ -807,7 +810,7 @@ function buildCar(): Car {
   const tmp = (g: THREE.BufferGeometry) => (temp.push(g), g);
   const parent = new THREE.Matrix4().compose(
     new THREE.Vector3(CAR.x, CAR.y, CAR.z),
-    new THREE.Quaternion(),
+    new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), CAR.yaw),
     new THREE.Vector3(CAR.s, CAR.s, CAR.s),
   );
   const add = (m: THREE.Material, g: THREE.BufferGeometry, pos: V3 = [0, 0, 0], rot?: V3) => mb.add(m, g, pos, rot, 1, parent);
@@ -958,9 +961,10 @@ function buildCar(): Car {
   glows.forEach((g) => group.add(g));
   temp.forEach((g) => g.dispose());
 
-  // headlight wash on the road ahead (reaches the part of the street the overview sees)
+  // headlight wash on the road ahead of the nose (+z once the car is turned around)
   const beams: THREE.MeshBasicMaterial[] = [];
-  const front = CAR.z - 3.05 * CAR.s;
+  const front = CAR.z + 3.05 * CAR.s;
+  const reach = 2.4;
   for (const x of [-0.72, 0.72]) {
     const bm = own(
       new THREE.MeshBasicMaterial({
@@ -973,9 +977,9 @@ function buildCar(): Car {
       }),
     );
     beams.push(bm);
-    const beam = new THREE.Mesh(plane(1.5, front - ST_Z0), bm);
+    const beam = new THREE.Mesh(plane(1.5, reach), bm);
     beam.rotation.x = -Math.PI / 2;
-    beam.position.set(CAR.x + x * CAR.s, -0.365, (front + ST_Z0) / 2 - 0.1);
+    beam.position.set(CAR.x + x * CAR.s, -0.365, front + reach / 2 + 0.1);
     beam.userData.noHighlight = true;
     group.add(beam);
   }
