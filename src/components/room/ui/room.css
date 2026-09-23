@@ -240,22 +240,6 @@ body:has(.room-root) {
   letter-spacing: 0.04em;
 }
 
-.room-corner-plain {
-  margin-left: 4px;
-  padding: 4px 0 4px 12px;
-  border-left: 1px solid var(--r-line);
-  color: var(--r-muted);
-  font-size: 12px;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: color 0.2s;
-}
-
-.room-corner-plain:hover,
-.room-corner-plain:focus-visible {
-  color: var(--r-accent-ink);
-}
-
 .room-hud-right {
   position: absolute;
   z-index: 20;
@@ -1311,10 +1295,6 @@ body:has(.room-root) {
   .room-corner {
     gap: 10px;
     padding: 6px 12px 6px 8px;
-  }
-
-  .room-corner-plain {
-    padding-left: 10px;
   }
 
   .room-pill-btn {
