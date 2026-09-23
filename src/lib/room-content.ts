@@ -160,7 +160,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "Work",
     hint: "the desk",
     kicker: "AI Architect",
-    title: "The desk: work",
+    title: "Work",
     lead: [
       "By day (and plenty of nights) I design and build AI systems: agents that reason, call tools, and hold up in production. I like the hard middle part, where a clever demo becomes software people can trust.",
     ],
@@ -184,7 +184,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "Games",
     hint: "the console",
     kicker: "Player 1",
-    title: "The console: games",
+    title: "Games",
     lead: [
       "Games are how I unwind, and a big reason I build things at all. I co-founded a game studio whose first title passed 500,000 downloads, and my agent Oak exists because I wanted better answers to Pokemon questions.",
     ],
@@ -222,7 +222,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "Cars",
     hint: "the window",
     kicker: "Behind the wheel",
-    title: "The window: cars",
+    title: "Cars",
     lead: [
       "Driving is my reset button. Give me an open road, good weather, and no destination in particular.",
     ],
@@ -246,7 +246,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "About",
     hint: "the wall",
     kicker: "Hi, I'm Gowtam",
-    title: "The wall: about me",
+    title: "About me",
     lead: [
       "I'm an AI architect who builds agents for a living and games, apps, and side projects for fun. This room is a little map of what I care about. Click around.",
     ],
@@ -282,7 +282,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "Places",
     hint: "the frames",
     kicker: "Where I've lived",
-    title: "The frames: two homes",
+    title: "Two homes",
     lead: [
       "I grew up in Idaho, moved to India for high school and college, then came back to the US for work. These days I live near Sacramento. Both countries show up in how I think, what I build, and what I care about.",
     ],
@@ -310,7 +310,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     navLabel: "Contact",
     hint: "the phone",
     kicker: "Get in touch",
-    title: "The phone: say hi",
+    title: "Say hi",
     lead: ["Want to talk about AI, games, cars, or a project? I read everything."],
     blocks: [
       {
