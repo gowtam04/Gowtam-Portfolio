@@ -86,16 +86,6 @@ export function Panel({ projects }: { projects: RoomProject[] }) {
       inert={!open}
     >
       <div className="room-sheet-handle" aria-hidden="true" />
-      <button
-        type="button"
-        className="room-panel-close"
-        aria-label="Close and return to the room"
-        onClick={() => actions.closeSpot()}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
-          <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        </svg>
-      </button>
       {section ? (
         <div key={section.id} className="room-panel-scroll">
           <p className="room-kicker">{section.kicker}</p>
@@ -117,6 +107,17 @@ export function Panel({ projects }: { projects: RoomProject[] }) {
           {sectionHasPlaceholders(section) ? <PlaceholderLegend /> : null}
         </div>
       ) : null}
+      {/* After the content in DOM order so Tab from the title reaches it; positioned top-right in CSS. */}
+      <button
+        type="button"
+        className="room-panel-close"
+        aria-label="Close and return to the room"
+        onClick={() => actions.closeSpot()}
+      >
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path d="M3 3l10 10M13 3L3 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+      </button>
     </aside>
   );
 }

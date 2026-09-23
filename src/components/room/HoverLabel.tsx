@@ -77,6 +77,7 @@ export function HoverLabel() {
       }
       shown.current = { id, label };
     }
+    camera.updateMatrixWorld();
     v.set(h.anchor[0], h.anchor[1], h.anchor[2]).project(camera);
     if (v.z > 1) {
       el.style.display = "none";

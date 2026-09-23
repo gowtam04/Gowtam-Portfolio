@@ -36,7 +36,13 @@ export interface HotspotDef {
   view?: CameraView;
 }
 
-export const OVERVIEW_VIEW: CameraView = { target: [0, 1.8, 0], dir: [1, 0.82, 1], radius: 7.6 };
+export const OVERVIEW_VIEW: CameraView = {
+  target: [0, 1.5, 0],
+  dir: [1, 0.82, 1],
+  radius: 7.6,
+  // Portrait screens are width-bound: leave a side margin around the walls.
+  radiusSheet: 8.3,
+};
 
 const section = (id: PanelSpotId) => ({ label: ROOM_SECTIONS[id].navLabel, hint: ROOM_SECTIONS[id].hint });
 

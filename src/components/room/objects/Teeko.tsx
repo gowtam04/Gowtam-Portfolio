@@ -544,7 +544,9 @@ export function Teeko() {
       // Track his head while visible (and during the fade out).
       if (showBubble || t - a.bubbleOffAt < 0.3) {
         bubbleAt.set(BUBBLE_ANCHOR[0], BUBBLE_ANCHOR[1], BUBBLE_ANCHOR[2]);
+        hg.updateWorldMatrix(true, false);
         hg.localToWorld(bubbleAt);
+        state.camera.updateMatrixWorld();
         bubbleAt.project(state.camera);
         const x = (bubbleAt.x * 0.5 + 0.5) * state.size.width;
         const y = (-bubbleAt.y * 0.5 + 0.5) * state.size.height;
@@ -587,7 +589,7 @@ export function Teeko() {
   });
 
   return (
-    <group position={ROOT}>
+    <group position={ROOT} scale={1.2}>
       {/* Only the bed takes the shared hover glow: it would turn a black dog grey.
           Teeko gets his own subtle fur lift instead (and he wakes up, which is the real cue). */}
       <Hotspot id="teeko">

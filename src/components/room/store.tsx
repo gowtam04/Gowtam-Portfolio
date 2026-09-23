@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 import type { PanelSpotId } from "@/lib/room-content";
-import { ROOM_SECTIONS, spotFromLocation } from "@/lib/room-content";
+import { ROOM_INTRO, ROOM_SECTIONS, spotFromLocation } from "@/lib/room-content";
 import type { RoomPhotos } from "@/lib/room-photos";
 import type { SpotId } from "./hotspots";
 import type { Phase, TimeMode } from "./timeOfDay";
@@ -238,6 +238,17 @@ export function RoomProvider({
     sheetMQ.addEventListener("change", syncMedia);
     motionMQ.addEventListener("change", syncMedia);
 
+    // Keep the tab title in step with the open panel (pushState does not update metadata).
+    let titledSpot: PanelSpotId | null | undefined;
+    const syncTitle = () => {
+      const open = store.getState().openSpot;
+      if (open === titledSpot) return;
+      titledSpot = open;
+      document.title = open ? ROOM_SECTIONS[open].meta.title : ROOM_INTRO.meta.title;
+    };
+    syncTitle();
+    const unsubscribeTitle = store.subscribe(syncTitle);
+
     const onPop = () => store.syncFromLocation();
     window.addEventListener("popstate", onPop);
     const timer = window.setInterval(() => store.tickPhase(), 60_000);
@@ -247,6 +258,7 @@ export function RoomProvider({
       motionMQ.removeEventListener("change", syncMedia);
       window.removeEventListener("popstate", onPop);
       window.clearInterval(timer);
+      unsubscribeTitle();
     };
   }, [store]);
 
