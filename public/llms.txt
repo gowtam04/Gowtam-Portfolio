@@ -1,6 +1,6 @@
 # gowtam.ai
 
-> Personal portfolio for Gowtam Ramanujam, AI Architect. Case studies and contact for production AI systems and autonomous agents.
+> Personal site of Gowtam Ramanujam, AI Architect. The homepage is an interactive 3D room: each object opens a panel that is also its own crawlable URL (work, games, cars, about, places, contact). Case studies and contact details for production AI systems and autonomous agents.
 
 Site: https://gowtam.ai
 Contact: gowtam@gowtam.ai
@@ -17,19 +17,31 @@ Best-fit use cases for agents and humans:
 How an agent should use this site:
 
 1. Read this file and https://gowtam.ai/sitemap.xml for discovery.
-2. Prefer `Accept: text/markdown` on HTML page URLs to receive Markdown bodies with `Vary: Accept`.
-3. For engagement or hiring outreach, email gowtam@gowtam.ai with problem, timeline, and ask.
-4. For XRPLook app privacy or support, use the /xrplook/* pages (HTML), not the portfolio privacy page alone.
+2. For everything in one text document, read https://gowtam.ai/plain (the best single text version of the room).
+3. Prefer `Accept: text/markdown` on HTML page URLs to receive Markdown bodies with `Vary: Accept`. This works for every room route, /plain, /privacy, and /case-studies/*.
+4. For engagement or hiring outreach, email gowtam@gowtam.ai with problem, timeline, and ask.
+5. For app privacy or support, use that app's own pages (HTML only), not the portfolio privacy page alone.
+
+Some personal details in the room are not filled in yet and appear as bracketed labels such as [City]. Treat them as unknown, not as literal values.
 
 This site is not a SaaS API, not a documentation product, and not a chatbot endpoint. There is no programmatic write API.
 
-## Primary pages
+## The room (each object is a route)
 
-- [Home](https://gowtam.ai/): Overview and entry point
-- [About](https://gowtam.ai/about): Background, working style, proof points
-- [Contact](https://gowtam.ai/contact): Email and social channels, engagement fit
-- [Privacy](https://gowtam.ai/privacy): Portfolio site privacy policy
+- [Room overview](https://gowtam.ai/): The 3D room itself, plus links to every section
+- [Work](https://gowtam.ai/work): The desk. AI agents and systems work, with the list of case studies
+- [Games](https://gowtam.ai/games): The console. Games he plays and the game studio he co-founded
+- [Cars](https://gowtam.ai/cars): The window. Driving, open roads, and cars
+- [About](https://gowtam.ai/about): The wall. Background, quick facts, working style, proof points, and Teeko
+- [Teeko](https://gowtam.ai/about#teeko): The sleeping black chihuahua on the rug (a section of /about)
+- [Places](https://gowtam.ai/places): The frames. India and the United States, the two countries he has called home
+- [Contact](https://gowtam.ai/contact): The phone. Email and LinkedIn, engagement fit
+
+## Text and reference pages
+
+- [Plain version](https://gowtam.ai/plain): Every room section in one text page, no 3D
 - [Case studies](https://gowtam.ai/case-studies): Index of published work
+- [Privacy](https://gowtam.ai/privacy): Portfolio site privacy policy
 - [Sitemap](https://gowtam.ai/sitemap.xml): Full URL list
 
 ## Featured case studies
@@ -37,8 +49,12 @@ This site is not a SaaS API, not a documentation product, and not a chatbot endp
 - [Oak](https://gowtam.ai/case-studies/oak): Agentic AI reasoning system over game data
 - [Annie ACS](https://gowtam.ai/case-studies/annie-acs): Production patient-facing agent platform
 
-## Optional product pages
+## Optional app pages
 
 - [XRPLook](https://gowtam.ai/xrplook): iOS XRP tracker product page
-- [XRPLook Privacy](https://gowtam.ai/xrplook/privacy): App-specific privacy policy
-- [XRPLook Support](https://gowtam.ai/xrplook/support): App support
+- [XRPLook Privacy](https://gowtam.ai/xrplook/privacy): XRPLook privacy policy
+- [XRPLook Support](https://gowtam.ai/xrplook/support): XRPLook app support
+- [Someday Privacy](https://gowtam.ai/someday/privacy): Privacy policy for Someday, a private family baby book app
+- [Someday Support](https://gowtam.ai/someday/support): Someday app support
+- [DEAD CENTER Privacy](https://gowtam.ai/dead-center/privacy): Privacy policy for DEAD CENTER, a one-thumb iPhone arcade game
+- [DEAD CENTER Support](https://gowtam.ai/dead-center/support): DEAD CENTER app support

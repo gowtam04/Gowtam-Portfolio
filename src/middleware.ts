@@ -113,6 +113,14 @@ function shouldSkipNegotiation(pathname: string): boolean {
   return false;
 }
 
+const APP_PRODUCT_PREFIXES = ["/xrplook", "/someday", "/dead-center"] as const;
+
+function isAppProductPath(pathname: string): boolean {
+  return APP_PRODUCT_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
+}
+
 export function middleware(req: NextRequest) {
   const pathname = normalizePathname(req.nextUrl.pathname);
 
@@ -120,13 +128,8 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // Skip Markdown negotiation for product pages in this pass
-  if (
-    pathname === "/xrplook" ||
-    pathname.startsWith("/xrplook/") ||
-    pathname === "/someday" ||
-    pathname.startsWith("/someday/")
-  ) {
+  // App product pages (HTML only): skip Markdown negotiation
+  if (isAppProductPath(pathname)) {
     const res = NextResponse.next();
     appendVaryAccept(res.headers);
     return res;

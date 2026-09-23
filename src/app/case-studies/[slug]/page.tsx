@@ -164,20 +164,26 @@ export default async function CaseStudyPage({ params }: PageProps) {
           <CaseStudyToc />
 
           <article>
-            {/* Breadcrumb */}
-            <nav
-              aria-label="Breadcrumb"
-              className="mb-8 flex items-center gap-2 text-[0.8rem] font-medium text-[var(--faint)]"
-            >
+            {/* Breadcrumb + way back into the 3D room (/work opens it on the desk) */}
+            <div className="mb-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-[0.8rem] font-medium text-[var(--faint)]">
+              <nav aria-label="Breadcrumb" className="flex items-center gap-2">
+                <Link
+                  href="/case-studies"
+                  className="transition-colors duration-150 hover:text-[var(--foreground)]"
+                >
+                  Work
+                </Link>
+                <span aria-hidden="true">/</span>
+                <span className="text-[var(--foreground)]">{caseStudy.title}</span>
+              </nav>
               <Link
-                href="/case-studies"
-                className="transition-colors duration-150 hover:text-[var(--foreground)]"
+                href="/work"
+                className="group inline-flex items-center gap-1.5 transition-colors duration-150 hover:text-[var(--accent)]"
               >
-                Work
+                <ArrowLeft className="h-3 w-3 transition-transform duration-150 group-hover:-translate-x-0.5" />
+                Back to the room
               </Link>
-              <span aria-hidden="true">/</span>
-              <span className="text-[var(--foreground)]">{caseStudy.title}</span>
-            </nav>
+            </div>
 
             {/* Header */}
             <header>

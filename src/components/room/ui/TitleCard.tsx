@@ -1,0 +1,62 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { ROOM_INTRO } from "@/lib/room-content";
+import { useRoom } from "../store";
+
+const DISMISS_MS = 3400;
+
+/** Splits "Gowtam's room" so the last word gets the italic accent. */
+function splitTitle(title: string): [string, string] {
+  const i = title.lastIndexOf(" ");
+  return i < 0 ? ["", title] : [title.slice(0, i + 1), title.slice(i + 1)];
+}
+
+/**
+ * "Gowtam's room / click anything". Shown on a fresh load of "/" only (deep
+ * links start with `firstClickDone`), dismissed after ~3.4s, on the first
+ * pointerdown, or when a spot opens. While no panel is open its title is the
+ * page's h1 (it stays in the DOM, faded out, after dismissal).
+ */
+export function TitleCard() {
+  const openSpot = useRoom((s) => s.openSpot);
+  const firstClickDone = useRoom((s) => s.firstClickDone);
+  const [dismissed, setDismissed] = useState(false);
+  const visible = !dismissed && !firstClickDone;
+
+  useEffect(() => {
+    if (dismissed || firstClickDone) return;
+    const timer = window.setTimeout(() => setDismissed(true), DISMISS_MS);
+    const onDown = () => setDismissed(true);
+    window.addEventListener("pointerdown", onDown, { once: true });
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [dismissed, firstClickDone]);
+
+  const [lead, accent] = splitTitle(ROOM_INTRO.title);
+  const title = (
+    <>
+      {lead}
+      <em>{accent}</em>
+    </>
+  );
+
+  return (
+    <div className={visible ? "room-title" : "room-title is-gone"}>
+      <div className="room-title-inner">
+        {openSpot === null ? (
+          <h1 className="room-title-h">{title}</h1>
+        ) : (
+          <p className="room-title-h" aria-hidden="true">
+            {title}
+          </p>
+        )}
+        <p className="room-title-sub" aria-hidden={visible ? undefined : true}>
+          {ROOM_INTRO.subtitle}
+        </p>
+      </div>
+    </div>
+  );
+}

@@ -27,7 +27,7 @@ export default function RoomCanvas() {
       className="room-canvas"
       frameloop={hidden ? "never" : "always"}
       dpr={[1, 2]}
-      shadows
+      shadows="percentage"
       gl={{ antialias: true, alpha: true, stencil: true, powerPreference: "high-performance" }}
       camera={{ fov: 30, near: 0.3, far: 400, position: [17.4, 16, 17.4] }}
       onCreated={({ gl }) => {

@@ -5,12 +5,13 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
+// Header for the classic (non-room) pages. "/" and the section routes open
+// the 3D room; /case-studies is the classic work index.
 const navLinks = [
-  { href: "/#about", label: "About" },
-  { href: "/#system", label: "System" },
+  { href: "/", label: "Room" },
   { href: "/case-studies", label: "Work" },
-  { href: "/#skills", label: "Skills" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Header() {
@@ -48,13 +49,13 @@ export function Header() {
 
           <div className="hidden items-center gap-7 md:flex">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-[0.9rem] font-medium text-[var(--muted)] transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <ThemeToggle />
           </div>
@@ -85,14 +86,14 @@ export function Header() {
         >
           <div className="flex flex-col gap-4 border-t border-[var(--border)] py-4">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={handleNavClick}
                 className="text-[0.95rem] font-medium text-[var(--muted)] transition-colors duration-150 hover:text-[var(--foreground)]"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </div>
         </div>

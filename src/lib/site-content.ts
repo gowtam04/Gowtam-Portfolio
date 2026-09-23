@@ -161,14 +161,13 @@ export const privacyContent = {
 export const homeMarkdownSummary = {
   title: "Gowtam Ramanujam | AI Architect",
   paragraphs: [
-    "Personal portfolio for Gowtam Ramanujam, an AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
-    "This site publishes case studies, an about page, contact channels, and a privacy policy. Prefer Accept: text/markdown for machine-readable page bodies. Start with /llms.txt and /sitemap.xml for discovery.",
+    "Personal site of Gowtam Ramanujam, an AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
+    "The homepage is an interactive 3D room. Each object opens a panel that is also its own URL, listed below. For everything in one text document, read /plain. Prefer Accept: text/markdown for machine-readable page bodies, and start with /llms.txt and /sitemap.xml for discovery.",
   ],
   links: [
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
-    { href: "/privacy", label: "Privacy" },
+    { href: "/plain", label: "Plain text version (everything on one page)" },
     { href: "/case-studies", label: "Case studies" },
+    { href: "/privacy", label: "Privacy" },
     { href: "/llms.txt", label: "llms.txt" },
     { href: "/sitemap.xml", label: "Sitemap" },
   ],

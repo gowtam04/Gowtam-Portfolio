@@ -1,28 +1,45 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { caseStudies } from "@/lib/case-studies";
+import type { RoutedSpotId } from "@/lib/room-content";
+import { ROOM_SECTIONS, ROUTED_SPOTS } from "@/lib/room-content";
+
+/** Launch of the 3D room homepage and its section routes. */
+const ROOM_UPDATED = "2026-09-22";
+
+const ROOM_PRIORITY: Record<RoutedSpotId, number> = {
+  work: 0.9,
+  about: 0.8,
+  contact: 0.8,
+  games: 0.6,
+  cars: 0.6,
+  places: 0.6,
+};
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://gowtam.ai";
+
+  // Room sections: each panel of the 3D room is its own crawlable route
+  const roomPages: MetadataRoute.Sitemap = ROUTED_SPOTS.map((spot) => ({
+    url: `${baseUrl}${ROOM_SECTIONS[spot].route}`,
+    lastModified: ROOM_UPDATED,
+    changeFrequency: "monthly" as const,
+    priority: ROOM_PRIORITY[spot],
+  }));
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
-      lastModified: "2026-07-05",
+      lastModified: ROOM_UPDATED,
       changeFrequency: "monthly",
       priority: 1,
     },
+    ...roomPages,
     {
-      url: `${baseUrl}/about`,
-      lastModified: "2026-08-21",
+      url: `${baseUrl}/plain`,
+      lastModified: ROOM_UPDATED,
       changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: "2026-08-21",
-      changeFrequency: "monthly",
-      priority: 0.8,
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/privacy`,
