@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, useSyncExternalStore } 
 import type { ReactNode } from "react";
 import type { PanelSpotId } from "@/lib/room-content";
 import { ROOM_SECTIONS, spotFromLocation } from "@/lib/room-content";
+import type { RoomPhotos } from "@/lib/room-photos";
 import type { SpotId } from "./hotspots";
 import type { Phase, TimeMode } from "./timeOfDay";
 import { TODS, isTimeMode, resolvePhase } from "./timeOfDay";
@@ -32,6 +33,8 @@ export interface RoomState {
   ready: boolean;
   /** WebGL unavailable or the 3D failed to load in time. */
   failed: boolean;
+  /** Optional real photos for the places frames (null = illustrated scene). */
+  photos: RoomPhotos;
 }
 
 /** Mutable per-frame values. Read and write freely inside `useFrame`; never triggers renders. */
@@ -70,7 +73,10 @@ export interface RoomStore {
 
 /* ------------------------------------------------------------ store */
 
-export function createRoomStore(initialSpot: PanelSpotId | null): RoomStore {
+export function createRoomStore(
+  initialSpot: PanelSpotId | null,
+  photos: RoomPhotos = { usa: null, india: null },
+): RoomStore {
   let state: RoomState = {
     openSpot: initialSpot,
     hoveredSpot: null,
@@ -85,6 +91,7 @@ export function createRoomStore(initialSpot: PanelSpotId | null): RoomStore {
     reducedMotion: false,
     ready: false,
     failed: false,
+    photos,
   };
   const listeners = new Set<() => void>();
   const fx: RoomFx = { lampLevel: 1, shadowFrames: 60, pointer: { x: 0, y: 0 } };
@@ -201,12 +208,14 @@ const SHEET_QUERY = "(max-width: 760px), (orientation: portrait) and (max-width:
 
 export function RoomProvider({
   initialSpot,
+  photos,
   children,
 }: {
   initialSpot: PanelSpotId | null;
+  photos?: RoomPhotos;
   children: ReactNode;
 }) {
-  const [store] = useState(() => createRoomStore(initialSpot) as InternalStore);
+  const [store] = useState(() => createRoomStore(initialSpot, photos) as InternalStore);
 
   useEffect(() => {
     // Time of day: ?time= override, else the visitor's clock.

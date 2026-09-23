@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { RoomExperience } from "@/components/room/RoomExperience";
 import { RoomJsonLd } from "@/components/room/seo/RoomJsonLd";
 import { roomMetadata } from "@/lib/room-metadata";
+import { getRoomPhotos } from "@/lib/room-photos";
 import { getRoomProjects } from "@/lib/room-projects";
 
 export const metadata: Metadata = roomMetadata("contact");
@@ -10,7 +11,7 @@ export default function ContactPage() {
   return (
     <>
       <RoomJsonLd spot="contact" />
-      <RoomExperience initialSpot="contact" projects={getRoomProjects()} />
+      <RoomExperience initialSpot="contact" projects={getRoomProjects()} photos={getRoomPhotos()} />
     </>
   );
 }
