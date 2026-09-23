@@ -33,7 +33,7 @@ export interface RoomState {
   ready: boolean;
   /** WebGL unavailable or the 3D failed to load in time. */
   failed: boolean;
-  /** Optional real photos for the places frames (null = illustrated scene). */
+  /** Optional real photos for the places frames (null = drawn wall map). */
   photos: RoomPhotos;
 }
 

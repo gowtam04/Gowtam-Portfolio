@@ -17,7 +17,7 @@ function find(name: string): string | null {
   return null;
 }
 
-/** Drop `public/images/room/usa.jpg` or `india.jpg` in to replace the illustrated scenes. */
+/** Drop `public/images/room/usa.jpg` or `india.jpg` in to replace the drawn wall maps. */
 export function getRoomPhotos(): RoomPhotos {
   return { usa: find("usa"), india: find("india") };
 }
