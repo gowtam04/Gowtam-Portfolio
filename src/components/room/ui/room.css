@@ -223,6 +223,9 @@ body:has(.room-root) {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
 }
 
 .room-corner-name {
@@ -429,7 +432,8 @@ body:has(.room-root) {
   display: flex;
 }
 
-.room-nav button {
+.room-nav button,
+.room-nav a {
   display: inline-flex;
   align-items: center;
   min-height: 36px;
@@ -441,17 +445,22 @@ body:has(.room-root) {
   font: 500 13px/1 var(--r-sans);
   white-space: nowrap;
   cursor: pointer;
+  text-decoration: none;
   transition: color 0.2s, background-color 0.2s;
 }
 
 .room-nav button:hover,
 .room-nav button:focus-visible,
-.room-nav button[aria-current="true"] {
+.room-nav button[aria-current="true"],
+.room-nav a:hover,
+.room-nav a:focus-visible,
+.room-nav a[aria-current="true"] {
   color: var(--r-ink);
   background: rgba(61, 184, 212, 0.14);
 }
 
-.room-nav button:focus-visible {
+.room-nav button:focus-visible,
+.room-nav a:focus-visible {
   outline-offset: -2px;
 }
 
@@ -1339,7 +1348,8 @@ body:has(.room-root) {
     gap: 2px;
   }
 
-  .room-nav button {
+  .room-nav button,
+  .room-nav a {
     padding: 9px 11px;
   }
 
@@ -1353,9 +1363,15 @@ body:has(.room-root) {
   }
 }
 
+/* Visually hidden (not display: none) so the homepage h1 stays readable on small phones. */
 @media (max-width: 420px) {
   .room-corner-id {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 }
 

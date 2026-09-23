@@ -15,8 +15,9 @@ function splitTitle(title: string): [string, string] {
 /**
  * "Gowtam's room / click anything". Shown on a fresh load of "/" only (deep
  * links start with `firstClickDone`), dismissed after ~3.4s, on the first
- * pointerdown, or when a spot opens. While no panel is open its title is the
- * page's h1 (it stays in the DOM, faded out, after dismissal).
+ * pointerdown, or when a spot opens. Its title is never the page's h1
+ * (that's `CornerCard` or the open panel's title); it stays in the DOM,
+ * faded out, after dismissal.
  */
 export function TitleCard() {
   const openSpot = useRoom((s) => s.openSpot);
@@ -46,13 +47,9 @@ export function TitleCard() {
   return (
     <div className={visible ? "room-title" : "room-title is-gone"}>
       <div className="room-title-inner">
-        {openSpot === null ? (
-          <h1 className="room-title-h">{title}</h1>
-        ) : (
-          <p className="room-title-h" aria-hidden="true">
-            {title}
-          </p>
-        )}
+        <p className="room-title-h" aria-hidden={openSpot === null ? undefined : "true"}>
+          {title}
+        </p>
         <p className="room-title-sub" aria-hidden={visible ? undefined : true}>
           {ROOM_INTRO.subtitle}
         </p>

@@ -34,11 +34,15 @@ export function SpotNav() {
       <ul className="room-nav-list">
         {PANEL_SPOT_ORDER.map((id) => (
           <li key={id}>
-            <button
-              type="button"
+            <a
+              href={ROOM_SECTIONS[id].route}
               data-room-nav={id}
               aria-current={openSpot === id ? "true" : undefined}
               onClick={(e) => {
+                if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) {
+                  return;
+                }
+                e.preventDefault();
                 openerRef.current = e.currentTarget;
                 if (id === "teeko") actions.pokeTeeko();
                 actions.openSpot(id);
@@ -49,7 +53,7 @@ export function SpotNav() {
               onMouseLeave={(e) => hoverOff(id, e.currentTarget)}
             >
               {ROOM_SECTIONS[id].navLabel}
-            </button>
+            </a>
           </li>
         ))}
         <li className="room-nav-sep" aria-hidden="true" />
