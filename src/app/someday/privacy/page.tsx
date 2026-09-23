@@ -151,7 +151,7 @@ export default function SomedayPrivacyPage() {
 
         <Section id="children" title="9. Children">
           <p>
-            Someday is for adults — parents, grandparents, and relatives —
+            Someday is for adults (parents, grandparents, and relatives)
             writing a book <em>about</em> a child. It is not directed at
             children under 13 as users, and it is not a Made for Kids app. We
             do not knowingly create accounts for children under 13. Photos and

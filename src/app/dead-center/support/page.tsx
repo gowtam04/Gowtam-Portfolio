@@ -23,7 +23,7 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "How do I play?",
     answer:
-      "Tap to start. Drag anywhere to move. There is no fire button — the gun auto-fires through the dead center of the ring. Step off that line or the pin comes home and kills you. Hunt teal beads with the same line for +100 each.",
+      "Tap to start. Drag anywhere to move. There is no fire button: the gun auto-fires through the dead center of the ring. Step off that line or the pin comes home and kills you. Hunt teal beads with the same line for +100 each.",
   },
   {
     question: "Why did I die on the first shot?",
@@ -57,7 +57,7 @@ const faqs: { question: string; answer: string }[] = [
   {
     question: "Who made the original idea?",
     answer:
-      "Inspired by mors' dead_center for PICO-1K Jam 2026. This is an independent game — same public rule, not a port of the 1024-byte cart.",
+      "Inspired by mors' dead_center for PICO-1K Jam 2026. This is an independent game: same public rule, not a port of the 1024-byte cart.",
   },
 ];
 
