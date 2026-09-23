@@ -1,29 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "XRPLook - Read-only XRP tracker for iPhone",
   description:
     "A private, read-only XRP tracker for iPhone. Watch balances and history without ever entering a key. No accounts, free, on-device only.",
-  alternates: {
-    canonical: "/xrplook",
-  },
-  openGraph: {
-    title: "XRPLook - Read-only XRP tracker for iPhone",
-    description:
-      "A private, read-only XRP tracker for iPhone. Watch balances and history without ever entering a key.",
-    url: "https://gowtam.ai/xrplook",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "XRPLook - Read-only XRP tracker for iPhone",
-    description:
-      "A private, read-only XRP tracker for iPhone. Watch balances and history without ever entering a key.",
-  },
-};
+  path: "/xrplook",
+  images: [
+    {
+      url: "/xrplook/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "XRPLook: a private, read-only XRP tracker for iPhone",
+    },
+  ],
+});
 
 const benefits = [
   "Track multiple XRP addresses with optional labels",

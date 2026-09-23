@@ -1,29 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "XRPLook Support",
   description:
     "Get help with XRPLook, the read-only XRP tracker for iPhone. FAQ, contact, and security guidance.",
-  alternates: {
-    canonical: "/xrplook/support",
-  },
-  openGraph: {
-    title: "XRPLook Support",
-    description:
-      "Get help with XRPLook. FAQ, contact, and security guidance for the read-only XRP tracker.",
-    url: "https://gowtam.ai/xrplook/support",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "XRPLook Support",
-    description:
-      "Get help with XRPLook. FAQ, contact, and security guidance for the read-only XRP tracker.",
-  },
-};
+  path: "/xrplook/support",
+  images: [
+    {
+      url: "/xrplook/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "XRPLook: a private, read-only XRP tracker for iPhone",
+    },
+  ],
+});
 
 const faqs: { question: string; answer: string }[] = [
   {

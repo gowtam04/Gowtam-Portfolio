@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "DEAD CENTER Support",
   description:
     "Get help with DEAD CENTER, the one-thumb iPhone arcade. How to play, mute, haptics, and how to reach us.",
-  alternates: {
-    canonical: "/dead-center/support",
-  },
-  openGraph: {
-    title: "DEAD CENTER Support",
-    description:
-      "Help with DEAD CENTER: how to play, mute, haptics, and contact.",
-    url: "https://gowtam.ai/dead-center/support",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-};
+  path: "/dead-center/support",
+  images: [
+    {
+      url: "/dead-center/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "DEAD CENTER: a one-thumb iPhone arcade",
+    },
+  ],
+});
 
 const faqs: { question: string; answer: string }[] = [
   {

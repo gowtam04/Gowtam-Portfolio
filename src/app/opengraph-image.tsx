@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-// Keep in sync with ROOT_OG_IMAGE.alt in src/lib/room-metadata.ts.
+// Keep in sync with ROOT_OG_IMAGE.alt in src/lib/page-metadata.ts.
 export const alt = "Gowtam Ramanujam, AI Architect: step into the room";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

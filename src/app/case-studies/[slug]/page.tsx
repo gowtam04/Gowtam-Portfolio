@@ -100,7 +100,7 @@ function generateBreadcrumbJsonLd(caseStudy: CaseStudy, slug: string) {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Work",
+        name: "Case studies",
         item: "https://gowtam.ai/case-studies",
       },
       {
@@ -171,7 +171,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
                   href="/case-studies"
                   className="transition-colors duration-150 hover:text-[var(--foreground)]"
                 >
-                  Work
+                  Case studies
                 </Link>
                 <span aria-hidden="true">/</span>
                 <span className="text-[var(--foreground)]">{caseStudy.title}</span>

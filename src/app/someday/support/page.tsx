@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Someday Support",
   description:
     "Get help with Someday, the private family baby book. Sign-in, invites, roles, and how to reach us.",
-  alternates: {
-    canonical: "/someday/support",
-  },
-  openGraph: {
-    title: "Someday Support",
-    description:
-      "Help with Someday: email sign-in, family invites, and roles.",
-    url: "https://gowtam.ai/someday/support",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-};
+  path: "/someday/support",
+  images: [
+    {
+      url: "/someday/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "Someday: a private family baby book for iPhone",
+    },
+  ],
+});
 
 const faqs: { question: string; answer: string }[] = [
   {

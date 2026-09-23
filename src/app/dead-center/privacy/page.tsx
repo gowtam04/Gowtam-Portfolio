@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "DEAD CENTER Privacy Policy",
   description:
     "Privacy Policy for DEAD CENTER, a one-thumb iPhone arcade. Best score and settings stay on the device. No accounts, no analytics.",
-  alternates: {
-    canonical: "/dead-center/privacy",
-  },
-  openGraph: {
-    title: "DEAD CENTER Privacy Policy",
-    description:
-      "How DEAD CENTER handles information. Best score and settings stay on your iPhone.",
-    url: "https://gowtam.ai/dead-center/privacy",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-};
+  path: "/dead-center/privacy",
+  images: [
+    {
+      url: "/dead-center/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "DEAD CENTER: a one-thumb iPhone arcade",
+    },
+  ],
+});
 
 const LAST_UPDATED = "September 4, 2026";
 

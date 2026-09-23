@@ -9,7 +9,7 @@ import { ThemeToggle } from "./ThemeToggle";
 // the 3D room; /case-studies is the classic work index.
 const navLinks = [
   { href: "/", label: "Room" },
-  { href: "/case-studies", label: "Work" },
+  { href: "/case-studies", label: "Case studies" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];

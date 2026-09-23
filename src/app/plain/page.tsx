@@ -16,15 +16,14 @@ import {
 import type { RoomProject } from "@/lib/room-projects";
 import { getRoomProjects } from "@/lib/room-projects";
 import { SITE_NAME } from "@/lib/site-content";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: `Plain version | ${SITE_NAME}`,
   description:
     "Everything in Gowtam's 3D room as a simple, fast text page: AI architecture work, games, cars, places, Teeko the chihuahua, and how to get in touch.",
-  alternates: {
-    canonical: "/plain",
-  },
-};
+  path: "/plain",
+});
 
 const LINK = "font-medium text-[var(--accent)] underline-offset-4 hover:text-[var(--accent-hover)] hover:underline";
 const LABEL = "text-[0.78rem] font-bold uppercase tracking-[0.08em] text-[var(--faint)]";

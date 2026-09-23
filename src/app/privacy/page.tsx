@@ -3,15 +3,14 @@ import Link from "next/link";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { privacyContent, SITE_EMAIL, SITE_NAME } from "@/lib/site-content";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: `Privacy Policy | ${SITE_NAME}`,
   description:
     "Privacy policy for the gowtam.ai portfolio site. Separate from product-specific policies such as XRPLook.",
-  alternates: {
-    canonical: "/privacy",
-  },
-};
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

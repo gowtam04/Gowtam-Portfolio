@@ -4,15 +4,14 @@ import { Footer } from "@/components/Footer";
 import { SectionHeading } from "@/components/SectionHeading";
 import { CaseStudiesGrid } from "@/components/CaseStudiesGrid";
 import { caseStudies } from "@/lib/case-studies";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
-  title: "Case studies | Gowtam Ramanujam",
+export const metadata: Metadata = pageMetadata({
+  title: "AI Agent & System Case Studies | Gowtam Ramanujam",
   description:
     "A portfolio of AI systems and autonomous agents: reasoning agents, production LLM platforms, and enterprise AI tools, from requirements through deployment.",
-  alternates: {
-    canonical: "/case-studies",
-  },
-};
+  path: "/case-studies",
+});
 
 const itemListJsonLd = {
   "@context": "https://schema.org",

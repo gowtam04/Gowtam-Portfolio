@@ -1,23 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/page-metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Someday Privacy Policy",
   description:
     "Privacy Policy for Someday, a private family baby book. Invite-only books, email sign-in, on-device voice transcripts.",
-  alternates: {
-    canonical: "/someday/privacy",
-  },
-  openGraph: {
-    title: "Someday Privacy Policy",
-    description:
-      "How Someday handles family photos, voice memos, and invite-only books.",
-    url: "https://gowtam.ai/someday/privacy",
-    siteName: "Gowtam Ramanujam Portfolio",
-    locale: "en_US",
-    type: "website",
-  },
-};
+  path: "/someday/privacy",
+  images: [
+    {
+      url: "/someday/opengraph-image",
+      width: 1200,
+      height: 630,
+      alt: "Someday: a private family baby book for iPhone",
+    },
+  ],
+});
 
 const LAST_UPDATED = "September 2, 2026";
 

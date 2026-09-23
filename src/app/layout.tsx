@@ -30,14 +30,10 @@ export const metadata: Metadata = {
   description:
     "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
   authors: [{ name: "Gowtam Ramanujam" }],
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "Gowtam Ramanujam | AI Architect",
     description:
       "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
-    url: "https://gowtam.ai",
     siteName: "Gowtam Ramanujam Portfolio",
     locale: "en_US",
     type: "website",
