@@ -205,7 +205,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
       {
         type: "chips",
         heading: "Now playing",
-        items: [["Pokemon Champions"], ["Cyberpunk 2077"], ["on Nintendo Switch 2"]],
+        items: [["Pokemon Champions on Nintendo Switch 2"], ["Age of Mythology on Xbox"]],
       },
       {
         type: "chips",
