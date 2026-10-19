@@ -144,8 +144,20 @@ export function CaseStudiesGrid() {
             </button>
           );
         })}
-        <span className="ml-auto text-[0.8rem] font-medium text-[var(--faint)]">
-          {filtered.length} project{filtered.length !== 1 ? "s" : ""}
+        <span className="ml-auto flex items-center gap-4 text-[0.8rem] font-medium text-[var(--faint)]">
+          <span className="flex items-center gap-3">
+            <span className="inline-flex items-center gap-1.5">
+              <TypeDot projectType="professional" />
+              Professional
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <TypeDot projectType="independent" />
+              Independent
+            </span>
+          </span>
+          <span>
+            {filtered.length} project{filtered.length !== 1 ? "s" : ""}
+          </span>
         </span>
       </div>
 
