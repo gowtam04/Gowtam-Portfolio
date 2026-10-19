@@ -725,7 +725,7 @@ export const caseStudies: CaseStudy[] = [
       "Validated market need through user testing with Indian families",
     ],
     technologies: ["React Native", "Expo", "Mobile App", "Document Management"],
-    projectType: "independent",
+    projectType: "professional",
     earlier: true,
   },
   {
