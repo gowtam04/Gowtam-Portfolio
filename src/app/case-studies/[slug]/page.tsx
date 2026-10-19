@@ -77,8 +77,6 @@ function generateArticleJsonLd(caseStudy: CaseStudy, slug: string) {
     },
     url: `https://gowtam.ai/case-studies/${slug}`,
     image: `https://gowtam.ai/case-studies/${slug}/opengraph-image`,
-    ...(caseStudy.datePublished && { datePublished: caseStudy.datePublished }),
-    ...(caseStudy.dateUpdated && { dateModified: caseStudy.dateUpdated }),
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://gowtam.ai/case-studies/${slug}`,
@@ -207,21 +205,13 @@ export default async function CaseStudyPage({ params }: PageProps) {
               )}
 
               {/* Metadata band */}
-              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] px-5 py-5 shadow-[var(--shadow-raised)] lg:grid-cols-4">
+              <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)] px-5 py-5 shadow-[var(--shadow-raised)] lg:grid-cols-3">
                 <div>
                   <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
                     Role
                   </dt>
                   <dd className="mt-1.5 text-sm font-medium text-[var(--foreground)]">
                     {caseStudy.role}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
-                    Year
-                  </dt>
-                  <dd className="mt-1.5 text-sm font-medium text-[var(--foreground)]">
-                    {caseStudy.duration}
                   </dd>
                 </div>
                 <div>
@@ -250,14 +240,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     {caseStudy.clientName ?? caseStudy.category}
                   </dd>
                 </div>
-                <div className="col-span-2 lg:col-span-4">
-                  <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
-                    Stack
-                  </dt>
-                  <dd className="mt-1.5 text-sm font-medium text-[var(--muted)]">
-                    {caseStudy.technologies.join(" · ")}
-                  </dd>
-                </div>
+                {caseStudy.technologies && caseStudy.technologies.length > 0 && (
+                  <div className="col-span-2 lg:col-span-3">
+                    <dt className="text-[0.72rem] font-bold uppercase tracking-[0.05em] text-[var(--faint)]">
+                      Stack
+                    </dt>
+                    <dd className="mt-1.5 text-sm font-medium text-[var(--muted)]">
+                      {caseStudy.technologies.join(" · ")}
+                    </dd>
+                  </div>
+                )}
               </dl>
 
               {/* Outcome stat band */}

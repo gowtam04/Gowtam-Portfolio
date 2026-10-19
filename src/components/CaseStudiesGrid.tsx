@@ -45,7 +45,6 @@ function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
           </span>
           <span className="text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
             {caseStudy.category}
-            {caseStudy.duration ? ` · ${caseStudy.duration}` : ""}
           </span>
         </div>
 
@@ -70,9 +69,11 @@ function FeaturedPanel({ caseStudy }: { caseStudy: CaseStudy }) {
           </div>
         )}
 
-        <p className="mt-5 text-xs font-medium text-[var(--faint)]">
-          {caseStudy.technologies.slice(0, 6).join(" · ")}
-        </p>
+        {caseStudy.technologies && caseStudy.technologies.length > 0 && (
+          <p className="mt-5 text-xs font-medium text-[var(--faint)]">
+            {caseStudy.technologies.slice(0, 6).join(" · ")}
+          </p>
+        )}
 
         <p className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[var(--foreground)] transition-colors duration-150 group-hover:text-[var(--accent)]">
           Read case study
@@ -107,12 +108,7 @@ function IndexRow({ caseStudy }: { caseStudy: CaseStudy }) {
         <TypeDot projectType={caseStudy.projectType} />
         {caseStudy.category}
       </span>
-      <span className="flex items-center gap-4">
-        <span className="hidden text-xs font-medium text-[var(--faint)] sm:block">
-          {caseStudy.duration}
-        </span>
-        <ArrowRight className="h-4 w-4 text-[var(--faint)] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" />
-      </span>
+      <ArrowRight className="h-4 w-4 text-[var(--faint)] transition-all duration-150 group-hover:translate-x-0.5 group-hover:text-[var(--accent)]" />
     </Link>
   );
 }
@@ -126,7 +122,8 @@ export function CaseStudiesGrid() {
   }, [activeFilter]);
 
   const featured = filtered.filter((cs) => cs.featured);
-  const rest = filtered.filter((cs) => !cs.featured);
+  const rest = filtered.filter((cs) => !cs.featured && !cs.earlier);
+  const earlier = filtered.filter((cs) => !cs.featured && cs.earlier);
 
   return (
     <div>
@@ -162,15 +159,24 @@ export function CaseStudiesGrid() {
             </div>
           )}
 
-          {rest.length > 0 && (
-            <div className="mt-8 overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)]">
-              <p className="border-b border-[var(--border)] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
-                More work
-              </p>
-              {rest.map((cs) => (
-                <IndexRow key={cs.slug} caseStudy={cs} />
-              ))}
-            </div>
+          {[
+            { label: "More work", items: rest },
+            { label: "Earlier product work", items: earlier },
+          ].map(
+            (group) =>
+              group.items.length > 0 && (
+                <div
+                  key={group.label}
+                  className="mt-8 overflow-hidden rounded-[var(--radius)] border border-[var(--border)] bg-[var(--surface-1)]"
+                >
+                  <p className="border-b border-[var(--border)] px-4 py-3 text-[0.72rem] font-bold uppercase tracking-[0.04em] text-[var(--faint)]">
+                    {group.label}
+                  </p>
+                  {group.items.map((cs) => (
+                    <IndexRow key={cs.slug} caseStudy={cs} />
+                  ))}
+                </div>
+              )
           )}
         </>
       ) : (

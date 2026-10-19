@@ -11,7 +11,7 @@ export interface RoomProject {
   featured: boolean;
 }
 
-/** Featured studies first (Oak, Annie ACS), then the rest in array order. */
+/** Featured studies first (LMA, Insight 360, Oracle Fusion utilities), then the rest in array order. */
 export function getRoomProjects(): RoomProject[] {
   const slim = caseStudies.map((cs) => ({
     slug: cs.slug,

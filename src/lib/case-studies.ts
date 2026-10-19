@@ -23,24 +23,22 @@ export interface CaseStudy {
   title: string;
   description: string;
   category: string;
-  duration: string;
   role: string;
   /** SEO-optimized title for <title> and og:title; falls back to `title` if omitted */
   seoTitle?: string;
   /** SEO-optimized description for meta description; falls back to `description` if omitted */
   metaDescription?: string;
-  /** Static ISO date (YYYY-MM-DD) for Article JSON-LD datePublished */
-  datePublished?: string;
-  /** Static ISO date (YYYY-MM-DD) for Article JSON-LD dateModified */
-  dateUpdated?: string;
   overview: CaseStudySection;
   challenge: CaseStudySection;
   solution: CaseStudySection;
   results: string[];
-  technologies: string[];
+  /** Shown as the Stack row; omit to hide it */
+  technologies?: string[];
   projectType: ProjectType;
   /** Featured studies render as large panels at the top of the work grid */
   featured?: boolean;
+  /** Pre-AI product work, listed in its own group after the rest */
+  earlier?: boolean;
   /** Quantified outcomes shown as a stat band on the detail page */
   stats?: CaseStudyStat[];
   appStoreUrl?: string;
@@ -55,95 +53,210 @@ export interface CaseStudy {
 
 export const caseStudies: CaseStudy[] = [
   {
-    slug: "oak",
-    title: "Oak",
+    slug: "legacy-modernization-assistant",
+    title: "Legacy Modernization Assistant",
     description:
-      "A full-stack AI agent that answers natural-language Pokémon questions by reasoning over raw game data, not just looking facts up, with cited sources and explicit uncertainty in every answer.",
-    category: "AI/ML",
-    duration: "2026",
+      "A multi-agent system on Claude that reads legacy code such as COBOL and DYL-280, designs a modern replacement with human input, and generates a first cut in the stack of the customer's choosing. In use by the State of California.",
+    category: "Enterprise AI",
     role: "AI Architect",
-    seoTitle: "Oak: Agentic AI Reasoning System",
+    seoTitle: "Legacy Modernization Assistant: Multi-Agent AI for Legacy Systems",
     metaDescription:
-      "AI agent that reasons over raw Pokémon game data to answer questions, citing sources and flagging uncertainty in every answer.",
-    datePublished: "2026-01-01",
-    dateUpdated: "2026-07-05",
+      "A multi-agent system on Claude that analyzes legacy code like COBOL, designs a modern replacement with human review, and generates it in any stack. In use by the State of California.",
     overview: {
       paragraphs: [
-        "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about.",
-        "What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
+        "The Legacy Modernization Assistant (LMA) is a multi-agent system on Claude that takes a legacy system and modernizes it into a modern stack of the customer's choosing. It accepts any legacy stack as input and any modern stack as output.",
+        "I architected it end to end: the agent roles, the human review points, the security model that keeps source code inside the customer's cloud, and the validation that checks the new system against the old one. It is in use by the State of California.",
       ],
     },
     challenge: {
       paragraphs: [
-        "Existing Pokémon tools are retrieval engines: they recite facts but cannot deduce how moves, abilities, types, and stats interact, which is exactly what competitive players need. Worse, general-purpose chatbots will confidently hallucinate mechanics.",
-        "The goal was an agent you can trust for battle math and matchups: one that shows its work, cites its sources, admits what it does not know, and is explicit about which game generation an answer applies to.",
+        "Critical business systems built on legacy technologies such as COBOL and DYL-280 are difficult to maintain and extend, because the architects who built them have retired. The knowledge of how the system works lives mostly in the code itself.",
+        "Any tool that helps has to meet enterprise constraints: the legacy code cannot leave the customer's cloud, people have to stay in control of design decisions, and the new system has to be proven to behave like the old one.",
       ],
     },
     solution: {
+      paragraphs: [
+        "I designed LMA as a pipeline of specialized agents with a person in the loop at the points where judgment matters.",
+      ],
       subsections: [
         {
-          title: "Reasoning tool loop",
+          title: "Analysis agents",
           paragraphs: [
-            "I designed a provider-agnostic tool loop where the model composes facts into mechanics conclusions instead of reciting them. For example, asking \"Does Fake Out work on Farigiraf?\" yields the chain: Fake Out is a +3 priority move; Armor Tail negates priority moves; if Farigiraf has Armor Tail, Fake Out fails.",
+            "Agents read the legacy code, extract its structure and business logic, and analyze how the system behaves, turning code nobody fully understands anymore into insight a team can act on.",
           ],
         },
         {
-          title: "Schema-validated responses",
+          title: "Design with human input",
           paragraphs: [
-            "Every response is a schema-validated object rendered field by field: the answer, the reasoning behind it, the cited data sources, an explicit inference and uncertainty flag, and the game generation it applies to.",
+            "Agents design the new system and surface their findings for review. People make the design calls; the agents do the reading, the cross-referencing, and the first draft.",
           ],
         },
         {
-          title: "Optional accounts and team builder",
+          title: "Generation in any stack",
           paragraphs: [
-            "Accounts are optional, so Oak is usable instantly as a guest. Signing in with an email one-time code unlocks durable chat history (search, pin, rename) plus a team builder with Showdown import and export, where a team can be set active to scope the agent's answers.",
+            "Once the design is agreed, LMA generates a first cut of the new system in the selected stack. The input and output stacks are both open: any legacy stack in, any modern stack out.",
           ],
         },
         {
-          title: "Multimodal turns and artifacts",
+          title: "Change management",
           paragraphs: [
-            "Oak supports up to four images per turn for prompts like \"what is this?\" or \"rate this team sheet.\" Answers can open rich side-panel artifacts for Pokémon, moves, teams, damage calcs, and type matchups with clickable entity links.",
+            "After the first cut, LMA supports day-to-day work on the system: bug fixes, test code generation, and diff analysis.",
           ],
         },
         {
-          title: "Model-agnostic stack",
+          title: "Governance and security",
+          bullets: [
+            "Human in the loop by design",
+            "Single sign-on enterprise authentication",
+            "Claude models run in AWS Bedrock or Azure AI Foundry, so the legacy code never leaves the enterprise cloud",
+          ],
+        },
+        {
+          title: "Validation",
           paragraphs: [
-            "The whole stack runs on xAI Grok 4.3 by default with Claude and GPT-5.5 as drop-in alternatives, switchable with a single operator setting and no rebuild.",
+            "Generated tests and output comparison check the new system against the original's behavior, so modernization is measured rather than assumed.",
           ],
         },
       ],
     },
     results: [
-      "Reasoning, not retrieval: a provider-agnostic tool loop where the model composes facts into mechanics conclusions, with citations and uncertainty surfaced in every answer",
-      "Optional accounts: instant guest use, with email one-time-code sign-in unlocking durable chat history and a team builder with Showdown import and export",
-      "Multimodal turns supporting up to four attached images for identification and team-sheet review",
-      "Interactive artifacts: answers open rich side-panel views (Pokémon, moves, teams, damage calcs, type matchups) with clickable entity links",
-      "Model-agnostic: runs on xAI Grok 4.3 by default, with Claude and GPT-5.5 as drop-in alternatives switchable via a single operator setting",
+      "In use by the State of California",
+      "Accepts any legacy stack as input and any modern stack as output",
+      "Legacy code never leaves the customer's enterprise cloud",
+      "Generated tests and output comparison validate the new system against the original",
+    ],
+    projectType: "professional",
+    featured: true,
+    clientName: "State of California",
+  },
+  {
+    slug: "insight-360",
+    title: "Insight 360",
+    description:
+      "An agentic AI command center for small and medium businesses. An onboarding agent interviews each company and writes a \"soul file\" that every agent is bound to, so AI output follows company standards by design.",
+    category: "Enterprise AI",
+    role: "AI Architect",
+    seoTitle: "Insight 360: Agentic AI Command Center for SMBs",
+    metaDescription:
+      "An agentic AI command center for small and medium businesses, where a per-company soul file governs the output of every agent. Live with 3 companies.",
+    overview: {
+      paragraphs: [
+        "Insight 360 is an agentic AI command center for small and medium businesses. Every company gets its own set of agents, and every one of those agents is bound to a per-company \"soul file\" that captures who the company is.",
+        "I architected the platform: the onboarding interview agent, the soul file that governs agent output, the custom orchestration layer, and the per-company isolation model. It is live with 3 companies.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "A small business that puts AI agents to work needs every one of them to reflect the company: its identity, its values, and its mission. Configuring each agent by hand does not scale, and nothing guarantees the agents stay consistent with each other.",
+        "Each company's data also has to stay completely separate from every other company on the platform.",
+      ],
+    },
+    solution: {
+      subsections: [
+        {
+          title: "Onboarding interview agent",
+          paragraphs: [
+            "An onboarding agent interviews each company to capture its identity, values, and mission, then synthesizes them into that company's soul file.",
+          ],
+        },
+        {
+          title: "The soul file",
+          paragraphs: [
+            "Every agent in the company is bound to its soul file, so AI output follows company standards by design instead of by per-agent configuration.",
+          ],
+        },
+        {
+          title: "Custom orchestration",
+          paragraphs: [
+            "A custom orchestration layer in which an orchestrator agent delegates work to specialized worker agents, running on Claude and OpenAI models.",
+          ],
+        },
+        {
+          title: "Isolation per company",
+          paragraphs: [
+            "Hosted on AWS, with each company running in a separate account and data isolated through row-level security.",
+          ],
+        },
+      ],
+    },
+    results: [
+      "Live with 3 companies",
+      "Every agent bound to its company's soul file, so output follows company standards by design",
+      "Orchestrator and worker agents on Claude and OpenAI models",
+      "Each company runs in a separate account with row-level security",
+    ],
+    projectType: "professional",
+    featured: true,
+    stats: [{ value: "3", label: "Companies live" }],
+  },
+  {
+    slug: "oracle-fusion-ai-utilities",
+    title: "AI Utilities for Oracle Fusion",
+    description:
+      "Three AI utilities inside Oracle Fusion (a resume shortlister, an expense auditor, and a contract compliance validator), all live with a multinational corporation based in Dubai.",
+    category: "Enterprise AI",
+    role: "AI Architect",
+    seoTitle: "AI Utilities for Oracle Fusion: Resumes, Expenses, Contracts",
+    metaDescription:
+      "Three production AI utilities for Oracle Fusion: explainable resume shortlisting, expense auditing with duplicate detection, and contract compliance validation.",
+    overview: {
+      paragraphs: [
+        "Three AI utilities built into Oracle Fusion for a multinational corporation based in Dubai: resume shortlisting, expense analysis and auditing, and contract compliance validation. All three are live.",
+        "Each utility does the high-volume reading and checking, explains what it found, and leaves the decision with a person.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "Each job requisition can draw hundreds or thousands of candidates, far more than a recruiter can read closely.",
+        "Finance was reviewing expense reports by hand, which was slow and inconsistent, and made it easy to miss problems such as two employees submitting the same report and causing a double payment.",
+        "Vendor contracts have to comply with the laws of the country where they are executed, but not every vendor carries the same risk, and reviewing every contract with the same depth wastes time.",
+      ],
+    },
+    solution: {
+      subsections: [
+        {
+          title: "Resume shortlister",
+          paragraphs: [
+            "Employers set the criteria (skills, experience, and education) and can add keywords that earn extra weight. The utility scores every candidate against the requisition, ranks them, and shortlists the top candidates.",
+            "Every ranking comes with an explanation of why the candidate ranked where they did, plus a profile with a summary, key strengths, and potential weaknesses.",
+          ],
+        },
+        {
+          title: "Expense analysis and auditing",
+          paragraphs: [
+            "Every submitted expense report is analyzed and checked for policy violations, unusual amounts, and duplicates, including the same report submitted by two employees. Flagged reports go to the manager and to the employee in charge of paying out expenses for human review.",
+            "The utility runs on OCI: OCI Generative AI (Llama 4 Maverick, chosen for multi-document processing) extracts receipt data, Oracle VBCS holds configurable audit rules, Oracle Integration Cloud triggers processing on events, and audit reports attach directly to the expense record in Oracle Fusion.",
+          ],
+        },
+        {
+          title: "Contract compliance validator",
+          paragraphs: [
+            "Vendors are tiered by risk. Vendors that do not handle customer or employee data, such as a coffee vendor, are treated as low risk. For high-risk vendors such as IT services, the utility analyzes the contract for compliance with the laws of the country where it is executed.",
+          ],
+        },
+      ],
+    },
+    results: [
+      "All three utilities live with a multinational corporation based in Dubai",
+      "Thousands of resumes processed, each ranking explained",
+      "Expense duplicates and policy violations routed to people for review",
+      "Contract review depth matched to vendor risk",
     ],
     technologies: [
-      "TypeScript",
-      "Next.js",
-      "Postgres",
-      "Drizzle",
-      "Server-Sent Events",
-      "Zod",
-      "Vitest",
-      "xAI Grok",
-      "Claude",
-      "GPT-5.5",
-      "Fly.io",
+      "Oracle Fusion Cloud",
+      "OCI Generative AI",
+      "Llama 4 Maverick",
+      "Oracle Integration Cloud",
+      "Oracle VBCS",
+      "Python",
     ],
-    projectType: "independent",
+    projectType: "professional",
     featured: true,
+    clientName: "Multinational corporation, Dubai",
     stats: [
-      { value: "14", label: "Reasoning tools" },
-      { value: "3", label: "Drop-in LLM providers" },
-      { value: "100%", label: "Answers cited" },
+      { value: "3", label: "Utilities in production" },
+      { value: "1,000s", label: "Resumes processed" },
     ],
-    externalLink: {
-      url: "https://oak.gowtam.ai",
-      label: "Try Oak",
-    },
   },
   {
     slug: "annie-acs",
@@ -151,13 +264,10 @@ export const caseStudies: CaseStudy[] = [
     description:
       "An AI medical consultant for a cosmetic surgery practice that educates patients on procedures, streams cited media from a curated knowledge base, books consultations via Calendly, and gives practice staff a full admin panel, including a second agent that answers natural-language questions over thousands of patient conversations.",
     category: "Healthcare Tech",
-    duration: "2026",
     role: "AI Architect",
     seoTitle: "Annie ACS: AI Patient Agent for a Surgery Practice",
     metaDescription:
       "AI medical consultant for a cosmetic surgery practice that educates patients, streams cited procedure media, and books consultations.",
-    datePublished: "2026-01-01",
-    dateUpdated: "2026-07-05",
     overview: {
       paragraphs: [
         "Annie ACS is a production AI medical consultant for Advanced Cosmetic Surgery (Dr. Jon Mendelsohn). Patients ask about blepharoplasty, rhinoplasty, facelifts, and other procedures; Annie adapts to their expertise level, surfaces procedure-specific videos and images from a curated knowledge base, and books consultations through Calendly, all inside an embeddable chat widget that runs 24/7 on the practice website.",
@@ -239,7 +349,6 @@ export const caseStudies: CaseStudy[] = [
       "pytest",
     ],
     projectType: "professional",
-    featured: true,
     stats: [
       { value: "0", label: "Hallucinated media URLs" },
       { value: "3", label: "Embed modes" },
@@ -253,33 +362,180 @@ export const caseStudies: CaseStudy[] = [
     },
   },
   {
+    slug: "oak",
+    title: "Oak",
+    description:
+      "A full-stack AI agent that answers natural-language Pokémon questions by reasoning over raw game data, not just looking facts up, with cited sources and explicit uncertainty in every answer.",
+    category: "AI/ML",
+    role: "AI Architect",
+    seoTitle: "Oak: Agentic AI Reasoning System",
+    metaDescription:
+      "AI agent that reasons over raw Pokémon game data to answer questions, citing sources and flagging uncertainty in every answer.",
+    overview: {
+      paragraphs: [
+        "Oak is a web chat agent that answers natural-language questions about Pokémon: moves, abilities, types, stats, evolutions, items, catch locations, and the game-mechanic interactions competitive players actually care about.",
+        "What sets it apart is how it answers. Most Pokémon tools are lookups where you search and get a stat block. Oak instead treats the data as raw material for reasoning, so a set of 14 tools supplies the facts (move priority values, ability effect text, type charts, base stats, learnsets) and the language model deduces how those pieces combine.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "Existing Pokémon tools are retrieval engines: they recite facts but cannot deduce how moves, abilities, types, and stats interact, which is exactly what competitive players need. Worse, general-purpose chatbots will confidently hallucinate mechanics.",
+        "The goal was an agent you can trust for battle math and matchups: one that shows its work, cites its sources, admits what it does not know, and is explicit about which game generation an answer applies to.",
+      ],
+    },
+    solution: {
+      subsections: [
+        {
+          title: "Reasoning tool loop",
+          paragraphs: [
+            "I designed a provider-agnostic tool loop where the model composes facts into mechanics conclusions instead of reciting them. For example, asking \"Does Fake Out work on Farigiraf?\" yields the chain: Fake Out is a +3 priority move; Armor Tail negates priority moves; if Farigiraf has Armor Tail, Fake Out fails.",
+          ],
+        },
+        {
+          title: "Schema-validated responses",
+          paragraphs: [
+            "Every response is a schema-validated object rendered field by field: the answer, the reasoning behind it, the cited data sources, an explicit inference and uncertainty flag, and the game generation it applies to.",
+          ],
+        },
+        {
+          title: "Optional accounts and team builder",
+          paragraphs: [
+            "Accounts are optional, so Oak is usable instantly as a guest. Signing in with an email one-time code unlocks durable chat history (search, pin, rename) plus a team builder with Showdown import and export, where a team can be set active to scope the agent's answers.",
+          ],
+        },
+        {
+          title: "Multimodal turns and artifacts",
+          paragraphs: [
+            "Oak supports up to four images per turn for prompts like \"what is this?\" or \"rate this team sheet.\" Answers can open rich side-panel artifacts for Pokémon, moves, teams, damage calcs, and type matchups with clickable entity links.",
+          ],
+        },
+        {
+          title: "Model-agnostic stack",
+          paragraphs: [
+            "The whole stack runs on xAI Grok 4.3 by default with Claude and GPT-5.5 as drop-in alternatives, switchable with a single operator setting and no rebuild.",
+          ],
+        },
+      ],
+    },
+    results: [
+      "Reasoning, not retrieval: a provider-agnostic tool loop where the model composes facts into mechanics conclusions, with citations and uncertainty surfaced in every answer",
+      "Optional accounts: instant guest use, with email one-time-code sign-in unlocking durable chat history and a team builder with Showdown import and export",
+      "Multimodal turns supporting up to four attached images for identification and team-sheet review",
+      "Interactive artifacts: answers open rich side-panel views (Pokémon, moves, teams, damage calcs, type matchups) with clickable entity links",
+      "Model-agnostic: runs on xAI Grok 4.3 by default, with Claude and GPT-5.5 as drop-in alternatives switchable via a single operator setting",
+    ],
+    technologies: [
+      "TypeScript",
+      "Next.js",
+      "Postgres",
+      "Drizzle",
+      "Server-Sent Events",
+      "Zod",
+      "Vitest",
+      "xAI Grok",
+      "Claude",
+      "GPT-5.5",
+      "Fly.io",
+    ],
+    projectType: "independent",
+    stats: [
+      { value: "14", label: "Reasoning tools" },
+      { value: "3", label: "Drop-in LLM providers" },
+      { value: "100%", label: "Answers cited" },
+    ],
+    externalLink: {
+      url: "https://oak.gowtam.ai",
+      label: "Try Oak",
+    },
+  },
+  {
+    slug: "diagnostic-lab-lims",
+    title: "Laboratory Information Management System",
+    description:
+      "A custom, HIPAA-compliant LIMS on AWS that replaced Salesforce for a diagnostic lab, with automated instrument ingestion and EHR delivery, enabling 10,000+ samples a day.",
+    category: "Healthcare Tech",
+    role: "Product Manager",
+    seoTitle: "Diagnostic Lab LIMS: Replacing Salesforce",
+    overview: {
+      paragraphs: [
+        "A custom laboratory information management system for a diagnostic lab that had outgrown Salesforce. It covers the lab's full workflow: sample accessioning and intake, test ordering and result entry, automated instrument integration, and reporting and billing, including EHR delivery.",
+        "I led the product from concept through company-wide deployment, shaping the system design with lab technicians, operations staff, and leadership. It replaced Salesforce and is used by hundreds of employees.",
+      ],
+    },
+    challenge: {
+      paragraphs: [
+        "The lab had outgrown Salesforce, which could not scale to its sample volume or support its lab-specific workflows.",
+        "A replacement had to handle high-volume testing from intake through result delivery without bottlenecks, take results straight from lab instruments, and meet HIPAA requirements.",
+      ],
+    },
+    solution: {
+      subsections: [
+        {
+          title: "Custom platform on AWS",
+          paragraphs: [
+            "A purpose-built platform hosted on AWS and built with React, Node.js, and PostgreSQL, designed around the lab's actual workflows instead of a general-purpose CRM.",
+          ],
+        },
+        {
+          title: "End-to-end lab workflow",
+          bullets: [
+            "Sample accessioning and intake",
+            "Test ordering and result entry",
+            "Reporting and billing, including EHR delivery",
+          ],
+        },
+        {
+          title: "Automated instrument integration",
+          paragraphs: [
+            "Lab instruments export CSV files, which the system ingests automatically over a USB connection, removing manual result transcription.",
+          ],
+        },
+        {
+          title: "Compliance",
+          paragraphs: [
+            "Fully HIPAA compliant and audited by a third party.",
+          ],
+        },
+      ],
+    },
+    results: [
+      "Replaced Salesforce with a purpose-built system",
+      "Scaled to process 10,000+ samples per day with lower error rates",
+      "Fully HIPAA compliant, audited by a third party",
+      "Deployed company-wide with hundreds of daily active users",
+    ],
+    technologies: ["React", "Node.js", "PostgreSQL", "AWS"],
+    projectType: "professional",
+    stats: [
+      { value: "10,000+", label: "Samples per day" },
+      { value: "100s", label: "Daily active users" },
+    ],
+  },
+  {
     slug: "nibble-ai",
     title: "Nibble AI",
     description:
-      "An AI-powered nutrition tracker that uses Claude AI for instant meal analysis from photos, available on the App Store.",
+      "An AI nutrition tracker on the App Store: Claude identifies the foods in each photo, and a USDA lookup supplies the verified nutrition values.",
     category: "AI/ML",
-    duration: "2024",
     role: "AI Architect",
     seoTitle: "Nibble AI: AI Nutrition Tracker iOS App",
-    datePublished: "2024-01-01",
-    dateUpdated: "2024-12-01",
     overview:
       "Nibble AI is an iOS application that revolutionizes nutrition tracking by leveraging Claude AI to instantly analyze meals from photos. The app eliminates the tedious manual entry that plagues traditional calorie counters, making healthy eating effortless and engaging.",
     challenge:
       "Traditional nutrition tracking apps require users to manually search and log every food item, leading to low adherence rates. Users needed a frictionless way to track their nutrition that could understand complex meals and provide accurate nutritional information without extensive manual input.",
     solution: {
       paragraphs: [
-        "I designed and built an AI-first nutrition tracking experience powered by Claude AI. The app uses computer vision to analyze meal photos and provide instant nutritional breakdowns.",
+        "I designed and built an AI-first nutrition tracker around a photo-to-nutrition pipeline. Claude identifies the foods in each photo, and a USDA lookup supplies the verified nutrition values, so the model does the recognition and the numbers come from a trusted source.",
         "I implemented barcode scanning for packaged foods, personalized AI coaching for dietary guidance, HealthKit integration for holistic health tracking, gamified challenges to boost engagement, and 16 home screen widgets for at-a-glance nutrition data.",
       ],
     },
     results: [
       "Successfully shipped to the App Store",
       "16 home screen widgets for personalized tracking",
-      "Instant AI-powered meal analysis from photos",
+      "Photo-to-nutrition pipeline: Claude identifies foods, USDA data supplies the values",
       "Seamless HealthKit integration for comprehensive health data",
     ],
-    technologies: ["Claude AI", "Claude Code", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
+    technologies: ["Claude AI", "USDA nutrition data", "Claude Code", "Swift", "SwiftUI", "HealthKit", "Vision API", "iOS"],
     projectType: 'independent',
     stats: [
       { value: "16", label: "Home screen widgets" },
@@ -288,16 +544,74 @@ export const caseStudies: CaseStudy[] = [
     appStoreUrl: "https://apps.apple.com/us/app/nibble-ai/id6756195763",
   },
   {
+    slug: "agent-red",
+    title: "Agent RED",
+    description:
+      "An autonomous multi-agent AI system that plays Pokemon Red using Claude AI models and a Game Boy emulator.",
+    category: "AI/ML",
+    role: "AI Architect",
+    seoTitle: "Agent RED: Multi-Agent AI Plays Pokemon Red",
+    overview:
+      "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains (navigation, battles, and menus) coordinated by an orchestrator that routes tasks to the appropriate agent.",
+    challenge:
+      "Playing Pokemon Red autonomously requires solving multiple complex problems: understanding game state from raw memory, navigating a world with 223 interconnected maps, making strategic battle decisions against 391 different trainer teams, and managing inventory and party composition, all while maintaining context across hours of gameplay.",
+    solution: {
+      subsections: [
+        {
+          title: "Multi-agent architecture",
+          paragraphs: [
+            "I designed a hierarchical multi-agent system with four specialized agents: an Orchestrator (Sonnet) for task routing, Navigation (Haiku) with A* pathfinding, Battle (Sonnet/Opus) with automatic escalation for boss fights, and Menu (Haiku) for inventory management.",
+          ],
+        },
+        {
+          title: "Game knowledge base",
+          paragraphs: [
+            "The system extracts comprehensive game state from emulator memory and leverages a knowledge base parsed from the Pokemon Red disassembly, including all 223 maps, 151 Pokemon stats, and type effectiveness matrices.",
+          ],
+        },
+        {
+          title: "Real-time dashboard",
+          paragraphs: [
+            "A real-time React dashboard provides monitoring and control via WebSocket streaming.",
+          ],
+        },
+      ],
+    },
+    results: [
+      "38 tools distributed across 4 specialized AI agents",
+      "223 maps with collision data and trainer positions parsed",
+      "151 Pokemon with stats, types, and learnsets integrated",
+      "Real-time monitoring dashboard with WebSocket streaming",
+    ],
+    technologies: [
+      "Claude AI",
+      "Claude Code",
+      "Python",
+      "FastAPI",
+      "React",
+      "TypeScript",
+      "PyBoy",
+      "Multi-Agent Systems",
+    ],
+    projectType: "independent",
+    stats: [
+      { value: "38", label: "Tools across agents" },
+      { value: "4", label: "Specialized agents" },
+      { value: "223", label: "Maps navigated" },
+    ],
+    externalLink: {
+      url: "https://github.com/gowtam04/Agent_RED",
+      label: "View on GitHub",
+    },
+  },
+  {
     slug: "logoforge",
     title: "LogoForge",
     description:
       "A free AI-powered logo generator that creates App Store-ready icon bundles using Google's Gemini AI.",
     category: "AI/ML",
-    duration: "2026",
     role: "AI Architect",
     seoTitle: "LogoForge: AI Logo Generator for App Icons",
-    datePublished: "2026-01-01",
-    dateUpdated: "2026-07-05",
     overview:
       "LogoForge is a free AI-powered logo generator that takes users from a simple text description to App Store-ready icon bundles in under five minutes. It leverages Google's Gemini multimodal AI to generate professional logos and includes a complete export pipeline for iOS, Android, and Web platforms.",
     challenge: {
@@ -356,11 +670,8 @@ export const caseStudies: CaseStudy[] = [
     description:
       "A collaborative grocery list app with real-time sync and zero-friction onboarding, built for families.",
     category: "Mobile App",
-    duration: "2024",
     role: "AI Architect",
     seoTitle: "FamilyCart: Real-Time Family Grocery List App",
-    datePublished: "2024-01-01",
-    dateUpdated: "2024-12-01",
     overview:
       "FamilyCart is a collaborative grocery shopping app designed to make family shopping seamless. The app enables multiple family members to contribute to and check off items from a shared list in real-time, eliminating the chaos of uncoordinated grocery runs.",
     challenge:
@@ -387,11 +698,8 @@ export const caseStudies: CaseStudy[] = [
     description:
       "A mobile app for digitizing and organizing health records, built for the Indian market where paper-based medical documents are still the norm.",
     category: "Healthcare Tech",
-    duration: "2023",
     role: "Product Manager",
     seoTitle: "Yosihealth: Digital Health Records App for India",
-    datePublished: "2023-01-01",
-    dateUpdated: "2023-12-01",
     overview: {
       paragraphs: [
         "Yosihealth is a mobile application designed to solve a pervasive problem in India: the reliance on paper-based medical records.",
@@ -418,93 +726,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     technologies: ["React Native", "Expo", "Mobile App", "Document Management"],
     projectType: "independent",
-  },
-  {
-    slug: "suit-break",
-    title: "Suit Break",
-    description:
-      "A multiplayer card game with real-time matchmaking, ELO rating system, and strategic gameplay mechanics.",
-    category: "Web Game",
-    duration: "2024",
-    role: "Product Designer & Developer",
-    seoTitle: "Suit Break: Multiplayer Card Game with ELO Rating",
-    datePublished: "2024-01-01",
-    dateUpdated: "2024-12-01",
-    overview:
-      "Suit Break is a multiplayer web-based card game that brings the classic trick-taking genre to the browser with modern matchmaking and competitive features. The game features strategic card request mechanics that add depth beyond traditional card games.",
-    challenge: {
-      paragraphs: [
-        "Creating an engaging multiplayer card game that works seamlessly in the browser while maintaining competitive integrity.",
-        "The game needed to handle real-time synchronization between players, prevent cheating, and provide a fair matchmaking experience for players of all skill levels.",
-      ],
-    },
-    solution: {
-      paragraphs: [
-        "I designed and implemented a complete multiplayer infrastructure with real-time matchmaking, private rooms for playing with friends, and an ELO-based rating system for competitive play.",
-        "The strategic card request mechanic adds a unique twist to traditional trick-taking games, requiring players to think several moves ahead.",
-      ],
-    },
-    results: [
-      "Real-time multiplayer with seamless matchmaking",
-      "ELO rating system for competitive balance",
-      "Private rooms for playing with friends",
-      "Unique strategic card request mechanics",
-    ],
-    technologies: ["Claude Code", "WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
-    projectType: 'independent',
-    externalLink: {
-      url: "https://ace-suit-break.fly.dev",
-      label: "Play Now",
-    },
-  },
-  {
-    slug: "diagnostic-lab-lims",
-    title: "Laboratory Information Management System",
-    description:
-      "Led the development of a custom LIMS that replaced Salesforce, enabling a diagnostic lab to process 10,000+ samples daily.",
-    category: "Healthcare Tech",
-    duration: "2022-2023",
-    role: "Product Manager",
-    seoTitle: "Diagnostic Lab LIMS: Replacing Salesforce",
-    datePublished: "2022-01-01",
-    dateUpdated: "2023-12-01",
-    overview: {
-      paragraphs: [
-        "A diagnostic testing lab needed a system that could handle their massive scale of operations.",
-        "I led the product development of a comprehensive LIMS from initial concept through company-wide deployment, managing the full product lifecycle for a system now used by hundreds of employees.",
-      ],
-    },
-    challenge: {
-      paragraphs: [
-        "The lab was using Salesforce to manage their operations, but it couldn't handle the scale they were operating at.",
-        "They needed a custom solution that could support their high-volume testing workflows, from patient intake through result delivery, without bottlenecks.",
-      ],
-    },
-    solution: {
-      paragraphs: [
-        "I owned the product vision and roadmap, working closely with lab technicians, operations staff, and leadership to design a system built around their actual workflows.",
-        "I led cross-functional teams through discovery, design, development, and deployment, ensuring the solution addressed real operational pain points.",
-      ],
-    },
-    results: [
-      "Scaled to process 10,000+ samples per day",
-      "Deployed company-wide with hundreds of daily active users",
-      "Led full product lifecycle from initial concept to production launch",
-      "Replaced legacy Salesforce system with purpose-built solution",
-    ],
-    technologies: [
-      "Product Strategy",
-      "Stakeholder Management",
-      "Requirements Analysis",
-      "Cross-functional Leadership",
-      "Healthcare Workflows",
-      "Enterprise Software",
-    ],
-    projectType: "professional",
-    stats: [
-      { value: "10,000+", label: "Samples per day" },
-      { value: "100s", label: "Daily active users" },
-    ],
+    earlier: true,
   },
   {
     slug: "dmepos-order-management",
@@ -512,11 +734,8 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Led the development of an order management system for a DMEPOS provider, replacing manual paper processes with a streamlined digital workflow.",
     category: "Healthcare Tech",
-    duration: "2022-2023",
     role: "Product Manager",
     seoTitle: "DMEPOS Order Management System: Digital Rx Workflow",
-    datePublished: "2022-01-01",
-    dateUpdated: "2023-12-01",
     overview: {
       paragraphs: [
         "A DMEPOS (Durable Medical Equipment, Prosthetics, Orthotics, and Supplies) provider needed to modernize their order management operations.",
@@ -550,100 +769,7 @@ export const caseStudies: CaseStudy[] = [
       "Cross-functional Leadership",
     ],
     projectType: "professional",
-  },
-  {
-    slug: "expense-ai-auditing",
-    title: "AI-Powered Expense Validation & Auditing",
-    description:
-      "Designed an AI solution using OCI Generative AI to automate expense report validation and auditing for a large enterprise.",
-    category: "Enterprise AI",
-    duration: "2025",
-    role: "AI Architect",
-    seoTitle: "AI Expense Validation & Auditing on Oracle Cloud",
-    datePublished: "2025-01-01",
-    dateUpdated: "2025-12-01",
-    overview: {
-      paragraphs: [
-        "An enterprise-scale AI automation system for Oracle Expense Report validation and auditing.",
-        "I architected the full solution: model selection, event-driven integration topology, and the orchestration layer that extracts receipt data, validates against policy rules, and generates audit reports at scale.",
-      ],
-    },
-    challenge: {
-      paragraphs: [
-        "The client's finance team was spending significant time manually reviewing and auditing expense reports. The process was slow, inconsistent, and couldn't scale with the volume of submissions.",
-        "Validating receipts against expense claims and ensuring policy compliance required tedious manual comparison that was prone to human error.",
-      ],
-    },
-    solution: {
-      paragraphs: [
-        "I architected an event-driven AI system on OCI. I evaluated multiple models through OCI Generative AI and selected Llama 4 Maverick for its multi-document processing capabilities. The architecture integrates Oracle VBCS for configurable audit rules, Oracle Integration Cloud for event-driven triggers, and a Python backend on OCI Compute that orchestrates extraction, validation, and report generation workflows.",
-        "The system handles multiple receipts per attachment, validates expenses against configured rules, and attaches audit reports directly to expense records in Oracle Fusion.",
-      ],
-    },
-    results: [
-      "Deployed to production, automating expense validation workflow",
-      "AI-powered data extraction from receipt images with multi-document support",
-      "Configurable audit rules enabling policy customization without code changes",
-      "Automated report generation attached directly to expense records in Oracle Fusion",
-    ],
-    technologies: [
-      "OCI Generative AI",
-      "Llama 4 Maverick",
-      "Oracle Fusion Cloud",
-      "Oracle Integration Cloud",
-      "Oracle VBCS",
-      "Python",
-      "REST APIs",
-    ],
-    projectType: "professional",
-    clientName: "Large UAE Conglomerate",
-  },
-  {
-    slug: "ai-resume-parser",
-    title: "AI Resume Parser",
-    description:
-      "Built an AI-powered solution that bulk-filters 1000+ job applicants and returns top candidates with detailed analysis based on configurable criteria.",
-    category: "Enterprise AI",
-    duration: "2024",
-    role: "AI Architect",
-    seoTitle: "AI Resume Parser: Bulk Applicant Screening Tool",
-    datePublished: "2024-01-01",
-    dateUpdated: "2024-12-01",
-    overview: {
-      paragraphs: [
-        "An AI-powered applicant screening system built for high-volume recruitment. The client was receiving 1000+ applicants per job listing.",
-        "I built a system where they could enter the job description, bulk upload all resumes, configure their filter criteria (skills, experience, education), and specify how many candidates to shortlist.",
-      ],
-    },
-    challenge: {
-      paragraphs: [
-        "The client was receiving 1000+ applicants for each open position. Manually reviewing every resume to identify qualified candidates was tedious, unsustainable, and created major bottlenecks in their hiring process.",
-        "They needed a way to efficiently filter massive applicant pools while still identifying the best-fit candidates.",
-      ],
-    },
-    solution: {
-      paragraphs: [
-        "I led the end-to-end development of an AI-powered screening system. Users enter the job description, bulk upload resumes (supporting 1000+ in mixed formats like PDF and Word), then configure their filter criteria: required skills, years of experience, and education level. They specify how many candidates they want shortlisted.",
-        "The AI then scores each resume one-by-one against the job requirements and filter criteria, ranks all applicants by match score, and filters down to the top X candidates. For each shortlisted candidate, the system generates a comprehensive profile including a summary, their key strengths, and potential weaknesses.",
-      ],
-    },
-    results: [
-      "Saved hundreds of hours of manual resume screening",
-      "Processed thousands of candidates across multiple job postings",
-      "AI-generated candidate profiles with summary, strengths, and weaknesses",
-      "Configurable filtering by skills, experience, and education criteria",
-    ],
-    technologies: [
-      "OpenAI GPT",
-      "Resume Parsing",
-      "Document Processing",
-      "Web Application",
-      "AI/ML",
-    ],
-    projectType: "professional",
-    stats: [
-      { value: "1,000+", label: "Applicants screened per posting" },
-    ],
+    earlier: true,
   },
   {
     slug: "paraverse",
@@ -651,11 +777,8 @@ export const caseStudies: CaseStudy[] = [
     description:
       "Led product development for a blockchain mobile app bridging physical and digital worlds through NFT-based redemption experiences.",
     category: "Web3/Blockchain",
-    duration: "2021-2022",
     role: "Product Manager",
     seoTitle: "Paraverse: NFT Redemption App on Polygon",
-    datePublished: "2021-01-01",
-    dateUpdated: "2022-12-01",
     overview: {
       paragraphs: [
         "Paraverse is a blockchain-based mobile application built on Polygon that creates a gateway between physical and digital worlds.",
@@ -689,70 +812,43 @@ export const caseStudies: CaseStudy[] = [
       "Polygon Blockchain",
     ],
     projectType: "professional",
+    earlier: true,
     clientName: "Paraverse LLC",
   },
   {
-    slug: "agent-red",
-    title: "Agent RED",
+    slug: "suit-break",
+    title: "Suit Break",
     description:
-      "An autonomous multi-agent AI system that plays Pokemon Red using Claude AI models and a Game Boy emulator.",
-    category: "AI/ML",
-    duration: "2024",
-    role: "AI Architect",
-    seoTitle: "Agent RED: Multi-Agent AI Plays Pokemon Red",
-    datePublished: "2024-01-01",
-    dateUpdated: "2024-12-01",
+      "A multiplayer card game with real-time matchmaking, ELO rating system, and strategic gameplay mechanics.",
+    category: "Web Game",
+    role: "Product Designer & Developer",
+    seoTitle: "Suit Break: Multiplayer Card Game with ELO Rating",
     overview:
-      "Agent RED is an autonomous AI system that plays Pokemon Red by combining Claude AI models with a PyBoy Game Boy emulator. The system features a hierarchical multi-agent architecture where specialized agents handle different gameplay domains (navigation, battles, and menus) coordinated by an orchestrator that routes tasks to the appropriate agent.",
-    challenge:
-      "Playing Pokemon Red autonomously requires solving multiple complex problems: understanding game state from raw memory, navigating a world with 223 interconnected maps, making strategic battle decisions against 391 different trainer teams, and managing inventory and party composition, all while maintaining context across hours of gameplay.",
+      "Suit Break is a multiplayer web-based card game that brings the classic trick-taking genre to the browser with modern matchmaking and competitive features. The game features strategic card request mechanics that add depth beyond traditional card games.",
+    challenge: {
+      paragraphs: [
+        "Creating an engaging multiplayer card game that works seamlessly in the browser while maintaining competitive integrity.",
+        "The game needed to handle real-time synchronization between players, prevent cheating, and provide a fair matchmaking experience for players of all skill levels.",
+      ],
+    },
     solution: {
-      subsections: [
-        {
-          title: "Multi-agent architecture",
-          paragraphs: [
-            "I designed a hierarchical multi-agent system with four specialized agents: an Orchestrator (Sonnet) for task routing, Navigation (Haiku) with A* pathfinding, Battle (Sonnet/Opus) with automatic escalation for boss fights, and Menu (Haiku) for inventory management.",
-          ],
-        },
-        {
-          title: "Game knowledge base",
-          paragraphs: [
-            "The system extracts comprehensive game state from emulator memory and leverages a knowledge base parsed from the Pokemon Red disassembly, including all 223 maps, 151 Pokemon stats, and type effectiveness matrices.",
-          ],
-        },
-        {
-          title: "Real-time dashboard",
-          paragraphs: [
-            "A real-time React dashboard provides monitoring and control via WebSocket streaming.",
-          ],
-        },
+      paragraphs: [
+        "I designed and implemented a complete multiplayer infrastructure with real-time matchmaking, private rooms for playing with friends, and an ELO-based rating system for competitive play.",
+        "The strategic card request mechanic adds a unique twist to traditional trick-taking games, requiring players to think several moves ahead.",
       ],
     },
     results: [
-      "38 tools distributed across 4 specialized AI agents",
-      "223 maps with collision data and trainer positions parsed",
-      "151 Pokemon with stats, types, and learnsets integrated",
-      "Real-time monitoring dashboard with WebSocket streaming",
+      "Real-time multiplayer with seamless matchmaking",
+      "ELO rating system for competitive balance",
+      "Private rooms for playing with friends",
+      "Unique strategic card request mechanics",
     ],
-    technologies: [
-      "Claude AI",
-      "Claude Code",
-      "Python",
-      "FastAPI",
-      "React",
-      "TypeScript",
-      "PyBoy",
-      "Multi-Agent Systems",
-    ],
-    projectType: "independent",
-    stats: [
-      { value: "38", label: "Tools across agents" },
-      { value: "4", label: "Specialized agents" },
-      { value: "223", label: "Maps navigated" },
-    ],
+    technologies: ["Claude Code", "WebSockets", "React", "Node.js", "Real-time Multiplayer", "Game Design"],
+    projectType: 'independent',
+    earlier: true,
     externalLink: {
-      url: "https://github.com/gowtam04/Agent_RED",
-      label: "View on GitHub",
+      url: "https://ace-suit-break.fly.dev",
+      label: "Play Now",
     },
   },
 ];
@@ -771,6 +867,6 @@ export function getAllCategories(): string[] {
 }
 
 export function getAllTechnologies(): string[] {
-  const technologies = new Set(caseStudies.flatMap((cs) => cs.technologies));
+  const technologies = new Set(caseStudies.flatMap((cs) => cs.technologies ?? []));
   return Array.from(technologies).sort();
 }

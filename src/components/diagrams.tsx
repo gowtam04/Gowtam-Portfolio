@@ -213,7 +213,115 @@ export function LimsDiagram() {
   );
 }
 
+export function LmaDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 262"
+      role="img"
+      aria-label="Legacy Modernization Assistant architecture: agents analyze legacy code, design the new system with human input, generate it in any stack, and validate it against the original, all inside the enterprise cloud on Claude in AWS Bedrock or Azure AI Foundry"
+      className="h-auto w-full"
+    >
+      {/* The signature: everything runs inside the customer's own cloud */}
+      <rect
+        x={8}
+        y={16}
+        width={624}
+        height={210}
+        rx={10}
+        fill="none"
+        stroke="var(--accent)"
+        strokeDasharray="4 4"
+      />
+
+      <Box x={22} y={44} w={112} h={56} label="LEGACY" sub="COBOL · DYL-280" />
+      <Wire d={`M134 72 H152 ${right(152, 72)}`} />
+      <Box x={154} y={44} w={104} h={56} label="ANALYZE" sub="READ · EXTRACT" />
+      <Wire d={`M258 72 H276 ${right(276, 72)}`} />
+      <Box x={278} y={44} w={104} h={56} label="DESIGN" sub="HUMAN INPUT" accent />
+      <Wire d={`M382 72 H400 ${right(400, 72)}`} />
+      <Box x={402} y={44} w={100} h={56} label="GENERATE" sub="ANY STACK" />
+      <Wire d={`M502 72 H520 ${right(520, 72)}`} />
+      <Box x={522} y={44} w={96} h={56} label="VALIDATE" sub="TESTS · DIFF" />
+
+      <Caption x={330} y={120} accent>HUMAN IN THE LOOP</Caption>
+
+      <Box x={22} y={150} w={232} h={52} label="SSO" sub="ENTERPRISE AUTHENTICATION" />
+      <Wire d={`M452 100 V144 ${down(452, 150)}`} />
+      <Box x={278} y={150} w={340} h={52} label="CHANGE MANAGEMENT" sub="BUG FIXES · TEST GENERATION · DIFF ANALYSIS" />
+
+      <Caption x={320} y={218} accent>ENTERPRISE CLOUD · CLAUDE ON AWS BEDROCK OR AZURE AI FOUNDRY</Caption>
+      <Caption x={624} y={252} anchor="end">LEGACY MODERNIZATION ASSISTANT</Caption>
+    </svg>
+  );
+}
+
+export function Insight360Diagram() {
+  return (
+    <svg
+      viewBox="0 0 640 286"
+      role="img"
+      aria-label="Insight 360 architecture: an onboarding agent interviews each company and writes its soul file; an orchestrator on Claude and OpenAI delegates to worker agents, every one bound to the soul file; each company runs in its own AWS account with row-level security"
+      className="h-auto w-full"
+    >
+      <Box x={16} y={16} w={150} h={52} label="ONBOARDING" sub="INTERVIEW AGENT" />
+      <Wire d={`M166 42 H186 ${right(186, 42)}`} />
+      <Box x={188} y={16} w={124} h={52} label="SOUL FILE" sub="PER COMPANY" accent />
+      <Box x={340} y={16} w={284} h={52} label="ORCHESTRATOR" sub="CLAUDE · OPENAI" />
+
+      <Wire d={`M382 68 V106 ${down(382, 112)}`} />
+      <Wire d={`M482 68 V106 ${down(482, 112)}`} />
+      <Wire d={`M582 68 V106 ${down(582, 112)}`} />
+
+      <Box x={340} y={112} w={84} h={52} label="WORKER" sub="AGENT" />
+      <Box x={440} y={112} w={84} h={52} label="WORKER" sub="AGENT" />
+      <Box x={540} y={112} w={84} h={52} label="WORKER" sub="AGENT" />
+
+      {/* The signature: the soul file governs every agent */}
+      <Wire d={`M250 68 V138 H334 ${right(334, 138)}`} accent />
+      <Caption x={250} y={160} accent>BOUND TO EVERY AGENT</Caption>
+
+      <Wire d={`M482 164 V200 ${down(482, 206)}`} />
+      <Box x={16} y={206} w={608} h={48} label="ONE ACCOUNT PER COMPANY" sub="AWS · ROW-LEVEL SECURITY" />
+
+      <Caption x={624} y={278} anchor="end">INSIGHT 360 · COMMAND CENTER</Caption>
+    </svg>
+  );
+}
+
+export function OracleFusionDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 270"
+      role="img"
+      aria-label="AI utilities for Oracle Fusion: Oracle Fusion feeds a resume shortlister, an expense auditor, and a contract compliance validator; every ranking and flag goes to a person for review"
+      className="h-auto w-full"
+    >
+      <Box x={16} y={98} w={140} h={60} label="ORACLE FUSION" sub="EVENTS · RECORDS" />
+
+      <Wire d={`M156 128 H172`} />
+      <Wire d={`M172 48 V208`} />
+      <Wire d={`M172 48 H198 ${right(198, 48)}`} />
+      <Wire d={`M172 128 H198 ${right(198, 128)}`} />
+      <Wire d={`M172 208 H198 ${right(198, 208)}`} />
+
+      <Box x={200} y={20} w={200} h={56} label="RESUME SHORTLIST" sub="RANKED · EXPLAINED" />
+      <Box x={200} y={100} w={200} h={56} label="EXPENSE AUDIT" sub="VIOLATIONS · DUPLICATES" />
+      <Box x={200} y={180} w={200} h={56} label="CONTRACT CHECK" sub="RISK-TIERED · LOCAL LAW" />
+
+      {/* The signature: people make the final call */}
+      <Wire d={`M400 48 H428 V208 H400`} accent />
+      <Wire d={`M400 128 H454 ${right(454, 128)}`} accent />
+      <Box x={456} y={98} w={168} h={60} label="HUMAN REVIEW" sub="FLAGS · RANKINGS" accent />
+
+      <Caption x={624} y={262} anchor="end">THREE UTILITIES · LIVE IN PRODUCTION</Caption>
+    </svg>
+  );
+}
+
 const DIAGRAMS: Record<string, ReactNode> = {
+  "legacy-modernization-assistant": <LmaDiagram />,
+  "insight-360": <Insight360Diagram />,
+  "oracle-fusion-ai-utilities": <OracleFusionDiagram />,
   oak: <OakDiagram />,
   "annie-acs": <AnnieDiagram />,
   "agent-red": <AgentRedDiagram />,

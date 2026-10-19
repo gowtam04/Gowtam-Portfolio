@@ -4,6 +4,11 @@ export const SITE_NAME = "Gowtam Ramanujam";
 export const SITE_URL = "https://gowtam.ai";
 export const SITE_EMAIL = "gowtam@gowtam.ai";
 export const SITE_ROLE = "AI Architect";
+/** Resume headline focus, shown under the role. */
+export const SITE_FOCUS = "Multi-Agent & Enterprise AI Systems";
+/** Site-wide description: root metadata, Person JSON-LD, Markdown home. */
+export const SITE_DESCRIPTION =
+  "AI Architect designing multi-agent and enterprise AI systems, from orchestration and governance to integration and deployment. 8+ years shipping production software, with AI tools in use by the State of California.";
 export const SITE_LINKEDIN = "https://www.linkedin.com/in/gowtam-ramanujam";
 
 export const privacyContent = {
@@ -70,7 +75,7 @@ export const privacyContent = {
 export const homeMarkdownSummary = {
   title: "Gowtam Ramanujam | AI Architect",
   paragraphs: [
-    "Personal site of Gowtam Ramanujam, an AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
+    "Personal site of Gowtam Ramanujam, an AI Architect designing multi-agent and enterprise AI systems, from orchestration and governance to integration and deployment. 8+ years shipping production software, with AI tools in use by the State of California.",
     "The homepage is an interactive 3D room. Each object opens a panel that is also its own URL, listed below. For everything in one text document, read /plain. Prefer Accept: text/markdown for machine-readable page bodies, and start with /llms.txt and /sitemap.xml for discovery.",
   ],
   links: [

@@ -1,6 +1,6 @@
 # gowtam.ai
 
-> Personal site of Gowtam Ramanujam, AI Architect. The homepage is an interactive 3D room: each object opens a panel that is also its own crawlable URL (work, about, places, cars, games, contact). Case studies and contact details for production AI systems and autonomous agents.
+> Personal site of Gowtam Ramanujam, AI Architect (multi-agent and enterprise AI systems, 8+ years shipping production software). The homepage is an interactive 3D room: each object opens a panel that is also its own crawlable URL (work, about, places, cars, games, contact). Case studies and contact details for production AI systems and autonomous agents.
 
 Site: https://gowtam.ai
 Contact: gowtam@gowtam.ai
@@ -46,8 +46,15 @@ This site is not a SaaS API, not a documentation product, and not a chatbot endp
 
 ## Featured case studies
 
-- [Oak](https://gowtam.ai/case-studies/oak): Agentic AI reasoning system over game data
+- [Legacy Modernization Assistant](https://gowtam.ai/case-studies/legacy-modernization-assistant): Multi-agent system on Claude that modernizes legacy code (COBOL, DYL-280) into any stack; in use by the State of California
+- [Insight 360](https://gowtam.ai/case-studies/insight-360): Agentic AI command center for SMBs where a per-company soul file governs every agent; live with 3 companies
+- [AI Utilities for Oracle Fusion](https://gowtam.ai/case-studies/oracle-fusion-ai-utilities): Resume shortlisting, expense auditing, and contract compliance validation, live with a multinational corporation in Dubai
+
+## More case studies
+
 - [Annie ACS](https://gowtam.ai/case-studies/annie-acs): Production patient-facing agent platform
+- [Oak](https://gowtam.ai/case-studies/oak): Agentic AI reasoning system over game data
+- [Laboratory Information Management System](https://gowtam.ai/case-studies/diagnostic-lab-lims): HIPAA-compliant LIMS on AWS that replaced Salesforce, 10,000+ samples a day
 
 ## Optional app pages
 

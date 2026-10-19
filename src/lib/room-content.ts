@@ -12,6 +12,7 @@
 
 import {
   SITE_EMAIL,
+  SITE_FOCUS,
   SITE_LINKEDIN,
   SITE_NAME,
   SITE_ROLE,
@@ -171,10 +172,10 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     route: "/work",
     navLabel: "Work",
     hint: "the desk",
-    kicker: "AI Architect",
+    kicker: SITE_FOCUS,
     title: "Work",
     lead: [
-      "By day (and plenty of nights) I design and build AI systems: agents that reason, call tools, and hold up in production. I like the hard middle part, where a clever demo becomes software people can trust.",
+      "By day (and plenty of nights) I architect multi-agent and enterprise AI systems, from orchestration and governance to integration and deployment. They run in production for the State of California, a multinational corporation in Dubai, and small businesses on Insight 360.",
     ],
     blocks: [
       {
@@ -187,7 +188,7 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
     meta: {
       title: `Work | ${SITE_NAME}, ${SITE_ROLE}`,
       description:
-        "The desk in Gowtam's room: AI agents and systems that reason, call tools, and hold up in production. Case studies include Oak and Annie ACS.",
+        "The desk in Gowtam's room: multi-agent and enterprise AI systems in production. Case studies include the Legacy Modernization Assistant, Insight 360, and AI utilities for Oracle Fusion.",
     },
   },
   games: {
@@ -268,7 +269,8 @@ export const ROOM_SECTIONS: Record<PanelSpotId, RoomSection> = {
         heading: "Quick facts",
         items: [
           ["Based in the Sacramento area"],
-          ["Builds AI agents and iOS apps"],
+          ["AI Architect at Optiwise, designing multi-agent and enterprise AI systems"],
+          ["Shipped 3 iOS apps to the App Store"],
           ["Co-founded a game studio"],
           ["Lived in India and the United States"],
           ["Happiest on an open road or with a controller in hand"],
@@ -412,24 +414,26 @@ const aboutLonger: LongerContent = {
     {
       heading: "What I do",
       paragraphs: [
-        "I design and build AI agents: systems where a language model has to call tools, work with real data, and give an answer someone can act on. Most of the job is the unglamorous middle part: picking the model, deciding what tools it gets, and planning for when it's wrong and how a person finds out.",
-        "The best example is Annie, a patient assistant for a cosmetic surgery practice. It answers procedure questions around the clock, pulls the right video from the practice's own library, and books consultations. I took it from a prototype that lost conversations on restart to a platform the staff run themselves. That includes a second agent that lets them ask plain-English questions across thousands of patient chats.",
+        "I'm an AI Architect at Optiwise. I design multi-agent and LLM-powered systems end to end: how the agents divide the work, what each one is allowed to do, where a person stays in the loop, and how it all plugs into the systems a company already runs. I work across Claude, GPT, Grok, open-source models, and OCI Generative AI.",
+        "The best example is the Legacy Modernization Assistant, now in use by the State of California. It's a team of agents on Claude that reads legacy code like COBOL, designs a modern replacement with people making the calls, generates it in whatever stack the customer picks, and checks the result against the original. The code never leaves the customer's own cloud.",
       ],
     },
     {
       heading: "How I got here",
       paragraphs: [
-        "Over the last seven years I've built production software for healthcare, finance, and recruiting teams. Along the way I co-founded a game studio whose first title passed 500,000 downloads, and I shipped three iOS apps.",
+        "I studied computer science at Anna University in Chennai and started as a software developer at Kenla Systems, building web and mobile apps with React, React Native, and Node.js. At Optiwise I spent several years as a product manager, delivering four healthcare products including a HIPAA-compliant lab system, before moving into AI architecture.",
+        "That's 8+ years of shipping production software across healthcare, enterprise AI, and mobile. Along the way I co-founded a game studio whose first title passed 500,000 downloads, and I shipped three iOS apps.",
       ],
     },
     {
       heading: "Things I've shipped",
       paragraphs: [],
       bullets: [
+        "The Legacy Modernization Assistant: a multi-agent system in use by the State of California",
+        "Three AI utilities for Oracle Fusion, live with a multinational corporation in Dubai",
+        "Insight 360: an agentic AI command center live with 3 companies",
+        "A HIPAA-compliant lab system handling 10,000+ samples a day",
         "Annie ACS: a patient-facing agent running 24/7 at a surgery practice",
-        "Oak: a Pokémon agent that reasons from 14 data tools and cites every answer",
-        "A lab system handling 10,000+ samples a day",
-        "A resume parser that screens 1,000+ applicants per posting",
       ],
     },
     {
@@ -455,10 +459,18 @@ const contactLonger: LongerContent = {
         "My favorite problem is an AI prototype that impressed people in a demo and now has to work every day. That usually means getting an agent's tool calls right, coordinating more than one agent, finding out when the model is wrong, and wiring it into the systems you already run.",
       ],
       bullets: [
+        "Architecting multi-agent and enterprise AI systems, from orchestration to governance",
         "Reviewing an agent product's architecture before you build it",
         "Designing and building LLM-backed systems hands-on",
         "Full-time AI architect or staff engineering roles",
         "Questions about anything in the case studies",
+      ],
+    },
+    {
+      heading: "How I work",
+      paragraphs: [
+        "Design first, then build fast. I start with a business requirements document, turn it into a technical design document, and have a working prototype in front of you, typically within days. From there it's iteration to production.",
+        "I use Claude Code, Codex, and Cursor as engineering tools to compress the design-to-prototype cycle, so the time goes into the decisions that matter: how the agents are orchestrated, where people stay in the loop, and how the system is governed.",
       ],
     },
     {
@@ -503,7 +515,7 @@ export const ROOM_INTRO = {
   meta: {
     title: `${SITE_NAME} | ${SITE_ROLE}`,
     description:
-      "Step into Gowtam's room: an AI architect's interactive 3D space. Click the desk for AI work, the console for games, the window for cars, and meet Teeko the chihuahua.",
+      "Gowtam Ramanujam, AI Architect for multi-agent and enterprise AI systems. Step into his interactive 3D room: click the desk for AI work, the console for games, the window for cars, and meet Teeko the chihuahua.",
   },
 } as const;
 

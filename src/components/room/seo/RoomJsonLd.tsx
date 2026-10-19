@@ -2,6 +2,7 @@ import type { RoutedSpotId } from "@/lib/room-content";
 import { ROOM_INTRO, ROOM_SECTIONS } from "@/lib/room-content";
 import { getRoomProjects } from "@/lib/room-projects";
 import {
+  SITE_DESCRIPTION,
   SITE_EMAIL,
   SITE_LINKEDIN,
   SITE_NAME,
@@ -13,9 +14,6 @@ const PERSON_ID = `${SITE_URL}/#person`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const PROFILE_IMAGE = `${SITE_URL}/images/profile.jpg`;
 
-const PERSON_DESCRIPTION =
-  "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.";
-
 const personEntity = {
   "@type": "Person",
   "@id": PERSON_ID,
@@ -24,16 +22,19 @@ const personEntity = {
   url: SITE_URL,
   image: PROFILE_IMAGE,
   email: `mailto:${SITE_EMAIL}`,
-  description: PERSON_DESCRIPTION,
+  description: SITE_DESCRIPTION,
   sameAs: [SITE_LINKEDIN],
+  worksFor: { "@type": "Organization", name: "Optiwise" },
+  alumniOf: { "@type": "CollegeOrUniversity", name: "Anna University" },
   knowsAbout: [
-    "Artificial Intelligence",
-    "Agentic AI",
     "AI System Architecture",
     "Multi-Agent Systems",
-    "Machine Learning",
-    "Mobile App Development",
-    "Enterprise Software",
+    "Multi-Agent Orchestration",
+    "Agentic AI",
+    "AI Governance",
+    "Enterprise AI",
+    "Context Engineering",
+    "Large Language Models",
   ],
 };
 

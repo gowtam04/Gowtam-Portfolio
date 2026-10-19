@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Caveat, Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { SITE_DESCRIPTION } from "@/lib/site-content";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -27,13 +28,11 @@ const caveat = Caveat({
 export const metadata: Metadata = {
   metadataBase: new URL("https://gowtam.ai"),
   title: "Gowtam Ramanujam | AI Architect",
-  description:
-    "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
+  description: SITE_DESCRIPTION,
   authors: [{ name: "Gowtam Ramanujam" }],
   openGraph: {
     title: "Gowtam Ramanujam | AI Architect",
-    description:
-      "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
+    description: SITE_DESCRIPTION,
     siteName: "Gowtam Ramanujam Portfolio",
     locale: "en_US",
     type: "website",
@@ -41,8 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gowtam Ramanujam | AI Architect",
-    description:
-      "AI Architect designing intelligent systems and autonomous agents. 7+ years shipping enterprise AI tools, agentic applications, and production software.",
+    description: SITE_DESCRIPTION,
   },
   robots: {
     index: true,

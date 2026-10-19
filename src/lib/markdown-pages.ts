@@ -116,7 +116,6 @@ function caseStudyToMarkdown(cs: CaseStudy): string {
     cs.description,
     "",
     `- Category: ${cs.category}`,
-    `- Duration: ${cs.duration}`,
     `- Role: ${cs.role}`,
     `- Project type: ${cs.projectType}`,
     "",
@@ -131,11 +130,14 @@ function caseStudyToMarkdown(cs: CaseStudy): string {
   for (const r of cs.results) {
     lines.push(`- ${r}`);
   }
-  lines.push("", "## Technologies", "");
-  for (const t of cs.technologies) {
-    lines.push(`- ${t}`);
-  }
   lines.push("");
+  if (cs.technologies?.length) {
+    lines.push("## Technologies", "");
+    for (const t of cs.technologies) {
+      lines.push(`- ${t}`);
+    }
+    lines.push("");
+  }
   if (cs.testimonial) {
     lines.push("## Testimonial", "", cs.testimonial, "");
   }

@@ -4,7 +4,10 @@ import type { RoutedSpotId } from "@/lib/room-content";
 import { ROOM_SECTIONS, ROUTED_SPOTS } from "@/lib/room-content";
 
 /** Launch of the 3D room homepage and its section routes. */
-const ROOM_UPDATED = "2026-09-22";
+const ROOM_UPDATED = "2026-10-18";
+
+/** Last content pass over the case studies (they carry no dates of their own). */
+const CASE_STUDIES_UPDATED = "2026-10-18";
 
 const ROOM_PRIORITY: Record<RoutedSpotId, number> = {
   work: 0.9,
@@ -49,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${baseUrl}/case-studies`,
-      lastModified: "2026-07-05",
+      lastModified: CASE_STUDIES_UPDATED,
       changeFrequency: "monthly",
       priority: 0.9,
     },
@@ -100,7 +103,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Dynamic case study pages
   const caseStudyPages: MetadataRoute.Sitemap = caseStudies.map((cs) => ({
     url: `${baseUrl}/case-studies/${cs.slug}`,
-    lastModified: cs.dateUpdated ?? "2026-07-05",
+    lastModified: CASE_STUDIES_UPDATED,
     changeFrequency: "monthly" as const,
     priority: 0.8,
   }));
